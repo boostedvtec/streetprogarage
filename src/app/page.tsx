@@ -1,0 +1,337 @@
+import Link from "next/link";
+import {
+  Wrench,
+  Gauge,
+  ShoppingCart,
+  ArrowRight,
+  CheckCircle,
+  ChartLineUp,
+  Quotes,
+  PlugsConnected,
+} from "@phosphor-icons/react/dist/ssr";
+import { Container, Section, Eyebrow } from "@/components/ui/container";
+import { LinkButton } from "@/components/ui/button";
+import { PhotoTile } from "@/components/photo-tile";
+
+const heroFeatures = [
+  { icon: Gauge, label: "Remote Tuning" },
+  { icon: ChartLineUp, label: "Rolling Road" },
+  { icon: Wrench, label: "Parts & Fitting" },
+];
+
+const services = [
+  {
+    icon: Gauge,
+    title: "Remote ECU Tuning",
+    description:
+      "Custom-built tunes from scratch — no cookie-cutter stage kits. Stock ECU reflash via HP Tuners or standalone ECU tuning, delivered anywhere in the world.",
+    href: "/remote-tuning",
+    cta: "Explore Remote Tuning",
+  },
+  {
+    icon: ChartLineUp,
+    title: "Rolling Road Tuning",
+    description:
+      "In-house rolling road dyno sessions in Manchester, UK. £100/hr with full datalogging and real-time adjustment on the day.",
+    href: "/rolling-road",
+    cta: "Book Rolling Road",
+  },
+  {
+    icon: Wrench,
+    title: "Parts, Fitting & Diagnostics",
+    description:
+      "Performance parts sales with professional fitting and full diagnostics — from bolt-ons to complete built engines.",
+    href: "/parts",
+    cta: "Shop Parts",
+  },
+  {
+    icon: PlugsConnected,
+    title: "Custom Wiring",
+    description:
+      "Standalone and piggyback ECU wiring, gauge installation, and Honda P28 ECU socketing service.",
+    href: "/custom-wiring",
+    cta: "View Wiring Services",
+  },
+];
+
+const processSteps = [
+  {
+    title: "Submit Your Build",
+    description:
+      "Fill in the Build List form with your vehicle, engine, mods and goals — we review every detail before quoting.",
+  },
+  {
+    title: "Get a Ballpark Quote",
+    description:
+      "Because every tune is custom-written, pricing depends on your ECU and build. You'll get an instant estimate, confirmed exactly after review.",
+  },
+  {
+    title: "Log & Tune",
+    description:
+      "Remote sessions use live datalogging and remote access; rolling road sessions are tuned live on the dyno in Manchester.",
+  },
+  {
+    title: "Revise & Deliver",
+    description:
+      "We fine-tune based on real-world driving or dyno results, with revisions available as an add-on if you need further adjustment.",
+  },
+];
+
+const trustPoints = [
+  "Every tune written from scratch — no generic stage maps",
+  "Stock ECU (HP Tuners) and standalone ECU platforms supported",
+  "UK-based workshop, global remote reach",
+  "Pre-tune safety checks available before every session",
+];
+
+export default function Home() {
+  return (
+    <>
+      {/* Hero */}
+      <div className="border-b border-border bg-surface/50">
+        <Container className="py-14 sm:py-20 lg:py-24">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:items-center lg:gap-14">
+            {/* Headline column */}
+            <div>
+              <Eyebrow>Manchester, UK &middot; Remote Worldwide</Eyebrow>
+              <h1 className="font-display mt-6 text-5xl leading-[0.95] sm:text-6xl lg:text-6xl">
+                Custom built.
+                <br />
+                <span className="text-accent">Precision tuned.</span>
+              </h1>
+              <p className="mt-6 max-w-md text-lg leading-relaxed text-foreground-muted">
+                Every tune written from scratch — remote ECU tuning delivered
+                globally, rolling road dyno sessions in Manchester, and
+                performance parts sales, fitting &amp; diagnostics.
+              </p>
+              <div className="mt-10 flex flex-wrap gap-4">
+                <LinkButton href="/quote" size="lg">
+                  Get a Quote
+                  <ArrowRight size={20} weight="bold" aria-hidden />
+                </LinkButton>
+                <LinkButton href="/rolling-road" size="lg" variant="secondary">
+                  Book Rolling Road
+                </LinkButton>
+              </div>
+              <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t border-border pt-6">
+                {heroFeatures.map(({ icon: Icon, label }) => (
+                  <li
+                    key={label}
+                    className="flex items-center gap-2 text-sm font-medium text-foreground-muted"
+                  >
+                    <Icon size={18} className="text-accent" aria-hidden />
+                    {label}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Photo mosaic — placeholders until real build photos are provided */}
+            <div className="grid grid-cols-3 auto-rows-[90px] gap-3 sm:auto-rows-[110px] lg:auto-rows-[120px]">
+              <PhotoTile label="Rolling Road Session" className="col-span-2 row-span-2" />
+              <PhotoTile label="Honda D16 Turbo" className="col-span-1 row-span-1" />
+              <PhotoTile label="Engine Bay Build" className="col-span-1 row-span-1" />
+              <PhotoTile label="Subaru WRX / STI" className="col-span-1 row-span-1" />
+              <PhotoTile label="Honda B18 Turbo" className="col-span-1 row-span-1" />
+              <PhotoTile label="K24 Turbo" className="col-span-1 row-span-1" />
+            </div>
+          </div>
+        </Container>
+      </div>
+
+      {/* Services */}
+      <Section>
+        <Container>
+          <div className="max-w-2xl">
+            <Eyebrow>What We Do</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl">
+              Everything it takes to get you more power
+            </h2>
+          </div>
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {services.map(({ icon: Icon, title, description, href, cta }) => (
+              <div
+                key={title}
+                className="group flex flex-col rounded-xl border border-border bg-surface p-8 transition-colors hover:border-accent"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent-soft text-accent">
+                  <Icon size={26} weight="bold" aria-hidden />
+                </div>
+                <h3 className="font-display mt-6 text-2xl">{title}</h3>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-foreground-muted">
+                  {description}
+                </p>
+                <Link
+                  href={href}
+                  className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-accent group-hover:gap-2.5 transition-all"
+                >
+                  {cta}
+                  <ArrowRight size={16} weight="bold" aria-hidden />
+                </Link>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* Process */}
+      <Section className="border-y border-border bg-surface/50">
+        <Container>
+          <div className="max-w-2xl">
+            <Eyebrow>The Process</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl">
+              From build list to finished tune
+            </h2>
+          </div>
+
+          <ol className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {processSteps.map((step, i) => (
+              <li key={step.title} className="relative">
+                <span className="font-display text-6xl text-border-strong">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="font-display mt-2 text-xl">{step.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
+                  {step.description}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </Container>
+      </Section>
+
+      {/* Trust points */}
+      <Section>
+        <Container className="grid gap-12 lg:grid-cols-2 lg:items-center">
+          <div>
+            <Eyebrow>Why Street PRO Garage</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl">
+              No stage kits. No shortcuts.
+            </h2>
+            <p className="mt-4 text-foreground-muted leading-relaxed">
+              We don&rsquo;t sell off-the-shelf Stage 1/2/3 maps. Every build gets a
+              tune written specifically for its parts, fuel, and goals.
+            </p>
+          </div>
+          <ul className="grid gap-4">
+            {trustPoints.map((point) => (
+              <li key={point} className="flex items-start gap-3">
+                <CheckCircle
+                  size={22}
+                  weight="fill"
+                  className="mt-0.5 shrink-0 text-accent"
+                  aria-hidden
+                />
+                <span className="text-foreground-muted">{point}</span>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </Section>
+
+      {/* Dyno gallery preview */}
+      <Section className="border-y border-border bg-surface/50">
+        <Container>
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div className="max-w-2xl">
+              <Eyebrow>Results</Eyebrow>
+              <h2 className="font-display mt-4 text-4xl sm:text-5xl">
+                Before &amp; after dyno results
+              </h2>
+            </div>
+            <Link
+              href="/gallery"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent"
+            >
+              View full gallery
+              <ArrowRight size={16} weight="bold" aria-hidden />
+            </Link>
+          </div>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {["Honda D16 Turbo — 207WHP", "Subaru WRX — 329Hp", "Rolling Road Session"].map((label) => (
+              <div
+                key={label}
+                className="flex aspect-[4/3] flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border-strong bg-surface text-foreground-subtle"
+              >
+                <ChartLineUp size={32} aria-hidden />
+                <span className="text-xs">{label}</span>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* Testimonials preview */}
+      <Section>
+        <Container>
+          <div className="max-w-2xl">
+            <Eyebrow>Customer Reviews</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl">
+              What builders are saying
+            </h2>
+          </div>
+          <div className="mt-12 grid gap-6 lg:grid-cols-3">
+            {[
+              {
+                quote:
+                  "Sample review — replace with a real customer quote once your first tunes are delivered.",
+                name: "Sample Customer",
+                vehicle: "Placeholder build",
+              },
+              {
+                quote:
+                  "Sample review — replace with a real customer quote once your first tunes are delivered.",
+                name: "Sample Customer",
+                vehicle: "Placeholder build",
+              },
+              {
+                quote:
+                  "Sample review — replace with a real customer quote once your first tunes are delivered.",
+                name: "Sample Customer",
+                vehicle: "Placeholder build",
+              },
+            ].map((t, i) => (
+              <figure
+                key={i}
+                className="flex flex-col rounded-xl border border-border bg-surface p-8"
+              >
+                <Quotes size={28} weight="fill" className="text-accent" aria-hidden />
+                <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-foreground-muted italic">
+                  &ldquo;{t.quote}&rdquo;
+                </blockquote>
+                <figcaption className="mt-6 text-sm font-semibold">
+                  {t.name}
+                  <span className="block font-normal text-foreground-subtle">
+                    {t.vehicle}
+                  </span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* CTA banner */}
+      <Section className="border-t border-border">
+        <Container>
+          <div className="flex flex-col items-start gap-6 rounded-2xl border border-accent/30 bg-accent-soft p-10 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="font-display text-3xl sm:text-4xl">
+                Ready to build your custom tune?
+              </h2>
+              <p className="mt-2 text-foreground-muted">
+                Submit your build list and get a ballpark quote today.
+              </p>
+            </div>
+            <LinkButton href="/quote" size="lg" className="shrink-0">
+              <ShoppingCart size={20} weight="bold" aria-hidden />
+              Start Your Build
+            </LinkButton>
+          </div>
+        </Container>
+      </Section>
+    </>
+  );
+}
