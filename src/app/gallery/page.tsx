@@ -1,22 +1,14 @@
 import type { Metadata } from "next";
-import { ChartLineUp } from "@phosphor-icons/react/dist/ssr";
+import Image from "next/image";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
+import { dynoResults } from "@/lib/builds";
 
 export const metadata: Metadata = {
   title: "Dyno Results Gallery | Street PRO Garage",
   description:
     "Before and after dyno results from remote and rolling road tuning at Street PRO Garage.",
 };
-
-const placeholderSlots = [
-  "Honda D16 Turbo — 207WHP",
-  "Subaru WRX — 329Hp",
-  "Honda B18 Turbo",
-  "Honda R18 Turbo — 233WHP",
-  "K24 Turbo Build",
-  "Rolling Road Session",
-];
 
 export default function GalleryPage() {
   return (
@@ -28,23 +20,32 @@ export default function GalleryPage() {
             Dyno Results Gallery
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground-muted">
-            Before and after power graphs from real builds. This gallery is
-            ready to populate with your first tuning results.
+            Before and after power graphs from real builds we&rsquo;ve tuned.
           </p>
         </Container>
       </div>
 
       <Section>
         <Container>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {placeholderSlots.map((label) => (
-              <div
-                key={label}
-                className="flex aspect-[4/3] flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border-strong bg-surface text-foreground-subtle"
+          <div className="grid gap-6 sm:grid-cols-2">
+            {dynoResults.map((result) => (
+              <figure
+                key={result.src}
+                className="overflow-hidden rounded-xl border border-border bg-surface"
               >
-                <ChartLineUp size={36} aria-hidden />
-                <span className="text-xs">{label}</span>
-              </div>
+                <div className="relative aspect-[4/3]">
+                  <Image
+                    src={result.src}
+                    alt={result.alt}
+                    fill
+                    sizes="(min-width: 640px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                <figcaption className="border-t border-border px-4 py-3 text-sm font-medium">
+                  {result.label}
+                </figcaption>
+              </figure>
             ))}
           </div>
 

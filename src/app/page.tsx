@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   Wrench,
   Gauge,
@@ -11,7 +12,7 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
-import { PhotoTile } from "@/components/photo-tile";
+import { buildPhotos, dynoResults } from "@/lib/builds";
 
 const heroFeatures = [
   { icon: Gauge, label: "Remote Tuning" },
@@ -126,14 +127,34 @@ export default function Home() {
               </ul>
             </div>
 
-            {/* Photo mosaic — placeholders until real build photos are provided */}
-            <div className="grid grid-cols-3 auto-rows-[90px] gap-3 sm:auto-rows-[110px] lg:auto-rows-[120px]">
-              <PhotoTile label="Rolling Road Session" className="col-span-2 row-span-2" />
-              <PhotoTile label="Honda D16 Turbo" className="col-span-1 row-span-1" />
-              <PhotoTile label="Engine Bay Build" className="col-span-1 row-span-1" />
-              <PhotoTile label="Subaru WRX / STI" className="col-span-1 row-span-1" />
-              <PhotoTile label="Honda B18 Turbo" className="col-span-1 row-span-1" />
-              <PhotoTile label="K24 Turbo" className="col-span-1 row-span-1" />
+            {/* Photo mosaic — real builds */}
+            <div className="grid gap-3">
+              <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-border">
+                <Image
+                  src={buildPhotos[0].src}
+                  alt={buildPhotos[0].alt}
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 60vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                {buildPhotos.slice(1).map((photo) => (
+                  <div
+                    key={photo.src}
+                    className="relative aspect-square overflow-hidden rounded-xl border border-border"
+                  >
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      sizes="(min-width: 1024px) 20vw, 33vw"
+                      className="object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </Container>
@@ -250,14 +271,23 @@ export default function Home() {
           </div>
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {["Honda D16 Turbo — 207WHP", "Subaru WRX — 329Hp", "Rolling Road Session"].map((label) => (
-              <div
-                key={label}
-                className="flex aspect-[4/3] flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border-strong bg-surface text-foreground-subtle"
+            {dynoResults.slice(0, 3).map((result) => (
+              <Link
+                key={result.src}
+                href="/gallery"
+                className="group relative aspect-[4/3] overflow-hidden rounded-xl border border-border bg-surface"
               >
-                <ChartLineUp size={32} aria-hidden />
-                <span className="text-xs">{label}</span>
-              </div>
+                <Image
+                  src={result.src}
+                  alt={result.alt}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, 50vw"
+                  className="object-cover transition-transform group-hover:scale-105"
+                />
+                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 py-3 text-xs font-medium text-white">
+                  {result.label}
+                </span>
+              </Link>
             ))}
           </div>
         </Container>
