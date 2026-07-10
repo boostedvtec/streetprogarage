@@ -34,8 +34,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    // Reading localStorage must happen post-mount (it doesn't exist during
+    // SSR) — starting `lines` empty and syncing here avoids a hydration
+    // mismatch that a useState lazy initializer would cause instead.
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (raw) setLines(JSON.parse(raw));
     } catch {
       // ignore malformed storage

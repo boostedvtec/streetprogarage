@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
@@ -40,18 +40,23 @@ const tabs: { value: TuningType; label: string; icon: typeof Broadcast }[] = [
 function TuningPageContent() {
   const searchParams = useSearchParams();
   const initial = searchParams.get("type");
-  const [active, setActive] = useState<TuningType>(
-    initial === "road" || initial === "rolling-road" ? initial : "remote"
-  );
-  const [guideOpen, setGuideOpen] = useState(false);
-  const [hasSeenRemoteGuide, setHasSeenRemoteGuide] = useState(false);
+  const initialTab: TuningType =
+    initial === "road" || initial === "rolling-road" ? initial : "remote";
 
-  useEffect(() => {
-    if (active === "remote" && !hasSeenRemoteGuide) {
+  const [active, setActive] = useState<TuningType>(initialTab);
+  // Guide opens on the very first time "remote" is the active tab — whether
+  // that's the default on load, or a later click — so seed both from the
+  // same initial value instead of reacting to it in an effect.
+  const [guideOpen, setGuideOpen] = useState(initialTab === "remote");
+  const [hasSeenRemoteGuide, setHasSeenRemoteGuide] = useState(initialTab === "remote");
+
+  function selectTab(value: TuningType) {
+    setActive(value);
+    if (value === "remote" && !hasSeenRemoteGuide) {
       setGuideOpen(true);
       setHasSeenRemoteGuide(true);
     }
-  }, [active, hasSeenRemoteGuide]);
+  }
 
   return (
     <>
@@ -93,7 +98,7 @@ function TuningPageContent() {
                   type="button"
                   role="tab"
                   aria-selected={isActive}
-                  onClick={() => setActive(value)}
+                  onClick={() => selectTab(value)}
                   className={`flex min-h-12 cursor-pointer items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold transition-colors ${
                     isActive
                       ? "border-accent bg-accent-soft text-accent"
