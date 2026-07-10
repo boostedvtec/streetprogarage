@@ -102,11 +102,6 @@ export const tuningAddOns: AddOn[] = [
     price: { uk: 50, pk: null },
   },
   {
-    name: "Flex Fuel Tuning",
-    description: "Ethanol content sensor integration with live-adjusting fuel & timing tables.",
-    price: { uk: 150, pk: null },
-  },
-  {
     name: "Methanol Injection Tuning",
     description: "Progressive methanol injection mapping and safety failsafes.",
     price: { uk: 100, pk: null },
@@ -147,6 +142,13 @@ export const tuningAddOns: AddOn[] = [
 /** Shown wherever an "Ask for pricing" item appears. */
 export const variablePriceNote =
   "Installation pricing varies by vehicle and complexity — ask for details before placing an order.";
+
+export const FLEX_FUEL_LABEL = "Flex Fuel (Pump Gas + E85)";
+
+export const fuelTypeOptions = ["Pump Gas Premium", "E85", FLEX_FUEL_LABEL] as const;
+
+/** Only Flex Fuel carries a surcharge — Pump Gas and E85 are the same base tune price. */
+export const flexFuelSurcharge: RegionPrice = { uk: 150, pk: null };
 
 export type PreDynoTest = {
   name: string;
@@ -247,7 +249,7 @@ export const forcedInductionUplifts: ForcedInductionUplift[] = [
   {
     key: "stock",
     label: "Stock Internal — Turbo / Supercharged / Nitrous",
-    amount: { uk: 150, pk: null },
+    amount: { uk: 100, pk: null },
     description: "Factory-internal engine running a power adder.",
   },
   {

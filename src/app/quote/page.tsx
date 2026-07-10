@@ -6,7 +6,7 @@ import { ArrowLeft, ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/s
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { FieldWrap, TextInput, TextArea, CheckboxGroup, RadioGroup } from "@/components/form/fields";
-import { tuningAddOns, preDynoTests, rollingRoad, forcedInductionUplifts, variablePriceNote, dynoHoursGuidance } from "@/lib/site-config";
+import { tuningAddOns, preDynoTests, rollingRoad, forcedInductionUplifts, variablePriceNote, dynoHoursGuidance, fuelTypeOptions } from "@/lib/site-config";
 import { estimateQuote, type EcuType, type ServiceType, type EngineInternals } from "@/lib/quote";
 import { formatRegionPrice, formatResolvedAmount, resolveRegionPrice, dynoServiceLabel, type Region } from "@/lib/region";
 import { useRegion } from "@/components/region/region-context";
@@ -17,7 +17,6 @@ const ENGINE_INTERNALS_OPTIONS: { value: EngineInternals; label: string }[] = [
   { value: "stock", label: "Stock Internals" },
   { value: "built", label: "Built / Forged Internals" },
 ];
-const FUEL_TYPE_OPTIONS = ["Pump Gas Premium", "E85", "Flex Fuel (Pump Gas + E85)"] as const;
 const INJECTOR_STATUS_OPTIONS = ["New", "Used or not sure", "Used (flow tested in the past 6 months)"] as const;
 const YES_NO = ["Yes", "No"] as const;
 const WIDEBAND_OPTIONS = ["Yes", "No", "Yes, but I need help installing/integrating it"] as const;
@@ -67,7 +66,7 @@ type FormState = {
   transmission: string;
   chassisSuspension: string;
   wheelsTires: string;
-  vehicleApplication: string[];
+  vehicleApplication: string;
   goals: string;
   specialRequirement: string;
   serviceType: ServiceType;
@@ -105,7 +104,7 @@ const initialState: FormState = {
   transmission: "",
   chassisSuspension: "",
   wheelsTires: "",
-  vehicleApplication: [],
+  vehicleApplication: "",
   goals: "",
   specialRequirement: "",
   serviceType: "remote",
@@ -151,6 +150,7 @@ export default function QuotePage() {
     ecuType: form.ecuType,
     aspiration: form.aspiration,
     engineInternals: form.engineInternals,
+    fuelType: form.fuelType,
     addOns: form.addOns,
     preDyno: form.preDyno,
     rollingRoadHours: effectiveHours,
@@ -343,7 +343,7 @@ export default function QuotePage() {
               <FieldWrap label="Fuel Type" required>
                 <RadioGroup
                   name="fuelType"
-                  options={FUEL_TYPE_OPTIONS}
+                  options={fuelTypeOptions}
                   value={form.fuelType}
                   onChange={(v) => set("fuelType", v)}
                 />
@@ -397,10 +397,11 @@ export default function QuotePage() {
               <FieldWrap label="Wheels / Tires" required>
                 <TextArea value={form.wheelsTires} onChange={(v) => set("wheelsTires", v)} required />
               </FieldWrap>
-              <FieldWrap label="Vehicle Application" required hint="Select all that apply">
-                <CheckboxGroup
+              <FieldWrap label="Vehicle Application" required>
+                <RadioGroup
+                  name="vehicleApplication"
                   options={VEHICLE_APPLICATION_OPTIONS}
-                  values={form.vehicleApplication}
+                  value={form.vehicleApplication}
                   onChange={(v) => set("vehicleApplication", v)}
                 />
               </FieldWrap>

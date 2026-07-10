@@ -1,4 +1,4 @@
-import { tuningAddOns, preDynoTests, rollingRoad, naTunePackages, forcedInductionUplifts } from "./site-config";
+import { tuningAddOns, preDynoTests, rollingRoad, naTunePackages, forcedInductionUplifts, flexFuelSurcharge, FLEX_FUEL_LABEL } from "./site-config";
 import { resolveRegionPrice, formatResolvedAmount, dynoServiceLabel, type Region, type RegionPrice } from "./region";
 
 export type ServiceType = "remote" | "rolling-road" | "both";
@@ -11,6 +11,7 @@ export type QuoteInputs = {
   ecuType: EcuType;
   aspiration: string[];
   engineInternals: EngineInternals;
+  fuelType: string;
   addOns: string[];
   preDyno: string[];
   rollingRoadHours: number;
@@ -93,6 +94,14 @@ export function estimateQuote(input: QuoteInputs) {
         amount: rate === null ? null : hours * rate,
       });
     }
+  }
+
+  if (input.fuelType === FLEX_FUEL_LABEL) {
+    const amount = resolveRegionPrice(flexFuelSurcharge, region);
+    breakdown.push({
+      label: amount === null ? "Flex Fuel Tuning (ask for pricing)" : "Flex Fuel Tuning",
+      amount,
+    });
   }
 
   for (const addOnName of input.addOns) {
