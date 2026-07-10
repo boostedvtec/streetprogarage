@@ -15,13 +15,13 @@ export function Logo({ className, imgClassName }: LogoProps) {
       aria-label="Street Pro Garage home"
     >
       <Image
-        src="/images/Logo.jpeg"
+        src="/images/Logo.png"
         alt="Street Pro Garage"
-        width={1254}
-        height={1254}
+        width={1200}
+        height={389}
         priority
         className={clsx(
-          "w-auto shrink-0 rounded-md transition-transform group-hover:scale-105",
+          "w-auto shrink-0 transition-transform group-hover:scale-105",
           imgClassName ?? "h-14"
         )}
       />
