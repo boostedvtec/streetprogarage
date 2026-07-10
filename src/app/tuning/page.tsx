@@ -24,9 +24,11 @@ import {
   supportedEcus,
   tuningAddOns,
   naTunePackages,
+  forcedInductionUplifts,
   ecuBrandLogos,
   preDynoTests,
   rollingRoad,
+  variablePriceNote,
 } from "@/lib/site-config";
 
 type TuningType = "remote" | "road" | "rolling-road";
@@ -34,7 +36,7 @@ type TuningType = "remote" | "road" | "rolling-road";
 const tabs: { value: TuningType; label: string; icon: typeof Broadcast }[] = [
   { value: "remote", label: "Remote Tuning", icon: Broadcast },
   { value: "road", label: "Road Tuning", icon: RoadHorizon },
-  { value: "rolling-road", label: "Rolling Road Tuning", icon: ChartLineUp },
+  { value: "rolling-road", label: "Rolling Road Dyno Tune", icon: ChartLineUp },
 ];
 
 function TuningPageContent() {
@@ -141,20 +143,17 @@ function TuningPageContent() {
                   stable connection.
                 </p>
               </div>
-              <div className="rounded-xl border border-border bg-surface p-8">
-                <h2 className="font-display text-2xl">Pricing</h2>
+              <div className="rounded-xl border border-accent/30 bg-accent-soft p-8">
+                <h2 className="font-display text-2xl">
+                  {naTunePackages.remoteTune.label}
+                </h2>
+                <p className="font-display mt-2 text-4xl text-accent">
+                  &pound;{naTunePackages.remoteTune.price}
+                </p>
                 <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
-                  Live remote sessions are quoted individually based on your
-                  ECU, build and goals — submit your build list for an exact
-                  quote. Prefer a fixed price? See{" "}
-                  <button
-                    type="button"
-                    onClick={() => setActive("road")}
-                    className="cursor-pointer font-semibold text-accent underline"
-                  >
-                    Road Tuning
-                  </button>{" "}
-                  for confirmed NA pricing.
+                  {naTunePackages.remoteTune.description} Confirmed flat rate
+                  for naturally aspirated builds — forced induction builds add
+                  the power adder uplift below.
                 </p>
               </div>
             </div>
@@ -207,7 +206,7 @@ function TuningPageContent() {
                   <ChartLineUp size={26} weight="bold" aria-hidden />
                 </div>
                 <div className="flex-1">
-                  <h2 className="font-display text-3xl">Rolling Road Tuning</h2>
+                  <h2 className="font-display text-3xl">Rolling Road Dyno Tune</h2>
                   <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
                     Tune live on our in-house rolling road dyno in Manchester
                     with full datalogging and real-time adjustment.
@@ -225,13 +224,13 @@ function TuningPageContent() {
               <div className="mt-6 grid gap-6 sm:grid-cols-2">
                 <div className="rounded-xl border border-accent/30 bg-accent-soft p-8">
                   <h3 className="font-display text-2xl">
-                    {naTunePackages.rollingRoadTune.label}
+                    {naTunePackages.dynoTune.label}
                   </h3>
                   <p className="font-display mt-2 text-4xl text-accent">
-                    &pound;{naTunePackages.rollingRoadTune.price}
+                    &pound;{naTunePackages.dynoTune.price}
                   </p>
                   <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
-                    {naTunePackages.rollingRoadTune.description}
+                    {naTunePackages.dynoTune.description}
                   </p>
                 </div>
                 <div className="rounded-xl border border-border bg-surface p-8">
@@ -319,6 +318,39 @@ function TuningPageContent() {
           </Section>
         </>
       )}
+
+      {/* Shared: Forced induction pricing */}
+      <Section className="border-t border-border">
+        <Container>
+          <div className="max-w-2xl">
+            <Eyebrow>Power Adder Builds</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl">
+              Turbo, Supercharged &amp; Nitrous Pricing
+            </h2>
+            <p className="mt-4 text-foreground-muted leading-relaxed">
+              Added on top of the &pound;{naTunePackages.remoteTune.price} basic tune
+              price above — applies the same way across remote, road and
+              rolling road dyno tuning.
+            </p>
+          </div>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2">
+            {forcedInductionUplifts.map((uplift) => (
+              <div
+                key={uplift.key}
+                className="rounded-xl border border-border bg-surface p-8"
+              >
+                <h3 className="font-display text-xl">{uplift.label}</h3>
+                <p className="font-display mt-2 text-3xl text-accent">
+                  +&pound;{uplift.amount}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
+                  {uplift.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </Section>
 
       {/* Shared: Supported ECUs */}
       <Section className="border-y border-border bg-surface/50">
@@ -457,7 +489,7 @@ function TuningPageContent() {
                     <td className="px-6 py-4 font-semibold whitespace-nowrap">{addOn.name}</td>
                     <td className="px-6 py-4 text-foreground-muted">{addOn.description}</td>
                     <td className="px-6 py-4 font-semibold text-accent whitespace-nowrap">
-                      &pound;{addOn.priceFrom}
+                      {addOn.priceFrom === null ? "Ask for pricing" : `£${addOn.priceFrom}`}
                     </td>
                   </tr>
                 ))}
@@ -466,7 +498,7 @@ function TuningPageContent() {
           </div>
           <p className="mt-4 text-xs text-foreground-subtle">
             Add-on pricing is a ballpark estimate and confirmed exactly based on
-            your specific vehicle and ECU platform.
+            your specific vehicle and ECU platform. {variablePriceNote}
           </p>
         </Container>
       </Section>

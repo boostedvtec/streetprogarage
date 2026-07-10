@@ -87,7 +87,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           return {
             product,
             quantity: line.quantity,
-            lineTotal: product.price * line.quantity,
+            lineTotal: (product.price ?? 0) * line.quantity,
           };
         })
         .filter((l): l is { product: Product; quantity: number; lineTotal: number } => l !== null),

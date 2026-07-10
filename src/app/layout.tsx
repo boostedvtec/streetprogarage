@@ -19,7 +19,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Street PRO Garage | Remote ECU Tuning, Rolling Road & Performance Parts",
+  title: "Street PRO Garage | Remote ECU Tuning, Rolling Road Dyno Tuning & Performance Parts",
   description:
     "Street PRO Garage delivers custom-built remote ECU tuning worldwide, rolling road dyno tuning in Manchester UK, and performance parts sales, fitting and diagnostics.",
 };

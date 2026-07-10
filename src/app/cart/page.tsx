@@ -44,7 +44,7 @@ export default function CartPage() {
                           {product.name}
                         </Link>
                         <p className="text-sm text-foreground-muted">
-                          &pound;{product.price} each
+                          {product.price === null ? "Ask for pricing" : `£${product.price} each`}
                         </p>
                       </div>
                       <button

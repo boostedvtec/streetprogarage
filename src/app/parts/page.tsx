@@ -85,15 +85,24 @@ export default function PartsPage() {
                   </p>
                   <div className="mt-4 flex items-center justify-between">
                     <span className="font-display text-2xl">
-                      &pound;{product.price}
+                      {product.price === null ? "Ask for Pricing" : `£${product.price}`}
                     </span>
-                    <button
-                      type="button"
-                      onClick={() => addItem(product.slug)}
-                      className="cursor-pointer rounded-md bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent-hover"
-                    >
-                      Add to Cart
-                    </button>
+                    {product.price === null ? (
+                      <Link
+                        href="/contact"
+                        className="cursor-pointer rounded-md border border-accent px-4 py-2 text-sm font-semibold text-accent transition-colors hover:bg-accent-soft"
+                      >
+                        Enquire
+                      </Link>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => addItem(product.slug)}
+                        className="cursor-pointer rounded-md bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent-hover"
+                      >
+                        Add to Cart
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

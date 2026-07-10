@@ -2,7 +2,8 @@ export type Product = {
   slug: string;
   name: string;
   category: string;
-  price: number;
+  /** null = price varies — ask for details before ordering. */
+  price: number | null;
   description: string;
   fitting: boolean;
   compatibility: string;
@@ -84,13 +85,43 @@ export const products: Product[] = [
   },
   {
     slug: "wideband-afr-gauge",
-    name: "Wideband AFR Gauge",
+    name: "AEM Wideband AFR Gauge",
     category: "Engine Management",
-    price: 175,
+    price: 195,
     description:
-      "Digital wideband air/fuel ratio gauge with data output for logging — required for most tuning packages.",
+      "AEM digital wideband air/fuel ratio gauge with data output for logging — required for most tuning packages.",
     fitting: true,
     compatibility: "Universal",
+  },
+  {
+    slug: "honda-p28-socketed-ecu-refurbished",
+    name: "Honda P28 Socketed ECU (Refurbished, Bench Tested)",
+    category: "Engine Management",
+    price: 400,
+    description:
+      "Pre-socketed, bench-tested Honda P28 ECU, refurbished and ready to run — chip-swappable straight out of the box.",
+    fitting: true,
+    compatibility: "Honda OBD1 — confirm engine bay compatibility before ordering",
+  },
+  {
+    slug: "honda-obd1-base-map-chip",
+    name: "Honda OBD1 Base Map Chip",
+    category: "Engine Management",
+    price: 50,
+    description:
+      "Base map tuning chip for Honda OBD1 ECUs. Add your engine code (D-, B-, H- or F-series) in the order notes before purchase so we supply the correct base map.",
+    fitting: false,
+    compatibility: "Honda OBD1 D/B/H/F-series — confirm engine code before ordering",
+  },
+  {
+    slug: "ecumaster-det3-plus",
+    name: "EcuMaster DET3+",
+    category: "Engine Management",
+    price: null,
+    description:
+      "Standalone plug-in ECU — price varies by vehicle and kit. Ask for a quote for your specific application.",
+    fitting: true,
+    compatibility: "Model-specific plug-in loom — confirm your vehicle",
   },
   {
     slug: "aluminium-front-mount-intercooler",

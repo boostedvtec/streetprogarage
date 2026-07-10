@@ -16,7 +16,7 @@ import { buildPhotos, dynoResults } from "@/lib/builds";
 
 const heroFeatures = [
   { icon: Gauge, label: "ECU Tuning" },
-  { icon: ChartLineUp, label: "Rolling Road" },
+  { icon: ChartLineUp, label: "Rolling Road Dyno Tune" },
   { icon: Wrench, label: "Parts & Fitting" },
 ];
 
@@ -103,7 +103,7 @@ export default function Home() {
                   <ArrowRight size={20} weight="bold" aria-hidden />
                 </LinkButton>
                 <LinkButton href="/tuning?type=rolling-road" size="lg" variant="secondary">
-                  Book Rolling Road
+                  Book Rolling Road Dyno Tune
                 </LinkButton>
               </div>
               <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t border-border pt-6">

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { getProductBySlug, products } from "@/lib/products";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { ProductImagePlaceholder } from "@/components/product-tile";
+import { LinkButton } from "@/components/ui/button";
 import { ProductAddToCart } from "./add-to-cart";
 
 export function generateStaticParams() {
@@ -36,7 +37,7 @@ export default async function ProductPage(props: PageProps<"/parts/[slug]">) {
           <div>
             <h1 className="font-display text-4xl sm:text-5xl">{product.name}</h1>
             <p className="font-display mt-4 text-3xl text-accent">
-              &pound;{product.price}
+              {product.price === null ? "Ask for Pricing" : `£${product.price}`}
             </p>
             <p className="mt-6 text-foreground-muted leading-relaxed">
               {product.description}
@@ -56,7 +57,13 @@ export default async function ProductPage(props: PageProps<"/parts/[slug]">) {
               </div>
             </dl>
             <div className="mt-8">
-              <ProductAddToCart slug={product.slug} />
+              {product.price === null ? (
+                <LinkButton href="/contact" size="lg">
+                  Enquire for Pricing
+                </LinkButton>
+              ) : (
+                <ProductAddToCart slug={product.slug} />
+              )}
             </div>
           </div>
         </div>

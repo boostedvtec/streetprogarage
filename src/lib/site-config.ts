@@ -79,46 +79,71 @@ export const ecuBrandLogos: EcuBrandLogo[] = [
 export type AddOn = {
   name: string;
   description: string;
-  priceFrom: number;
+  /** null = price varies — ask for details before placing order. */
+  priceFrom: number | null;
 };
 
 export const tuningAddOns: AddOn[] = [
   {
     name: "Launch Control",
     description: "Custom launch RPM & anti-stall mapping for consistent starts.",
-    priceFrom: 60,
+    priceFrom: 50,
   },
   {
     name: "Anti-Lag System (ALS)",
     description: "Anti-lag mapping for turbocharged builds — reduces spool lag.",
-    priceFrom: 120,
+    priceFrom: 100,
   },
   {
     name: "Pops & Bangs / Overrun Crackle",
     description: "Exhaust overrun tune for pops, bangs and crackle on decel.",
-    priceFrom: 60,
+    priceFrom: 50,
   },
   {
     name: "Flex Fuel Tuning",
     description: "Ethanol content sensor integration with live-adjusting fuel & timing tables.",
-    priceFrom: 100,
+    priceFrom: 150,
   },
   {
-    name: "Methanol Injection Integration",
+    name: "Methanol Injection Tuning",
     description: "Progressive methanol injection mapping and safety failsafes.",
     priceFrom: 100,
   },
   {
     name: "Mechanical Cam Degree Optimisation",
     description: "Cam timing verification & degreeing to match the tune to actual mechanical setup.",
-    priceFrom: 80,
+    priceFrom: 100,
   },
   {
     name: "Extra Revision",
     description: "Additional tuning revision beyond what's included in your package.",
-    priceFrom: 40,
+    priceFrom: 50,
+  },
+  {
+    name: "ECU Installation",
+    description: "Fitting and setup of your standalone or piggyback ECU.",
+    priceFrom: null,
+  },
+  {
+    name: "ECU Custom Wiring",
+    description: "Custom harness build for your ECU installation.",
+    priceFrom: null,
+  },
+  {
+    name: "Additional Sensor for ECU",
+    description: "Wideband, knock, EGT and other sensor integration.",
+    priceFrom: null,
+  },
+  {
+    name: "Gauges Installation",
+    description: "Boost, AFR, oil, EGT and other gauge fitting.",
+    priceFrom: null,
   },
 ];
+
+/** Shown wherever an "Ask for pricing" item appears. */
+export const variablePriceNote =
+  "Installation pricing varies by vehicle and complexity — ask for details before placing an order.";
 
 export type PreDynoTest = {
   name: string;
@@ -130,12 +155,12 @@ export const preDynoTests: PreDynoTest[] = [
   {
     name: "Boost Leak Test",
     description: "Pressurised system check for leaks across the intake & charge pipe system.",
-    priceFrom: 30,
+    priceFrom: 50,
   },
   {
     name: "Compression Test",
     description: "Per-cylinder compression check to confirm engine health before tuning.",
-    priceFrom: 40,
+    priceFrom: 30,
   },
   {
     name: "Cylinder Leakdown Test",
@@ -145,12 +170,17 @@ export const preDynoTests: PreDynoTest[] = [
   {
     name: "Valve Lash Adjustment",
     description: "Valve clearance check & adjustment to manufacturer or performance spec.",
-    priceFrom: 60,
+    priceFrom: 75,
   },
   {
     name: "Spark Plug Gap Check & Set",
     description: "Verifies and sets plug gap to suit fuel type & boost level.",
-    priceFrom: 20,
+    priceFrom: 30,
+  },
+  {
+    name: "Injector Flow Test & Cleaning",
+    description: "Flow-bench test and ultrasonic cleaning to confirm injector health and a matched flow set.",
+    priceFrom: 100,
   },
 ];
 
@@ -159,23 +189,63 @@ export const rollingRoad = {
   currency: "£",
   location: "Manchester, UK",
   bookingPolicy:
-    "Rolling road sessions require pre-booking and a deposit. No-show bookings forfeit the booking fee — it is non-refundable.",
+    "Rolling road dyno tune sessions require pre-booking and a deposit. No-show bookings forfeit the booking fee — it is non-refundable.",
+};
+
+export type TunePackage = {
+  label: string;
+  price: number;
+  description: string;
 };
 
 /**
- * Fixed price packages for naturally aspirated (N/A) builds — the only
- * aspiration type with confirmed flat pricing so far.
+ * Fixed price packages for naturally aspirated (N/A) builds — flat across
+ * all three tuning methods.
  */
-export const naTunePackages = {
+export const naTunePackages: {
+  remoteTune: TunePackage;
+  roadTune: TunePackage;
+  dynoTune: TunePackage;
+} = {
+  remoteTune: {
+    label: "Remote Tune (NA)",
+    price: 300,
+    description: "A custom tune written live over a remote connection — no dyno time required.",
+  },
   roadTune: {
     label: "Road Tune (NA)",
     price: 300,
-    description:
-      "A custom tune written from road-driven datalogs — no dyno time required.",
+    description: "A custom tune written from road-driven datalogs — no dyno time required.",
   },
-  rollingRoadTune: {
-    label: "Rolling Road Tune (NA)",
-    price: 350,
-    description: "Flat rate for naturally aspirated builds — includes the £100 rolling road session.",
+  dynoTune: {
+    label: "Rolling Road Dyno Tune (NA)",
+    price: 300,
+    description: "Flat rate for naturally aspirated builds — includes your rolling road dyno session.",
   },
 };
+
+export type ForcedInductionUplift = {
+  key: "stock" | "built";
+  label: string;
+  amount: number;
+  description: string;
+};
+
+/**
+ * Added on top of the basic NA tune price for any build running a power
+ * adder — applies across remote, road and rolling road dyno tuning alike.
+ */
+export const forcedInductionUplifts: ForcedInductionUplift[] = [
+  {
+    key: "stock",
+    label: "Stock Internal — Turbo / Supercharged / Nitrous",
+    amount: 150,
+    description: "Factory-internal engine running a power adder.",
+  },
+  {
+    key: "built",
+    label: "Built Internal — Turbo / Supercharged / Nitrous",
+    amount: 250,
+    description: "Aftermarket/forged internals running a power adder.",
+  },
+];

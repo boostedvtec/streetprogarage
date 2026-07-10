@@ -6,10 +6,15 @@ import { ArrowLeft, ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/s
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { FieldWrap, TextInput, TextArea, CheckboxGroup, RadioGroup } from "@/components/form/fields";
-import { tuningAddOns, preDynoTests } from "@/lib/site-config";
-import { estimateQuote, type EcuType, type ServiceType } from "@/lib/quote";
+import { tuningAddOns, preDynoTests, variablePriceNote } from "@/lib/site-config";
+import { estimateQuote, type EcuType, type ServiceType, type EngineInternals } from "@/lib/quote";
 
 const ASPIRATION_OPTIONS = ["Turbo", "Nitrous", "Supercharged", "N/A"] as const;
+const FORCED_INDUCTION_ASPIRATIONS = ["Turbo", "Nitrous", "Supercharged"] as const;
+const ENGINE_INTERNALS_OPTIONS: { value: EngineInternals; label: string }[] = [
+  { value: "stock", label: "Stock Internals" },
+  { value: "built", label: "Built / Forged Internals" },
+];
 const FUEL_TYPE_OPTIONS = ["Pump Gas", "E85", "Flex Fuel", "E90", "Methanol", "Diesel"] as const;
 const INJECTOR_STATUS_OPTIONS = ["New", "Used or not sure", "Used (flow tested in the past 6 months)"] as const;
 const YES_NO = ["Yes", "No"] as const;
@@ -22,7 +27,7 @@ const VEHICLE_APPLICATION_OPTIONS = [
 ] as const;
 const SERVICE_TYPE_OPTIONS: { value: ServiceType; label: string }[] = [
   { value: "remote", label: "Remote Tuning" },
-  { value: "rolling-road", label: "Rolling Road (Manchester)" },
+  { value: "rolling-road", label: "Rolling Road Dyno Tune (Manchester)" },
   { value: "both", label: "Both" },
 ];
 const ECU_TYPE_OPTIONS: { value: EcuType; label: string }[] = [
@@ -42,6 +47,7 @@ type FormState = {
   bottomEnd: string;
   cylinderHead: string;
   aspiration: string[];
+  engineInternals: EngineInternals;
   powerAdder: string;
   ignition: string;
   sparkPlugs: string;
@@ -78,6 +84,7 @@ const initialState: FormState = {
   bottomEnd: "",
   cylinderHead: "",
   aspiration: [],
+  engineInternals: "stock",
   powerAdder: "",
   ignition: "",
   sparkPlugs: "",
@@ -117,6 +124,7 @@ export default function QuotePage() {
     serviceType: form.serviceType,
     ecuType: form.ecuType,
     aspiration: form.aspiration,
+    engineInternals: form.engineInternals,
     addOns: form.addOns,
     preDyno: form.preDyno,
     rollingRoadHours: form.rollingRoadHours,
@@ -240,6 +248,30 @@ export default function QuotePage() {
                   onChange={(v) => set("aspiration", v)}
                 />
               </FieldWrap>
+              {form.aspiration.some((a) =>
+                (FORCED_INDUCTION_ASPIRATIONS as readonly string[]).includes(a)
+              ) && (
+                <FieldWrap
+                  label="Engine Internals"
+                  required
+                  hint="Stock internal +£150, built/forged internal +£250 — added on top of the basic tune price"
+                >
+                  <RadioGroup
+                    name="engineInternals"
+                    options={ENGINE_INTERNALS_OPTIONS.map((o) => o.label)}
+                    value={
+                      ENGINE_INTERNALS_OPTIONS.find((o) => o.value === form.engineInternals)
+                        ?.label ?? ""
+                    }
+                    onChange={(label) =>
+                      set(
+                        "engineInternals",
+                        ENGINE_INTERNALS_OPTIONS.find((o) => o.label === label)?.value ?? "stock"
+                      )
+                    }
+                  />
+                </FieldWrap>
+              )}
               <FieldWrap
                 label="Power Adder Details"
                 hint="Wastegate size and spring, boost control, nitrous kit spec"
@@ -354,7 +386,7 @@ export default function QuotePage() {
               </FieldWrap>
 
               {form.serviceType !== "remote" && (
-                <FieldWrap label="Estimated Rolling Road Hours" hint="£100/hr — most tunes need 2-4 hours">
+                <FieldWrap label="Estimated Rolling Road Dyno Hours" hint="£100/hr — most tunes need 2-4 hours">
                   <TextInput
                     type="number"
                     value={String(form.rollingRoadHours)}
@@ -370,6 +402,9 @@ export default function QuotePage() {
                   onChange={(v) => set("addOns", v)}
                 />
               </FieldWrap>
+              {form.addOns.some(
+                (name) => tuningAddOns.find((a) => a.name === name)?.priceFrom === null
+              ) && <p className="-mt-2 text-xs text-foreground-subtle">{variablePriceNote}</p>}
 
               {form.serviceType !== "remote" && (
                 <FieldWrap label="Pre-Dyno Engine Health Checks" hint="Optional — additional charge">
@@ -389,7 +424,7 @@ export default function QuotePage() {
                   {quote.breakdown.map((b) => (
                     <li key={b.label} className="flex justify-between gap-4">
                       <span>{b.label}</span>
-                      <span>&pound;{b.amount}</span>
+                      <span>{b.amount === null ? "Ask for pricing" : `£${b.amount}`}</span>
                     </li>
                   ))}
                 </ul>

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { FieldWrap, TextInput, TextArea, RadioGroup } from "@/components/form/fields";
 import { siteConfig } from "@/lib/site-config";
 
-const TOPICS = ["General Enquiry", "Remote Tuning", "Rolling Road", "Parts"] as const;
+const TOPICS = ["General Enquiry", "Remote Tuning", "Rolling Road Dyno Tune", "Parts"] as const;
 
 export default function ContactPage() {
   const [name, setName] = useState("");

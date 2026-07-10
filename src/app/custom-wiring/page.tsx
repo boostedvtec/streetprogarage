@@ -126,7 +126,7 @@ export default function CustomWiringPage() {
         </Container>
       </Section>
 
-      {/* Honda P28 socketing */}
+      {/* Honda OBD1 ECU services */}
       <Section>
         <Container>
           <div className="grid gap-10 lg:grid-cols-[2fr_3fr] lg:items-start">
@@ -135,48 +135,79 @@ export default function CustomWiringPage() {
                 <Cpu size={26} weight="bold" aria-hidden />
               </div>
               <h2 className="font-display mt-6 text-3xl sm:text-4xl">
-                Honda P28 ECU Socketing
+                Honda OBD1 ECU Services
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-foreground-muted">
-                A classic Honda tuning mod, done properly and tested before
-                it leaves the workshop.
+                Classic Honda tuning mods, done properly and bench tested
+                before they leave the workshop.
               </p>
             </div>
-            <div className="rounded-xl border border-border bg-surface p-8">
-              <ul className="grid gap-4">
-                <li className="flex items-start gap-3">
-                  <CheckCircle size={20} weight="fill" className="mt-0.5 shrink-0 text-accent" aria-hidden />
-                  <span className="text-sm text-foreground-muted">
-                    The P28 (and other OBD1 Honda ECUs) ships with its tuning
-                    chip <strong className="text-foreground">soldered directly to the board</strong>.
-                    Socketing replaces that solder joint with a socket, so
-                    the chip can be swapped in seconds instead of desoldering
-                    and resoldering every revision.
+            <div className="grid gap-6">
+              <div className="rounded-xl border border-border bg-surface p-8">
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <h3 className="font-display text-xl">
+                    P28 ECU Socketing &amp; Bench Testing
+                  </h3>
+                  <span className="font-display shrink-0 text-2xl text-accent">
+                    &pound;100
                   </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle size={20} weight="fill" className="mt-0.5 shrink-0 text-accent" aria-hidden />
-                  <span className="text-sm text-foreground-muted">
-                    Essential for chip-based tuning workflows (Uberdata,
-                    Crome-style setups) where you&rsquo;re testing multiple
-                    maps or need a quick base map swap.
+                </div>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-foreground-subtle">
+                  Service only — send in or bring your own ECU
+                </p>
+                <ul className="mt-4 grid gap-3">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle size={20} weight="fill" className="mt-0.5 shrink-0 text-accent" aria-hidden />
+                    <span className="text-sm text-foreground-muted">
+                      The P28 (and other OBD1 Honda ECUs) ships with its
+                      tuning chip{" "}
+                      <strong className="text-foreground">soldered directly to the board</strong>.
+                      Socketing replaces that solder joint with a socket, so
+                      the chip can be swapped in seconds instead of
+                      desoldering and resoldering every revision.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle size={20} weight="fill" className="mt-0.5 shrink-0 text-accent" aria-hidden />
+                    <span className="text-sm text-foreground-muted">
+                      Essential for chip-based tuning workflows (Uberdata,
+                      Crome-style setups) where you&rsquo;re testing multiple
+                      maps or need a quick base map swap.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle size={20} weight="fill" className="mt-0.5 shrink-0 text-accent" aria-hidden />
+                    <span className="text-sm text-foreground-muted">
+                      Other OBD1 Honda ECUs (P72, P75, PR3, PW0, etc.) can be
+                      assessed for socketing too — send your ECU code through
+                      the build list form and we&rsquo;ll confirm.
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="rounded-xl border border-border bg-surface p-8">
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <h3 className="font-display text-xl">
+                    Hondata / Snake EMU / Cobra RTP Installation
+                  </h3>
+                  <span className="font-display shrink-0 text-2xl text-accent">
+                    &pound;100
                   </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle size={20} weight="fill" className="mt-0.5 shrink-0 text-accent" aria-hidden />
-                  <span className="text-sm text-foreground-muted">
-                    Other OBD1 Honda ECUs (P72, P75, PR3, PW0, etc.) can be
-                    assessed for socketing too — send your ECU code through
-                    the build list form and we&rsquo;ll confirm.
-                  </span>
-                </li>
-              </ul>
-              <div className="mt-6 flex items-start gap-2 rounded-lg border border-border-strong bg-surface-2 p-4 text-xs text-foreground-subtle">
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
+                  Installation and setup of Hondata, Snake EMU or Cobra RTP
+                  tuning hardware onto your Honda OBD1/OBD2 ECU.
+                </p>
+              </div>
+
+              <div className="flex items-start gap-2 rounded-lg border border-border-strong bg-surface-2 p-4 text-xs text-foreground-subtle">
                 <Info size={16} className="mt-0.5 shrink-0" aria-hidden />
                 <span>
-                  Socketing is a board-level modification — send your ECU in,
-                  or bring it with you to a rolling road session. Turnaround
-                  and pricing confirmed once we&rsquo;ve seen the ECU.
+                  Both are board-level services — send your ECU in, or bring
+                  it with you to a rolling road session. Additional repair or
+                  non-standard work beyond the standard service is quoted
+                  separately once we&rsquo;ve seen the ECU.
                 </span>
               </div>
             </div>

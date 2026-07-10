@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Warning, MagnifyingGlass } from "@phosphor-icons/react/dist/ssr";
+import { Warning, MagnifyingGlass, Scales } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { preDynoTests } from "@/lib/site-config";
@@ -44,6 +44,42 @@ export default function DeclarationPage() {
               resulting from undisclosed faults, inaccurate build information,
               or the mechanical condition of components not inspected by us
               directly.
+            </p>
+          </div>
+
+          <div className="mt-8 rounded-xl border border-accent/30 bg-accent-soft p-8">
+            <div className="flex items-center gap-3">
+              <Scales size={26} weight="fill" className="shrink-0 text-accent" aria-hidden />
+              <h2 className="font-display text-2xl">Track Use Only &amp; Road Legality</h2>
+            </div>
+            <p className="mt-4 leading-relaxed text-foreground">
+              Certain tuning options and modifications we offer — including
+              but not limited to <strong>anti-lag systems (ALS)</strong>,{" "}
+              <strong>pops &amp; bangs / overrun tuning</strong>, de-cat
+              downpipes, and race-fuel or extreme performance calibrations —
+              are intended for <strong>closed-course, track, or private land
+              use only</strong>. These modifications may not comply with road
+              traffic law, noise regulations, or emissions standards.
+            </p>
+            <p className="mt-4 leading-relaxed text-foreground-muted">
+              In the <strong className="text-foreground">UK</strong>, this
+              includes (but is not limited to) the Road Vehicles
+              (Construction and Use) Regulations 1986, MOT emissions and
+              noise testing requirements, and the Road Traffic Act. Legal
+              requirements vary significantly by country, state and region —
+              it is the vehicle owner&rsquo;s sole responsibility to check and
+              comply with local road-legality, emissions, and noise laws
+              before using a vehicle with these modifications on public
+              roads, whether in the UK or elsewhere.
+            </p>
+            <p className="mt-4 leading-relaxed text-foreground-muted">
+              Street PRO Garage accepts no liability for fines, prosecution,
+              MOT/inspection failure, insurance issues, or any other
+              consequence arising from road use of track-only modifications.
+              This information is provided for general guidance only and
+              does not constitute legal advice — consult your local
+              authority or a qualified professional if you are unsure
+              whether a modification is road legal in your area.
             </p>
           </div>
 
