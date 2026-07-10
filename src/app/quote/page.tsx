@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { FieldWrap, TextInput, TextArea, CheckboxGroup, RadioGroup } from "@/components/form/fields";
 import { tuningAddOns, preDynoTests, rollingRoad, forcedInductionUplifts, variablePriceNote } from "@/lib/site-config";
 import { estimateQuote, type EcuType, type ServiceType, type EngineInternals } from "@/lib/quote";
-import { formatRegionPrice, formatResolvedAmount, resolveRegionPrice } from "@/lib/region";
+import { formatRegionPrice, formatResolvedAmount, resolveRegionPrice, dynoServiceLabel, type Region } from "@/lib/region";
 import { useRegion } from "@/components/region/region-context";
 
 const ASPIRATION_OPTIONS = ["Turbo", "Nitrous", "Supercharged", "N/A"] as const;
@@ -27,10 +27,10 @@ const VEHICLE_APPLICATION_OPTIONS = [
   "Daily Driver / occasional track use",
   "Extreme rally conditions",
 ] as const;
-function getServiceTypeOptions(city: string): { value: ServiceType; label: string }[] {
+function getServiceTypeOptions(region: Region, city: string): { value: ServiceType; label: string }[] {
   return [
     { value: "remote", label: "Remote Tuning" },
-    { value: "rolling-road", label: `Rolling Road Dyno Tune (${city})` },
+    { value: "rolling-road", label: `${dynoServiceLabel(region)} (${city})` },
     { value: "both", label: "Both" },
   ];
 }
@@ -125,7 +125,7 @@ export default function QuotePage() {
   const set = <K extends keyof FormState>(key: K, value: FormState[K]) =>
     setForm((prev) => ({ ...prev, [key]: value }));
 
-  const serviceTypeOptions = getServiceTypeOptions(data.city);
+  const serviceTypeOptions = getServiceTypeOptions(region, data.city);
   const stockUplift = forcedInductionUplifts.find((u) => u.key === "stock")?.amount ?? {
     uk: null,
     pk: null,
@@ -403,7 +403,7 @@ export default function QuotePage() {
 
               {form.serviceType !== "remote" && (
                 <FieldWrap
-                  label="Estimated Rolling Road Dyno Hours"
+                  label={`Estimated ${dynoServiceLabel(region)} Hours`}
                   hint={
                     resolveRegionPrice(rollingRoad.ratePerHour, region) === null
                       ? "Ask for pricing — most tunes need 2-4 hours"

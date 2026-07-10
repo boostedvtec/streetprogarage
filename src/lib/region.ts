@@ -94,3 +94,8 @@ export function formatResolvedAmount(amount: number | null, region: Region): str
 export function formatRegionPrice(price: RegionPrice, region: Region): string {
   return formatResolvedAmount(resolveRegionPrice(price, region), region);
 }
+
+/** "Rolling Road Dyno Tune" everywhere in the UK, just "Dyno Tune" in Pakistan. */
+export function dynoServiceLabel(region: Region): string {
+  return region === "pk" ? "Dyno Tune" : "Rolling Road Dyno Tune";
+}

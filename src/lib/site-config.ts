@@ -187,7 +187,7 @@ export const preDynoTests: PreDynoTest[] = [
 ];
 
 export const rollingRoad = {
-  ratePerHour: { uk: 100, pk: null } as RegionPrice,
+  ratePerHour: { uk: 100, pk: 15000 } as RegionPrice,
   currency: "£",
   location: "Manchester, UK",
   bookingPolicy:
@@ -222,7 +222,7 @@ export const naTunePackages: {
   dynoTune: {
     label: "Rolling Road Dyno Tune (NA)",
     price: { uk: 300, pk: 75000 },
-    description: "Flat rate for naturally aspirated builds — includes your rolling road dyno session.",
+    description: "Flat rate for naturally aspirated builds — includes your dyno session.",
   },
 };
 

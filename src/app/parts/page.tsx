@@ -28,9 +28,9 @@ export default function PartsPage() {
           <h1 className="font-display mt-6 text-4xl">Parts Shop Not Available Here</h1>
           <p className="mt-4 text-foreground-muted">
             Our parts shop currently serves UK customers only. In{" "}
-            {data.country}, we offer remote tuning, rolling road dyno tuning,
-            custom wiring and ECU installation, and engine swaps/builds at
-            our {data.city} workshop.
+            {data.country}, we offer remote tuning, dyno tuning, custom
+            wiring and ECU installation, and engine swaps/builds at our{" "}
+            {data.city} workshop.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <LinkButton href="/tuning" size="lg">

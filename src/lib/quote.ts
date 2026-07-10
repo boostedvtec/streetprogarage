@@ -1,5 +1,5 @@
 import { tuningAddOns, preDynoTests, rollingRoad, naTunePackages, forcedInductionUplifts } from "./site-config";
-import { resolveRegionPrice, type Region, type RegionPrice } from "./region";
+import { resolveRegionPrice, dynoServiceLabel, type Region, type RegionPrice } from "./region";
 
 export type ServiceType = "remote" | "rolling-road" | "both";
 export type EcuType = "stock" | "standalone" | "unsure";
@@ -47,7 +47,7 @@ export function estimateQuote(input: QuoteInputs) {
       input.serviceType === "remote"
         ? `Remote Tune${naSuffix}`
         : input.serviceType === "rolling-road"
-        ? `Rolling Road Dyno Tune${naSuffix} (incl. dyno session)`
+        ? `${dynoServiceLabel(region)}${naSuffix} (incl. dyno session)`
         : `Road Tune${naSuffix}`;
     breakdown.push({
       label: baseLabel,
@@ -74,11 +74,9 @@ export function estimateQuote(input: QuoteInputs) {
     if (input.serviceType !== "remote") {
       const hours = Math.max(1, input.rollingRoadHours || 2);
       const rate = resolveRegionPrice(rollingRoad.ratePerHour, region);
+      const dynoSessionLabel = `${dynoServiceLabel(region)} session`;
       breakdown.push({
-        label:
-          rate === null
-            ? "Rolling road dyno tune session"
-            : `Rolling road dyno tune session (${hours}hr)`,
+        label: rate === null ? dynoSessionLabel : `${dynoSessionLabel} (${hours}hr)`,
         amount: rate === null ? null : hours * rate,
       });
     }

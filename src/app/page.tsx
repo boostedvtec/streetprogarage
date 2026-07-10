@@ -17,12 +17,12 @@ import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { buildPhotos, dynoResults } from "@/lib/builds";
 import { useRegion } from "@/components/region/region-context";
-import type { RegionData } from "@/lib/region";
+import { dynoServiceLabel, type RegionData } from "@/lib/region";
 
-function getHeroFeatures(services: RegionData["services"]) {
+function getHeroFeatures(region: RegionData["value"], services: RegionData["services"]) {
   return [
     { icon: Gauge, label: "ECU Tuning" },
-    { icon: ChartLineUp, label: "Rolling Road Dyno Tune" },
+    { icon: ChartLineUp, label: dynoServiceLabel(region) },
     services.parts
       ? { icon: Wrench, label: "Parts & Fitting" }
       : { icon: Engine, label: "Engine Swaps" },
@@ -34,7 +34,7 @@ function getServices(regionData: RegionData) {
     {
       icon: Gauge,
       title: "ECU Tuning",
-      description: `Custom-built tunes from scratch — remote, road-logged, or live on our ${regionData.city} rolling road. No cookie-cutter stage kits, ever.`,
+      description: `Custom-built tunes from scratch — remote, road-logged, or live on our ${regionData.city} dyno. No cookie-cutter stage kits, ever.`,
       href: "/tuning",
       cta: "Explore Tuning",
     },
@@ -70,33 +70,35 @@ function getServices(regionData: RegionData) {
   return items;
 }
 
-const processSteps = [
-  {
-    title: "Submit Your Build",
-    description:
-      "Fill in the Build List form with your vehicle, engine, mods and goals — we review every detail before quoting.",
-  },
-  {
-    title: "Get a Ballpark Quote",
-    description:
-      "Because every tune is custom-written, pricing depends on your ECU and build. You'll get an instant estimate, confirmed exactly after review.",
-  },
-  {
-    title: "Log & Tune",
-    description:
-      "Remote sessions use live datalogging and remote access; rolling road sessions are tuned live on the dyno in Manchester.",
-  },
-  {
-    title: "Revise & Deliver",
-    description:
-      "We fine-tune based on real-world driving or dyno results, with revisions available as an add-on if you need further adjustment.",
-  },
-];
+function getProcessSteps(city: string) {
+  return [
+    {
+      title: "Submit Your Build",
+      description:
+        "Fill in the Build List form with your vehicle, engine, mods and goals — we review every detail before quoting.",
+    },
+    {
+      title: "Get a Ballpark Quote",
+      description:
+        "Because every tune is custom-written, pricing depends on your ECU and build. You'll get an instant estimate, confirmed exactly after review.",
+    },
+    {
+      title: "Log & Tune",
+      description: `Remote sessions use live datalogging and remote access; dyno sessions are tuned live in ${city}.`,
+    },
+    {
+      title: "Revise & Deliver",
+      description:
+        "We fine-tune based on real-world driving or dyno results, with revisions available as an add-on if you need further adjustment.",
+    },
+  ];
+}
 
 export default function Home() {
-  const { data } = useRegion();
-  const heroFeatures = getHeroFeatures(data.services);
+  const { data, region } = useRegion();
+  const heroFeatures = getHeroFeatures(region, data.services);
   const services = getServices(data);
+  const processSteps = getProcessSteps(data.city);
   const trustPoints = [
     "Every tune written from scratch — no generic stage maps",
     "Stock ECU (HP Tuners) and standalone ECU platforms supported",
@@ -120,7 +122,7 @@ export default function Home() {
               </h1>
               <p className="mt-6 max-w-md text-lg leading-relaxed text-foreground-muted">
                 Every tune written from scratch — remote ECU tuning delivered
-                globally, rolling road dyno sessions in {data.city}, and{" "}
+                globally, dyno sessions in {data.city}, and{" "}
                 {data.services.parts
                   ? "performance parts sales, fitting & diagnostics."
                   : "custom wiring, ECU installation & engine build services."}
@@ -131,7 +133,7 @@ export default function Home() {
                   <ArrowRight size={20} weight="bold" aria-hidden />
                 </LinkButton>
                 <LinkButton href="/tuning?type=rolling-road" size="lg" variant="secondary">
-                  Book Rolling Road Dyno Tune
+                  Book {dynoServiceLabel(region)}
                 </LinkButton>
               </div>
               <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t border-border pt-6">

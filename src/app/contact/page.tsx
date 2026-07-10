@@ -7,17 +7,18 @@ import { Button } from "@/components/ui/button";
 import { FieldWrap, TextInput, TextArea, RadioGroup } from "@/components/form/fields";
 import { siteConfig } from "@/lib/site-config";
 import { useRegion } from "@/components/region/region-context";
+import { dynoServiceLabel, type Region } from "@/lib/region";
 
-function getTopics(services: { parts: boolean; engineSwaps: boolean }): string[] {
-  const topics = ["General Enquiry", "Remote Tuning", "Rolling Road Dyno Tune"];
+function getTopics(region: Region, services: { parts: boolean; engineSwaps: boolean }): string[] {
+  const topics = ["General Enquiry", "Remote Tuning", dynoServiceLabel(region)];
   if (services.parts) topics.push("Parts");
   if (services.engineSwaps) topics.push("Engine Swaps");
   return topics;
 }
 
 export default function ContactPage() {
-  const { data } = useRegion();
-  const topics = useMemo(() => getTopics(data.services), [data.services]);
+  const { region, data } = useRegion();
+  const topics = useMemo(() => getTopics(region, data.services), [region, data.services]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -51,7 +52,7 @@ export default function ContactPage() {
           <Eyebrow>Get In Touch</Eyebrow>
           <h1 className="font-display mt-4 text-5xl sm:text-6xl">Contact</h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground-muted">
-            Questions about tuning, parts, or booking a rolling road session?
+            Questions about tuning, parts, or booking a dyno session?
             Reach out and we&rsquo;ll get back to you.
           </p>
         </Container>

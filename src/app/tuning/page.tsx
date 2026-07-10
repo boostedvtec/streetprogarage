@@ -32,18 +32,21 @@ import {
 } from "@/lib/site-config";
 import { useRegion } from "@/components/region/region-context";
 import { PriceTag } from "@/components/region/price-tag";
-import { resolveRegionPrice } from "@/lib/region";
+import { resolveRegionPrice, dynoServiceLabel, type Region } from "@/lib/region";
 
 type TuningType = "remote" | "road" | "rolling-road";
 
-const tabs: { value: TuningType; label: string; icon: typeof Broadcast }[] = [
-  { value: "remote", label: "Remote Tuning", icon: Broadcast },
-  { value: "road", label: "Road Tuning", icon: RoadHorizon },
-  { value: "rolling-road", label: "Rolling Road Dyno Tune", icon: ChartLineUp },
-];
+function getTabs(region: Region): { value: TuningType; label: string; icon: typeof Broadcast }[] {
+  return [
+    { value: "remote", label: "Remote Tuning", icon: Broadcast },
+    { value: "road", label: "Road Tuning", icon: RoadHorizon },
+    { value: "rolling-road", label: dynoServiceLabel(region), icon: ChartLineUp },
+  ];
+}
 
 function TuningPageContent() {
   const { data, region } = useRegion();
+  const tabs = getTabs(region);
   const searchParams = useSearchParams();
   const initial = searchParams.get("type");
   const initialTab: TuningType =
@@ -210,10 +213,10 @@ function TuningPageContent() {
                   <ChartLineUp size={26} weight="bold" aria-hidden />
                 </div>
                 <div className="flex-1">
-                  <h2 className="font-display text-3xl">Rolling Road Dyno Tune</h2>
+                  <h2 className="font-display text-3xl">{dynoServiceLabel(region)}</h2>
                   <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
-                    Tune live on our in-house rolling road dyno in Manchester
-                    with full datalogging and real-time adjustment.
+                    Tune live on our in-house dyno in {data.city} with full
+                    datalogging and real-time adjustment.
                   </p>
                 </div>
                 <span className="font-display text-3xl text-accent">
@@ -229,7 +232,7 @@ function TuningPageContent() {
               <div className="mt-6 grid gap-6 sm:grid-cols-2">
                 <div className="rounded-xl border border-accent/30 bg-accent-soft p-8">
                   <h3 className="font-display text-2xl">
-                    {naTunePackages.dynoTune.label}
+                    {dynoServiceLabel(region)} (NA)
                   </h3>
                   <p className="font-display mt-2 text-4xl text-accent">
                     <PriceTag price={naTunePackages.dynoTune.price} />
@@ -334,8 +337,8 @@ function TuningPageContent() {
             </h2>
             <p className="mt-4 text-foreground-muted leading-relaxed">
               Added on top of the <PriceTag price={naTunePackages.remoteTune.price} /> basic tune
-              price above — applies the same way across remote, road and
-              rolling road dyno tuning.
+              price above — applies the same way across remote, road and{" "}
+              {dynoServiceLabel(region).toLowerCase()} tuning.
             </p>
           </div>
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
