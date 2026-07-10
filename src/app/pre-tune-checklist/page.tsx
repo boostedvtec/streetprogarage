@@ -96,7 +96,7 @@ export default function PreTuneChecklistPage() {
                   className="rounded-md border border-border-strong bg-surface-2 px-4 py-2 text-sm text-foreground-muted"
                 >
                   {test.name}{" "}
-                  <span className="text-accent">from <PriceTag amount={test.priceFrom} /></span>
+                  <span className="text-accent">from <PriceTag price={test.price} /></span>
                 </li>
               ))}
             </ul>

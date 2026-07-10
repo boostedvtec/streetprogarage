@@ -1,9 +1,9 @@
 "use client";
 
-import { formatPrice } from "@/lib/region";
+import { formatRegionPrice, type RegionPrice } from "@/lib/region";
 import { useRegion } from "@/components/region/region-context";
 
-export function PriceTag({ amount }: { amount: number | null }) {
+export function PriceTag({ price }: { price: RegionPrice }) {
   const { region } = useRegion();
-  return <>{formatPrice(amount, region)}</>;
+  return <>{formatRegionPrice(price, region)}</>;
 }

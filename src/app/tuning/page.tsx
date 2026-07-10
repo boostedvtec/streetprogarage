@@ -32,6 +32,7 @@ import {
 } from "@/lib/site-config";
 import { useRegion } from "@/components/region/region-context";
 import { PriceTag } from "@/components/region/price-tag";
+import { resolveRegionPrice } from "@/lib/region";
 
 type TuningType = "remote" | "road" | "rolling-road";
 
@@ -42,7 +43,7 @@ const tabs: { value: TuningType; label: string; icon: typeof Broadcast }[] = [
 ];
 
 function TuningPageContent() {
-  const { data } = useRegion();
+  const { data, region } = useRegion();
   const searchParams = useSearchParams();
   const initial = searchParams.get("type");
   const initialTab: TuningType =
@@ -151,7 +152,7 @@ function TuningPageContent() {
                   {naTunePackages.remoteTune.label}
                 </h2>
                 <p className="font-display mt-2 text-4xl text-accent">
-                  <PriceTag amount={naTunePackages.remoteTune.price} />
+                  <PriceTag price={naTunePackages.remoteTune.price} />
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
                   {naTunePackages.remoteTune.description} Confirmed flat rate
@@ -186,7 +187,7 @@ function TuningPageContent() {
                   {naTunePackages.roadTune.label}
                 </h2>
                 <p className="font-display mt-2 text-4xl text-accent">
-                  <PriceTag amount={naTunePackages.roadTune.price} />
+                  <PriceTag price={naTunePackages.roadTune.price} />
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
                   {naTunePackages.roadTune.description} Confirmed flat rate for
@@ -216,10 +217,12 @@ function TuningPageContent() {
                   </p>
                 </div>
                 <span className="font-display text-3xl text-accent">
-                  <PriceTag amount={rollingRoad.ratePerHour} />
-                  <span className="ml-1 text-sm text-foreground-muted font-body font-normal align-middle">
-                    /hour
-                  </span>
+                  <PriceTag price={rollingRoad.ratePerHour} />
+                  {resolveRegionPrice(rollingRoad.ratePerHour, region) !== null && (
+                    <span className="ml-1 text-sm text-foreground-muted font-body font-normal align-middle">
+                      /hour
+                    </span>
+                  )}
                 </span>
               </div>
 
@@ -229,7 +232,7 @@ function TuningPageContent() {
                     {naTunePackages.dynoTune.label}
                   </h3>
                   <p className="font-display mt-2 text-4xl text-accent">
-                    <PriceTag amount={naTunePackages.dynoTune.price} />
+                    <PriceTag price={naTunePackages.dynoTune.price} />
                   </p>
                   <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
                     {naTunePackages.dynoTune.description}
@@ -285,7 +288,7 @@ function TuningPageContent() {
                       </div>
                     </div>
                     <span className="shrink-0 font-display text-xl text-accent">
-                      <PriceTag amount={test.priceFrom} />
+                      <PriceTag price={test.price} />
                     </span>
                   </div>
                 ))}
@@ -330,7 +333,7 @@ function TuningPageContent() {
               Turbo, Supercharged &amp; Nitrous Pricing
             </h2>
             <p className="mt-4 text-foreground-muted leading-relaxed">
-              Added on top of the <PriceTag amount={naTunePackages.remoteTune.price} /> basic tune
+              Added on top of the <PriceTag price={naTunePackages.remoteTune.price} /> basic tune
               price above — applies the same way across remote, road and
               rolling road dyno tuning.
             </p>
@@ -343,7 +346,7 @@ function TuningPageContent() {
               >
                 <h3 className="font-display text-xl">{uplift.label}</h3>
                 <p className="font-display mt-2 text-3xl text-accent">
-                  +<PriceTag amount={uplift.amount} />
+                  +<PriceTag price={uplift.amount} />
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
                   {uplift.description}
@@ -491,7 +494,7 @@ function TuningPageContent() {
                     <td className="px-6 py-4 font-semibold whitespace-nowrap">{addOn.name}</td>
                     <td className="px-6 py-4 text-foreground-muted">{addOn.description}</td>
                     <td className="px-6 py-4 font-semibold text-accent whitespace-nowrap">
-                      <PriceTag amount={addOn.priceFrom} />
+                      <PriceTag price={addOn.price} />
                     </td>
                   </tr>
                 ))}

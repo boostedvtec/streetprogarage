@@ -1,10 +1,12 @@
 import { tuningAddOns, preDynoTests, rollingRoad, naTunePackages, forcedInductionUplifts } from "./site-config";
+import { resolveRegionPrice, type Region, type RegionPrice } from "./region";
 
 export type ServiceType = "remote" | "rolling-road" | "both";
 export type EcuType = "stock" | "standalone" | "unsure";
 export type EngineInternals = "stock" | "built";
 
 export type QuoteInputs = {
+  region: Region;
   serviceType: ServiceType;
   ecuType: EcuType;
   aspiration: string[];
@@ -17,16 +19,18 @@ export type QuoteInputs = {
 /**
  * Ballpark base tuning fee used only when the aspiration question hasn't
  * been answered yet — as soon as N/A or a power adder is selected, the flat
- * confirmed pricing below takes over.
+ * confirmed pricing below takes over. No Pakistan figures given for this
+ * placeholder estimate, so it falls back to "ask for pricing" there.
  */
-const BASE_FEES: Record<EcuType, number> = {
-  stock: 250,
-  standalone: 380,
-  unsure: 300,
+const BASE_FEES: Record<EcuType, RegionPrice> = {
+  stock: { uk: 250, pk: null },
+  standalone: { uk: 380, pk: null },
+  unsure: { uk: 300, pk: null },
 };
 
 export function estimateQuote(input: QuoteInputs) {
   const breakdown: { label: string; amount: number | null }[] = [];
+  const region = input.region;
 
   const isForcedInduction = input.aspiration.some((a) =>
     ["Turbo", "Nitrous", "Supercharged"].includes(a)
@@ -45,25 +49,37 @@ export function estimateQuote(input: QuoteInputs) {
         : input.serviceType === "rolling-road"
         ? `Rolling Road Dyno Tune${naSuffix} (incl. dyno session)`
         : `Road Tune${naSuffix}`;
-    breakdown.push({ label: baseLabel, amount: naTunePackages.remoteTune.price });
+    breakdown.push({
+      label: baseLabel,
+      amount: resolveRegionPrice(naTunePackages.remoteTune.price, region),
+    });
 
     if (isForcedInduction) {
       const uplift =
         forcedInductionUplifts.find((u) => u.key === input.engineInternals) ??
         forcedInductionUplifts[0];
-      breakdown.push({ label: uplift.label, amount: uplift.amount });
+      breakdown.push({
+        label: uplift.label,
+        amount: resolveRegionPrice(uplift.amount, region),
+      });
     }
   } else {
     if (input.serviceType !== "rolling-road") {
-      const base = BASE_FEES[input.ecuType];
-      breakdown.push({ label: "Custom tune (base, ballpark)", amount: base });
+      breakdown.push({
+        label: "Custom tune (base, ballpark)",
+        amount: resolveRegionPrice(BASE_FEES[input.ecuType], region),
+      });
     }
 
     if (input.serviceType !== "remote") {
       const hours = Math.max(1, input.rollingRoadHours || 2);
+      const rate = resolveRegionPrice(rollingRoad.ratePerHour, region);
       breakdown.push({
-        label: `Rolling road dyno tune session (${hours}hr @ £${rollingRoad.ratePerHour}/hr)`,
-        amount: hours * rollingRoad.ratePerHour,
+        label:
+          rate === null
+            ? "Rolling road dyno tune session"
+            : `Rolling road dyno tune session (${hours}hr)`,
+        amount: rate === null ? null : hours * rate,
       });
     }
   }
@@ -71,16 +87,23 @@ export function estimateQuote(input: QuoteInputs) {
   for (const addOnName of input.addOns) {
     const addOn = tuningAddOns.find((a) => a.name === addOnName);
     if (addOn) {
+      const amount = resolveRegionPrice(addOn.price, region);
       breakdown.push({
-        label: addOn.priceFrom === null ? `${addOn.name} (ask for pricing)` : addOn.name,
-        amount: addOn.priceFrom,
+        label: amount === null ? `${addOn.name} (ask for pricing)` : addOn.name,
+        amount,
       });
     }
   }
 
   for (const testName of input.preDyno) {
     const test = preDynoTests.find((t) => t.name === testName);
-    if (test) breakdown.push({ label: test.name, amount: test.priceFrom });
+    if (test) {
+      const amount = resolveRegionPrice(test.price, region);
+      breakdown.push({
+        label: amount === null ? `${test.name} (ask for pricing)` : test.name,
+        amount,
+      });
+    }
   }
 
   const low = breakdown.reduce((sum, b) => sum + (b.amount ?? 0), 0);

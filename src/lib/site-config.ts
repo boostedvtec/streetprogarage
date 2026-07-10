@@ -1,3 +1,5 @@
+import type { RegionPrice } from "./region";
+
 export const siteConfig = {
   name: "Street PRO Garage",
   shortName: "SPG",
@@ -80,65 +82,64 @@ export const ecuBrandLogos: EcuBrandLogo[] = [
 export type AddOn = {
   name: string;
   description: string;
-  /** null = price varies — ask for details before placing order. */
-  priceFrom: number | null;
+  price: RegionPrice;
 };
 
 export const tuningAddOns: AddOn[] = [
   {
     name: "Launch Control",
     description: "Custom launch RPM & anti-stall mapping for consistent starts.",
-    priceFrom: 50,
+    price: { uk: 50, pk: 10000 },
   },
   {
     name: "Anti-Lag System (ALS)",
     description: "Anti-lag mapping for turbocharged builds — reduces spool lag.",
-    priceFrom: 100,
+    price: { uk: 100, pk: 10000 },
   },
   {
     name: "Pops & Bangs / Overrun Crackle",
     description: "Exhaust overrun tune for pops, bangs and crackle on decel.",
-    priceFrom: 50,
+    price: { uk: 50, pk: null },
   },
   {
     name: "Flex Fuel Tuning",
     description: "Ethanol content sensor integration with live-adjusting fuel & timing tables.",
-    priceFrom: 150,
+    price: { uk: 150, pk: 20000 },
   },
   {
     name: "Methanol Injection Tuning",
     description: "Progressive methanol injection mapping and safety failsafes.",
-    priceFrom: 100,
+    price: { uk: 100, pk: 10000 },
   },
   {
     name: "Mechanical Cam Degree Optimisation",
     description: "Cam timing verification & degreeing to match the tune to actual mechanical setup.",
-    priceFrom: 100,
+    price: { uk: 100, pk: null },
   },
   {
     name: "Extra Revision",
     description: "Additional tuning revision beyond what's included in your package.",
-    priceFrom: 50,
+    price: { uk: 50, pk: null },
   },
   {
     name: "ECU Installation",
     description: "Fitting and setup of your standalone or piggyback ECU.",
-    priceFrom: null,
+    price: { uk: null, pk: null },
   },
   {
     name: "ECU Custom Wiring",
     description: "Custom harness build for your ECU installation.",
-    priceFrom: null,
+    price: { uk: null, pk: null },
   },
   {
     name: "Additional Sensor for ECU",
     description: "Wideband, knock, EGT and other sensor integration.",
-    priceFrom: null,
+    price: { uk: null, pk: null },
   },
   {
     name: "Gauges Installation",
     description: "Boost, AFR, oil, EGT and other gauge fitting.",
-    priceFrom: null,
+    price: { uk: null, pk: null },
   },
 ];
 
@@ -149,44 +150,44 @@ export const variablePriceNote =
 export type PreDynoTest = {
   name: string;
   description: string;
-  priceFrom: number;
+  price: RegionPrice;
 };
 
 export const preDynoTests: PreDynoTest[] = [
   {
     name: "Boost Leak Test",
     description: "Pressurised system check for leaks across the intake & charge pipe system.",
-    priceFrom: 50,
+    price: { uk: 50, pk: null },
   },
   {
     name: "Compression Test",
     description: "Per-cylinder compression check to confirm engine health before tuning.",
-    priceFrom: 30,
+    price: { uk: 30, pk: null },
   },
   {
     name: "Cylinder Leakdown Test",
     description: "Diagnoses valve, piston ring & head gasket condition with more precision than a compression test.",
-    priceFrom: 50,
+    price: { uk: 50, pk: null },
   },
   {
     name: "Valve Lash Adjustment",
     description: "Valve clearance check & adjustment to manufacturer or performance spec.",
-    priceFrom: 75,
+    price: { uk: 75, pk: null },
   },
   {
     name: "Spark Plug Gap Check & Set",
     description: "Verifies and sets plug gap to suit fuel type & boost level.",
-    priceFrom: 30,
+    price: { uk: 30, pk: null },
   },
   {
     name: "Injector Flow Test & Cleaning",
     description: "Flow-bench test and ultrasonic cleaning to confirm injector health and a matched flow set.",
-    priceFrom: 100,
+    price: { uk: 100, pk: null },
   },
 ];
 
 export const rollingRoad = {
-  ratePerHour: 100,
+  ratePerHour: { uk: 100, pk: null } as RegionPrice,
   currency: "£",
   location: "Manchester, UK",
   bookingPolicy:
@@ -195,13 +196,13 @@ export const rollingRoad = {
 
 export type TunePackage = {
   label: string;
-  price: number;
+  price: RegionPrice;
   description: string;
 };
 
 /**
  * Fixed price packages for naturally aspirated (N/A) builds — flat across
- * all three tuning methods.
+ * all three tuning methods. UK and Pakistan pricing are set independently.
  */
 export const naTunePackages: {
   remoteTune: TunePackage;
@@ -210,17 +211,17 @@ export const naTunePackages: {
 } = {
   remoteTune: {
     label: "Remote Tune (NA)",
-    price: 300,
+    price: { uk: 300, pk: 75000 },
     description: "A custom tune written live over a remote connection — no dyno time required.",
   },
   roadTune: {
     label: "Road Tune (NA)",
-    price: 300,
+    price: { uk: 300, pk: 75000 },
     description: "A custom tune written from road-driven datalogs — no dyno time required.",
   },
   dynoTune: {
     label: "Rolling Road Dyno Tune (NA)",
-    price: 300,
+    price: { uk: 300, pk: 75000 },
     description: "Flat rate for naturally aspirated builds — includes your rolling road dyno session.",
   },
 };
@@ -228,7 +229,7 @@ export const naTunePackages: {
 export type ForcedInductionUplift = {
   key: "stock" | "built";
   label: string;
-  amount: number;
+  amount: RegionPrice;
   description: string;
 };
 
@@ -240,13 +241,13 @@ export const forcedInductionUplifts: ForcedInductionUplift[] = [
   {
     key: "stock",
     label: "Stock Internal — Turbo / Supercharged / Nitrous",
-    amount: 150,
+    amount: { uk: 150, pk: 50000 },
     description: "Factory-internal engine running a power adder.",
   },
   {
     key: "built",
     label: "Built Internal — Turbo / Supercharged / Nitrous",
-    amount: 250,
+    amount: { uk: 250, pk: 75000 },
     description: "Aftermarket/forged internals running a power adder.",
   },
 ];

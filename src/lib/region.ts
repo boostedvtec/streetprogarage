@@ -70,15 +70,27 @@ export const regionData: Record<Region, RegionData> = {
   },
 };
 
-/** GBP is the source of truth for every price in the codebase. */
-export const GBP_TO_PKR_RATE = 350;
+/**
+ * UK and Pakistan pricing are set independently by the business, not
+ * derived from each other by exchange rate. `null` on either side means
+ * "ask for pricing" for that region.
+ */
+export type RegionPrice = {
+  uk: number | null;
+  pk: number | null;
+};
 
-export function toPKR(gbpAmount: number): number {
-  return Math.round((gbpAmount * GBP_TO_PKR_RATE) / 50) * 50;
+export function resolveRegionPrice(price: RegionPrice, region: Region): number | null {
+  return region === "pk" ? price.pk : price.uk;
 }
 
-export function formatPrice(gbpAmount: number | null, region: Region): string {
-  if (gbpAmount === null) return "Ask for pricing";
-  if (region === "pk") return `Rs ${toPKR(gbpAmount).toLocaleString("en-US")}`;
-  return `£${gbpAmount}`;
+/** Formats an amount already resolved to the given region's currency. */
+export function formatResolvedAmount(amount: number | null, region: Region): string {
+  if (amount === null) return "Ask for pricing";
+  if (region === "pk") return `Rs ${amount.toLocaleString("en-US")}`;
+  return `£${amount}`;
+}
+
+export function formatRegionPrice(price: RegionPrice, region: Region): string {
+  return formatResolvedAmount(resolveRegionPrice(price, region), region);
 }

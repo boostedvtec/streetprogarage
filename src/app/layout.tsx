@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { CartProvider } from "@/components/cart/cart-context";
 import { RegionProvider } from "@/components/region/region-context";
+import { RegionGate } from "@/components/region/region-gate";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -38,6 +39,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-foreground font-body">
         <RegionProvider>
           <CartProvider>
+            <RegionGate />
             <SiteHeader />
             <main className="flex-1">{children}</main>
             <SiteFooter />

@@ -8,9 +8,8 @@ import { Button } from "@/components/ui/button";
 import { FieldWrap, TextInput, TextArea, CheckboxGroup, RadioGroup } from "@/components/form/fields";
 import { tuningAddOns, preDynoTests, rollingRoad, forcedInductionUplifts, variablePriceNote } from "@/lib/site-config";
 import { estimateQuote, type EcuType, type ServiceType, type EngineInternals } from "@/lib/quote";
-import { formatPrice } from "@/lib/region";
+import { formatRegionPrice, formatResolvedAmount, resolveRegionPrice } from "@/lib/region";
 import { useRegion } from "@/components/region/region-context";
-import { PriceTag } from "@/components/region/price-tag";
 
 const ASPIRATION_OPTIONS = ["Turbo", "Nitrous", "Supercharged", "N/A"] as const;
 const FORCED_INDUCTION_ASPIRATIONS = ["Turbo", "Nitrous", "Supercharged"] as const;
@@ -127,10 +126,17 @@ export default function QuotePage() {
     setForm((prev) => ({ ...prev, [key]: value }));
 
   const serviceTypeOptions = getServiceTypeOptions(data.city);
-  const stockUplift = forcedInductionUplifts.find((u) => u.key === "stock")?.amount ?? 0;
-  const builtUplift = forcedInductionUplifts.find((u) => u.key === "built")?.amount ?? 0;
+  const stockUplift = forcedInductionUplifts.find((u) => u.key === "stock")?.amount ?? {
+    uk: null,
+    pk: null,
+  };
+  const builtUplift = forcedInductionUplifts.find((u) => u.key === "built")?.amount ?? {
+    uk: null,
+    pk: null,
+  };
 
   const quote = estimateQuote({
+    region,
     serviceType: form.serviceType,
     ecuType: form.ecuType,
     aspiration: form.aspiration,
@@ -165,7 +171,7 @@ export default function QuotePage() {
           <h1 className="font-display mt-6 text-4xl">Build List Received</h1>
           <p className="mt-4 text-foreground-muted">
             Thanks {form.name || "there"} — we&rsquo;ve received your build list and
-            ballpark estimate of <strong className="text-foreground"><PriceTag amount={quote.low} />&ndash;<PriceTag amount={quote.high} /></strong>.
+            ballpark estimate of <strong className="text-foreground">{formatResolvedAmount(quote.low, region)}&ndash;{formatResolvedAmount(quote.high, region)}</strong>.
             We&rsquo;ll follow up by email at {form.email} with your exact quote.
           </p>
           <Button className="mt-8" onClick={() => window.location.assign("/")}>
@@ -264,7 +270,7 @@ export default function QuotePage() {
                 <FieldWrap
                   label="Engine Internals"
                   required
-                  hint={`Stock internal +${formatPrice(stockUplift, region)}, built/forged internal +${formatPrice(builtUplift, region)} — added on top of the basic tune price`}
+                  hint={`Stock internal +${formatRegionPrice(stockUplift, region)}, built/forged internal +${formatRegionPrice(builtUplift, region)} — added on top of the basic tune price`}
                 >
                   <RadioGroup
                     name="engineInternals"
@@ -398,7 +404,11 @@ export default function QuotePage() {
               {form.serviceType !== "remote" && (
                 <FieldWrap
                   label="Estimated Rolling Road Dyno Hours"
-                  hint={`${formatPrice(rollingRoad.ratePerHour, region)}/hr — most tunes need 2-4 hours`}
+                  hint={
+                    resolveRegionPrice(rollingRoad.ratePerHour, region) === null
+                      ? "Ask for pricing — most tunes need 2-4 hours"
+                      : `${formatRegionPrice(rollingRoad.ratePerHour, region)}/hr — most tunes need 2-4 hours`
+                  }
                 >
                   <TextInput
                     type="number"
@@ -415,9 +425,10 @@ export default function QuotePage() {
                   onChange={(v) => set("addOns", v)}
                 />
               </FieldWrap>
-              {form.addOns.some(
-                (name) => tuningAddOns.find((a) => a.name === name)?.priceFrom === null
-              ) && <p className="-mt-2 text-xs text-foreground-subtle">{variablePriceNote}</p>}
+              {form.addOns.some((name) => {
+                const addOn = tuningAddOns.find((a) => a.name === name);
+                return addOn && resolveRegionPrice(addOn.price, region) === null;
+              }) && <p className="-mt-2 text-xs text-foreground-subtle">{variablePriceNote}</p>}
 
               {form.serviceType !== "remote" && (
                 <FieldWrap label="Pre-Dyno Engine Health Checks" hint="Optional — additional charge">
@@ -431,13 +442,13 @@ export default function QuotePage() {
 
               <div className="rounded-xl border border-accent/30 bg-accent-soft p-6">
                 <h2 className="font-display text-2xl">
-                  Ballpark Estimate: <PriceTag amount={quote.low} />&ndash;<PriceTag amount={quote.high} />
+                  Ballpark Estimate: {formatResolvedAmount(quote.low, region)}&ndash;{formatResolvedAmount(quote.high, region)}
                 </h2>
                 <ul className="mt-3 space-y-1 text-sm text-foreground-muted">
                   {quote.breakdown.map((b) => (
                     <li key={b.label} className="flex justify-between gap-4">
                       <span>{b.label}</span>
-                      <span><PriceTag amount={b.amount} /></span>
+                      <span>{formatResolvedAmount(b.amount, region)}</span>
                     </li>
                   ))}
                 </ul>

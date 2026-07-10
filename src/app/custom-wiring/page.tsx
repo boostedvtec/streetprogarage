@@ -8,7 +8,7 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
-import { PriceTag } from "@/components/region/price-tag";
+import { UkOnlySection } from "@/components/region/uk-only-section";
 
 export const metadata: Metadata = {
   title: "Custom Wiring & ECU Installation | Street PRO Garage",
@@ -127,7 +127,8 @@ export default function CustomWiringPage() {
         </Container>
       </Section>
 
-      {/* Honda OBD1 ECU services */}
+      {/* Honda OBD1 ECU services — UK only */}
+      <UkOnlySection>
       <Section>
         <Container>
           <div className="grid gap-10 lg:grid-cols-[2fr_3fr] lg:items-start">
@@ -150,7 +151,7 @@ export default function CustomWiringPage() {
                     P28 ECU Socketing &amp; Bench Testing
                   </h3>
                   <span className="font-display shrink-0 text-2xl text-accent">
-                    <PriceTag amount={100} />
+                    &pound;100
                   </span>
                 </div>
                 <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-foreground-subtle">
@@ -193,7 +194,7 @@ export default function CustomWiringPage() {
                     Hondata / Snake EMU / Cobra RTP Installation
                   </h3>
                   <span className="font-display shrink-0 text-2xl text-accent">
-                    <PriceTag amount={100} />
+                    &pound;100
                   </span>
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
@@ -215,6 +216,7 @@ export default function CustomWiringPage() {
           </div>
         </Container>
       </Section>
+      </UkOnlySection>
 
       <Section className="border-t border-border">
         <Container>

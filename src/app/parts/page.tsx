@@ -6,7 +6,6 @@ import { Wrench } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { ProductImagePlaceholder } from "@/components/product-tile";
-import { PriceTag } from "@/components/region/price-tag";
 import { products, categories } from "@/lib/products";
 import { useCart } from "@/components/cart/cart-context";
 import { useRegion } from "@/components/region/region-context";
@@ -115,7 +114,7 @@ export default function PartsPage() {
                   </p>
                   <div className="mt-4 flex items-center justify-between">
                     <span className="font-display text-2xl">
-                      <PriceTag amount={product.price} />
+                      {product.price === null ? "Ask for Pricing" : `£${product.price}`}
                     </span>
                     {product.price === null ? (
                       <Link
