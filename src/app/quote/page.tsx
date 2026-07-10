@@ -17,7 +17,7 @@ const ENGINE_INTERNALS_OPTIONS: { value: EngineInternals; label: string }[] = [
   { value: "stock", label: "Stock Internals" },
   { value: "built", label: "Built / Forged Internals" },
 ];
-const FUEL_TYPE_OPTIONS = ["Pump Gas", "E85", "Flex Fuel", "E90", "Methanol", "Diesel"] as const;
+const FUEL_TYPE_OPTIONS = ["Pump Gas Premium", "E85", "Flex Fuel (Pump Gas + E85)"] as const;
 const INJECTOR_STATUS_OPTIONS = ["New", "Used or not sure", "Used (flow tested in the past 6 months)"] as const;
 const YES_NO = ["Yes", "No"] as const;
 const WIDEBAND_OPTIONS = ["Yes", "No", "Yes, but I need help installing/integrating it"] as const;
@@ -57,7 +57,7 @@ type FormState = {
   sparkPlugs: string;
   injectorSizeBrand: string;
   fuelSystem: string;
-  fuelType: string[];
+  fuelType: string;
   injectorStatus: string;
   ecuConfig: string;
   ecuType: EcuType;
@@ -95,7 +95,7 @@ const initialState: FormState = {
   sparkPlugs: "",
   injectorSizeBrand: "",
   fuelSystem: "",
-  fuelType: [],
+  fuelType: "",
   injectorStatus: "",
   ecuConfig: "",
   ecuType: "unsure",
@@ -280,11 +280,12 @@ export default function QuotePage() {
               <FieldWrap label="Cylinder Head Modifications" required>
                 <TextArea value={form.cylinderHead} onChange={(v) => set("cylinderHead", v)} required />
               </FieldWrap>
-              <FieldWrap label="Aspiration" required hint="Select all that apply">
-                <CheckboxGroup
+              <FieldWrap label="Aspiration" required>
+                <RadioGroup
+                  name="aspiration"
                   options={ASPIRATION_OPTIONS}
-                  values={form.aspiration}
-                  onChange={(v) => set("aspiration", v)}
+                  value={form.aspiration[0] ?? ""}
+                  onChange={(v) => set("aspiration", [v])}
                 />
               </FieldWrap>
               {form.aspiration.some((a) =>
@@ -339,10 +340,11 @@ export default function QuotePage() {
               <FieldWrap label="Fuel System Details" required>
                 <TextArea value={form.fuelSystem} onChange={(v) => set("fuelSystem", v)} required />
               </FieldWrap>
-              <FieldWrap label="Fuel Type" required hint="Select all that apply">
-                <CheckboxGroup
+              <FieldWrap label="Fuel Type" required>
+                <RadioGroup
+                  name="fuelType"
                   options={FUEL_TYPE_OPTIONS}
-                  values={form.fuelType}
+                  value={form.fuelType}
                   onChange={(v) => set("fuelType", v)}
                 />
               </FieldWrap>
@@ -423,6 +425,18 @@ export default function QuotePage() {
                   }
                 />
               </FieldWrap>
+
+              {form.serviceType === "both" && (
+                <div className="rounded-lg border border-border-strong bg-surface-2 p-4 text-sm text-foreground-muted">
+                  Your car is set up and pre-tuned remotely before it goes on
+                  the dyno, so everything&rsquo;s confirmed working first. Once
+                  it&rsquo;s on the dyno, we focus on maximising power to make the
+                  most of the session — saving dyno time and diagnostics.
+                  After the final dyno tune, the car is retested on the road
+                  with datalogs to double-check everything&rsquo;s running
+                  correctly.
+                </div>
+              )}
 
               {form.serviceType !== "remote" && (
                 <FieldWrap
