@@ -30,6 +30,8 @@ import {
   rollingRoad,
   variablePriceNote,
 } from "@/lib/site-config";
+import { useRegion } from "@/components/region/region-context";
+import { PriceTag } from "@/components/region/price-tag";
 
 type TuningType = "remote" | "road" | "rolling-road";
 
@@ -40,6 +42,7 @@ const tabs: { value: TuningType; label: string; icon: typeof Broadcast }[] = [
 ];
 
 function TuningPageContent() {
+  const { data } = useRegion();
   const searchParams = useSearchParams();
   const initial = searchParams.get("type");
   const initialTab: TuningType =
@@ -64,7 +67,7 @@ function TuningPageContent() {
     <>
       <div className="border-b border-border bg-surface/50">
         <Container className="py-16 sm:py-20">
-          <Eyebrow>Manchester, UK &middot; Remote Worldwide</Eyebrow>
+          <Eyebrow>{data.city}, {data.country} &middot; Remote Worldwide</Eyebrow>
           <h1 className="font-display mt-4 text-5xl sm:text-6xl">
             Tuning Services
           </h1>
@@ -148,7 +151,7 @@ function TuningPageContent() {
                   {naTunePackages.remoteTune.label}
                 </h2>
                 <p className="font-display mt-2 text-4xl text-accent">
-                  &pound;{naTunePackages.remoteTune.price}
+                  <PriceTag amount={naTunePackages.remoteTune.price} />
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
                   {naTunePackages.remoteTune.description} Confirmed flat rate
@@ -183,7 +186,7 @@ function TuningPageContent() {
                   {naTunePackages.roadTune.label}
                 </h2>
                 <p className="font-display mt-2 text-4xl text-accent">
-                  &pound;{naTunePackages.roadTune.price}
+                  <PriceTag amount={naTunePackages.roadTune.price} />
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
                   {naTunePackages.roadTune.description} Confirmed flat rate for
@@ -213,8 +216,7 @@ function TuningPageContent() {
                   </p>
                 </div>
                 <span className="font-display text-3xl text-accent">
-                  {rollingRoad.currency}
-                  {rollingRoad.ratePerHour}
+                  <PriceTag amount={rollingRoad.ratePerHour} />
                   <span className="ml-1 text-sm text-foreground-muted font-body font-normal align-middle">
                     /hour
                   </span>
@@ -227,7 +229,7 @@ function TuningPageContent() {
                     {naTunePackages.dynoTune.label}
                   </h3>
                   <p className="font-display mt-2 text-4xl text-accent">
-                    &pound;{naTunePackages.dynoTune.price}
+                    <PriceTag amount={naTunePackages.dynoTune.price} />
                   </p>
                   <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
                     {naTunePackages.dynoTune.description}
@@ -239,7 +241,7 @@ function TuningPageContent() {
                     <h3 className="font-display text-xl">Location</h3>
                   </div>
                   <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
-                    Sessions are held at our Manchester, UK workshop. Full
+                    Sessions are held at our {data.city}, {data.country} workshop. Full
                     address confirmed once your booking is secured.
                   </p>
                 </div>
@@ -283,7 +285,7 @@ function TuningPageContent() {
                       </div>
                     </div>
                     <span className="shrink-0 font-display text-xl text-accent">
-                      &pound;{test.priceFrom}
+                      <PriceTag amount={test.priceFrom} />
                     </span>
                   </div>
                 ))}
@@ -328,7 +330,7 @@ function TuningPageContent() {
               Turbo, Supercharged &amp; Nitrous Pricing
             </h2>
             <p className="mt-4 text-foreground-muted leading-relaxed">
-              Added on top of the &pound;{naTunePackages.remoteTune.price} basic tune
+              Added on top of the <PriceTag amount={naTunePackages.remoteTune.price} /> basic tune
               price above — applies the same way across remote, road and
               rolling road dyno tuning.
             </p>
@@ -341,7 +343,7 @@ function TuningPageContent() {
               >
                 <h3 className="font-display text-xl">{uplift.label}</h3>
                 <p className="font-display mt-2 text-3xl text-accent">
-                  +&pound;{uplift.amount}
+                  +<PriceTag amount={uplift.amount} />
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
                   {uplift.description}
@@ -489,7 +491,7 @@ function TuningPageContent() {
                     <td className="px-6 py-4 font-semibold whitespace-nowrap">{addOn.name}</td>
                     <td className="px-6 py-4 text-foreground-muted">{addOn.description}</td>
                     <td className="px-6 py-4 font-semibold text-accent whitespace-nowrap">
-                      {addOn.priceFrom === null ? "Ask for pricing" : `£${addOn.priceFrom}`}
+                      <PriceTag amount={addOn.priceFrom} />
                     </td>
                   </tr>
                 ))}

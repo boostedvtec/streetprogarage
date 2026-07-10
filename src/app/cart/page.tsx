@@ -5,6 +5,7 @@ import { Trash, Minus, Plus, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { ProductImagePlaceholder } from "@/components/product-tile";
+import { PriceTag } from "@/components/region/price-tag";
 import { useCart } from "@/components/cart/cart-context";
 
 export default function CartPage() {
@@ -44,7 +45,7 @@ export default function CartPage() {
                           {product.name}
                         </Link>
                         <p className="text-sm text-foreground-muted">
-                          {product.price === null ? "Ask for pricing" : `£${product.price} each`}
+                          <PriceTag amount={product.price} /> each
                         </p>
                       </div>
                       <button
@@ -76,7 +77,7 @@ export default function CartPage() {
                           <Plus size={14} aria-hidden />
                         </button>
                       </div>
-                      <span className="font-display text-xl">&pound;{lineTotal}</span>
+                      <span className="font-display text-xl"><PriceTag amount={lineTotal} /></span>
                     </div>
                   </div>
                 </li>
@@ -87,7 +88,7 @@ export default function CartPage() {
               <h2 className="font-display text-xl">Order Summary</h2>
               <div className="mt-4 flex justify-between text-sm text-foreground-muted">
                 <span>Subtotal</span>
-                <span>&pound;{subtotal}</span>
+                <span><PriceTag amount={subtotal} /></span>
               </div>
               <p className="mt-1 text-xs text-foreground-subtle">
                 Fitting labour and shipping are quoted at checkout.

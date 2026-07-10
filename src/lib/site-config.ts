@@ -21,10 +21,11 @@ export const siteConfig = {
 } as const;
 
 export const navLinks = [
-  { href: "/tuning", label: "Tuning" },
-  { href: "/custom-wiring", label: "Custom Wiring" },
-  { href: "/parts", label: "Parts" },
-  { href: "/contact", label: "Contact" },
+  { href: "/tuning", label: "Tuning", regions: ["uk", "pk"] },
+  { href: "/custom-wiring", label: "Custom Wiring", regions: ["uk", "pk"] },
+  { href: "/engine-swaps", label: "Engine Swaps", regions: ["pk"] },
+  { href: "/parts", label: "Parts", regions: ["uk"] },
+  { href: "/contact", label: "Contact", regions: ["uk", "pk"] },
 ] as const;
 
 export type EcuCategory = {

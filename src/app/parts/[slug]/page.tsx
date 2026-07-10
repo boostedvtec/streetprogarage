@@ -4,6 +4,7 @@ import { getProductBySlug, products } from "@/lib/products";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { ProductImagePlaceholder } from "@/components/product-tile";
 import { LinkButton } from "@/components/ui/button";
+import { PriceTag } from "@/components/region/price-tag";
 import { ProductAddToCart } from "./add-to-cart";
 
 export function generateStaticParams() {
@@ -37,7 +38,7 @@ export default async function ProductPage(props: PageProps<"/parts/[slug]">) {
           <div>
             <h1 className="font-display text-4xl sm:text-5xl">{product.name}</h1>
             <p className="font-display mt-4 text-3xl text-accent">
-              {product.price === null ? "Ask for Pricing" : `£${product.price}`}
+              <PriceTag amount={product.price} />
             </p>
             <p className="mt-6 text-foreground-muted leading-relaxed">
               {product.description}

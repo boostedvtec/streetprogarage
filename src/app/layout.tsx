@@ -4,6 +4,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { CartProvider } from "@/components/cart/cart-context";
+import { RegionProvider } from "@/components/region/region-context";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -35,11 +36,13 @@ export default function RootLayout({
       className={`${bebasNeue.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground font-body">
-        <CartProvider>
-          <SiteHeader />
-          <main className="flex-1">{children}</main>
-          <SiteFooter />
-        </CartProvider>
+        <RegionProvider>
+          <CartProvider>
+            <SiteHeader />
+            <main className="flex-1">{children}</main>
+            <SiteFooter />
+          </CartProvider>
+        </RegionProvider>
       </body>
     </html>
   );

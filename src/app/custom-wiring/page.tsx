@@ -8,6 +8,7 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
+import { PriceTag } from "@/components/region/price-tag";
 
 export const metadata: Metadata = {
   title: "Custom Wiring & ECU Installation | Street PRO Garage",
@@ -149,7 +150,7 @@ export default function CustomWiringPage() {
                     P28 ECU Socketing &amp; Bench Testing
                   </h3>
                   <span className="font-display shrink-0 text-2xl text-accent">
-                    &pound;100
+                    <PriceTag amount={100} />
                   </span>
                 </div>
                 <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-foreground-subtle">
@@ -192,7 +193,7 @@ export default function CustomWiringPage() {
                     Hondata / Snake EMU / Cobra RTP Installation
                   </h3>
                   <span className="font-display shrink-0 text-2xl text-accent">
-                    &pound;100
+                    <PriceTag amount={100} />
                   </span>
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-foreground-muted">

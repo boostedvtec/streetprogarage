@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -9,43 +11,64 @@ import {
   ChartLineUp,
   Quotes,
   PlugsConnected,
+  Engine,
 } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { buildPhotos, dynoResults } from "@/lib/builds";
+import { useRegion } from "@/components/region/region-context";
+import type { RegionData } from "@/lib/region";
 
-const heroFeatures = [
-  { icon: Gauge, label: "ECU Tuning" },
-  { icon: ChartLineUp, label: "Rolling Road Dyno Tune" },
-  { icon: Wrench, label: "Parts & Fitting" },
-];
+function getHeroFeatures(services: RegionData["services"]) {
+  return [
+    { icon: Gauge, label: "ECU Tuning" },
+    { icon: ChartLineUp, label: "Rolling Road Dyno Tune" },
+    services.parts
+      ? { icon: Wrench, label: "Parts & Fitting" }
+      : { icon: Engine, label: "Engine Swaps" },
+  ];
+}
 
-const services = [
-  {
-    icon: Gauge,
-    title: "ECU Tuning",
-    description:
-      "Custom-built tunes from scratch — remote, road-logged, or live on our Manchester rolling road. No cookie-cutter stage kits, ever.",
-    href: "/tuning",
-    cta: "Explore Tuning",
-  },
-  {
-    icon: Wrench,
-    title: "Parts, Fitting & Diagnostics",
-    description:
-      "Performance parts sales with professional fitting and full diagnostics — from bolt-ons to complete built engines.",
-    href: "/parts",
-    cta: "Shop Parts",
-  },
-  {
-    icon: PlugsConnected,
-    title: "Custom Wiring",
-    description:
-      "Standalone and piggyback ECU wiring, gauge installation, and Honda P28 ECU socketing service.",
-    href: "/custom-wiring",
-    cta: "View Wiring Services",
-  },
-];
+function getServices(regionData: RegionData) {
+  const items = [
+    {
+      icon: Gauge,
+      title: "ECU Tuning",
+      description: `Custom-built tunes from scratch — remote, road-logged, or live on our ${regionData.city} rolling road. No cookie-cutter stage kits, ever.`,
+      href: "/tuning",
+      cta: "Explore Tuning",
+    },
+    {
+      icon: PlugsConnected,
+      title: "Custom Wiring",
+      description:
+        "Standalone and piggyback ECU wiring, gauge installation, and Honda P28 ECU socketing service.",
+      href: "/custom-wiring",
+      cta: "View Wiring Services",
+    },
+  ];
+  if (regionData.services.parts) {
+    items.splice(1, 0, {
+      icon: Wrench,
+      title: "Parts, Fitting & Diagnostics",
+      description:
+        "Performance parts sales with professional fitting and full diagnostics — from bolt-ons to complete built engines.",
+      href: "/parts",
+      cta: "Shop Parts",
+    });
+  }
+  if (regionData.services.engineSwaps) {
+    items.splice(1, 0, {
+      icon: Engine,
+      title: "Engine Swaps & Builds",
+      description:
+        "Full engine swaps and custom builds — fitment, wiring, fuelling and cooling done properly, then tuned on the dyno.",
+      href: "/engine-swaps",
+      cta: "View Engine Swaps",
+    });
+  }
+  return items;
+}
 
 const processSteps = [
   {
@@ -70,14 +93,17 @@ const processSteps = [
   },
 ];
 
-const trustPoints = [
-  "Every tune written from scratch — no generic stage maps",
-  "Stock ECU (HP Tuners) and standalone ECU platforms supported",
-  "UK-based workshop, global remote reach",
-  "Pre-tune safety checks available before every session",
-];
-
 export default function Home() {
+  const { data } = useRegion();
+  const heroFeatures = getHeroFeatures(data.services);
+  const services = getServices(data);
+  const trustPoints = [
+    "Every tune written from scratch — no generic stage maps",
+    "Stock ECU (HP Tuners) and standalone ECU platforms supported",
+    `${data.country}-based workshop, global remote reach`,
+    "Pre-tune safety checks available before every session",
+  ];
+
   return (
     <>
       {/* Hero */}
@@ -86,7 +112,7 @@ export default function Home() {
           <div className="grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:items-center lg:gap-14">
             {/* Headline column */}
             <div>
-              <Eyebrow>Manchester, UK &middot; Remote Worldwide</Eyebrow>
+              <Eyebrow>{data.city}, {data.country} &middot; Remote Worldwide</Eyebrow>
               <h1 className="font-display mt-6 text-5xl leading-[0.95] sm:text-6xl lg:text-6xl">
                 Custom built.
                 <br />
@@ -94,8 +120,10 @@ export default function Home() {
               </h1>
               <p className="mt-6 max-w-md text-lg leading-relaxed text-foreground-muted">
                 Every tune written from scratch — remote ECU tuning delivered
-                globally, rolling road dyno sessions in Manchester, and
-                performance parts sales, fitting &amp; diagnostics.
+                globally, rolling road dyno sessions in {data.city}, and{" "}
+                {data.services.parts
+                  ? "performance parts sales, fitting & diagnostics."
+                  : "custom wiring, ECU installation & engine build services."}
               </p>
               <div className="mt-10 flex flex-wrap gap-4">
                 <LinkButton href="/quote" size="lg">

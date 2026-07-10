@@ -6,8 +6,11 @@ import { ArrowLeft, ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/s
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { FieldWrap, TextInput, TextArea, CheckboxGroup, RadioGroup } from "@/components/form/fields";
-import { tuningAddOns, preDynoTests, variablePriceNote } from "@/lib/site-config";
+import { tuningAddOns, preDynoTests, rollingRoad, forcedInductionUplifts, variablePriceNote } from "@/lib/site-config";
 import { estimateQuote, type EcuType, type ServiceType, type EngineInternals } from "@/lib/quote";
+import { formatPrice } from "@/lib/region";
+import { useRegion } from "@/components/region/region-context";
+import { PriceTag } from "@/components/region/price-tag";
 
 const ASPIRATION_OPTIONS = ["Turbo", "Nitrous", "Supercharged", "N/A"] as const;
 const FORCED_INDUCTION_ASPIRATIONS = ["Turbo", "Nitrous", "Supercharged"] as const;
@@ -25,11 +28,13 @@ const VEHICLE_APPLICATION_OPTIONS = [
   "Daily Driver / occasional track use",
   "Extreme rally conditions",
 ] as const;
-const SERVICE_TYPE_OPTIONS: { value: ServiceType; label: string }[] = [
-  { value: "remote", label: "Remote Tuning" },
-  { value: "rolling-road", label: "Rolling Road Dyno Tune (Manchester)" },
-  { value: "both", label: "Both" },
-];
+function getServiceTypeOptions(city: string): { value: ServiceType; label: string }[] {
+  return [
+    { value: "remote", label: "Remote Tuning" },
+    { value: "rolling-road", label: `Rolling Road Dyno Tune (${city})` },
+    { value: "both", label: "Both" },
+  ];
+}
 const ECU_TYPE_OPTIONS: { value: EcuType; label: string }[] = [
   { value: "stock", label: "Stock ECU (HP Tuners reflash)" },
   { value: "standalone", label: "Standalone ECU" },
@@ -113,12 +118,17 @@ const initialState: FormState = {
 const STEP_LABELS = ["Vehicle", "Engine", "Fuel & ECU", "Chassis & Goals", "Service & Quote"];
 
 export default function QuotePage() {
+  const { region, data } = useRegion();
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<FormState>(initialState);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
 
   const set = <K extends keyof FormState>(key: K, value: FormState[K]) =>
     setForm((prev) => ({ ...prev, [key]: value }));
+
+  const serviceTypeOptions = getServiceTypeOptions(data.city);
+  const stockUplift = forcedInductionUplifts.find((u) => u.key === "stock")?.amount ?? 0;
+  const builtUplift = forcedInductionUplifts.find((u) => u.key === "built")?.amount ?? 0;
 
   const quote = estimateQuote({
     serviceType: form.serviceType,
@@ -155,7 +165,7 @@ export default function QuotePage() {
           <h1 className="font-display mt-6 text-4xl">Build List Received</h1>
           <p className="mt-4 text-foreground-muted">
             Thanks {form.name || "there"} — we&rsquo;ve received your build list and
-            ballpark estimate of <strong className="text-foreground">&pound;{quote.low}&ndash;&pound;{quote.high}</strong>.
+            ballpark estimate of <strong className="text-foreground"><PriceTag amount={quote.low} />&ndash;<PriceTag amount={quote.high} /></strong>.
             We&rsquo;ll follow up by email at {form.email} with your exact quote.
           </p>
           <Button className="mt-8" onClick={() => window.location.assign("/")}>
@@ -254,7 +264,7 @@ export default function QuotePage() {
                 <FieldWrap
                   label="Engine Internals"
                   required
-                  hint="Stock internal +£150, built/forged internal +£250 — added on top of the basic tune price"
+                  hint={`Stock internal +${formatPrice(stockUplift, region)}, built/forged internal +${formatPrice(builtUplift, region)} — added on top of the basic tune price`}
                 >
                   <RadioGroup
                     name="engineInternals"
@@ -377,16 +387,19 @@ export default function QuotePage() {
               <FieldWrap label="Service Type" required>
                 <RadioGroup
                   name="serviceType"
-                  options={SERVICE_TYPE_OPTIONS.map((o) => o.label)}
-                  value={SERVICE_TYPE_OPTIONS.find((o) => o.value === form.serviceType)?.label ?? ""}
+                  options={serviceTypeOptions.map((o) => o.label)}
+                  value={serviceTypeOptions.find((o) => o.value === form.serviceType)?.label ?? ""}
                   onChange={(label) =>
-                    set("serviceType", SERVICE_TYPE_OPTIONS.find((o) => o.label === label)?.value ?? "remote")
+                    set("serviceType", serviceTypeOptions.find((o) => o.label === label)?.value ?? "remote")
                   }
                 />
               </FieldWrap>
 
               {form.serviceType !== "remote" && (
-                <FieldWrap label="Estimated Rolling Road Dyno Hours" hint="£100/hr — most tunes need 2-4 hours">
+                <FieldWrap
+                  label="Estimated Rolling Road Dyno Hours"
+                  hint={`${formatPrice(rollingRoad.ratePerHour, region)}/hr — most tunes need 2-4 hours`}
+                >
                   <TextInput
                     type="number"
                     value={String(form.rollingRoadHours)}
@@ -418,13 +431,13 @@ export default function QuotePage() {
 
               <div className="rounded-xl border border-accent/30 bg-accent-soft p-6">
                 <h2 className="font-display text-2xl">
-                  Ballpark Estimate: &pound;{quote.low}&ndash;&pound;{quote.high}
+                  Ballpark Estimate: <PriceTag amount={quote.low} />&ndash;<PriceTag amount={quote.high} />
                 </h2>
                 <ul className="mt-3 space-y-1 text-sm text-foreground-muted">
                   {quote.breakdown.map((b) => (
                     <li key={b.label} className="flex justify-between gap-4">
                       <span>{b.label}</span>
-                      <span>{b.amount === null ? "Ask for pricing" : `£${b.amount}`}</span>
+                      <span><PriceTag amount={b.amount} /></span>
                     </li>
                   ))}
                 </ul>

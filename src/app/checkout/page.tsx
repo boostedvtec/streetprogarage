@@ -6,9 +6,13 @@ import { Info, CreditCard } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/components/cart/cart-context";
+import { PriceTag } from "@/components/region/price-tag";
+import { useRegion } from "@/components/region/region-context";
+import { formatPrice } from "@/lib/region";
 
 export default function CheckoutPage() {
   const { detailedLines, subtotal, lines, clear } = useCart();
+  const { region } = useRegion();
   const router = useRouter();
   const [paymentMethod, setPaymentMethod] = useState<"stripe" | "paypal">("stripe");
   const [status, setStatus] = useState<"idle" | "submitting" | "message">("idle");
@@ -160,7 +164,7 @@ export default function CheckoutPage() {
               </div>
             ) : (
               <Button type="submit" size="lg" disabled={status === "submitting"}>
-                {status === "submitting" ? "Processing..." : `Pay £${subtotal}`}
+                {status === "submitting" ? "Processing..." : `Pay ${formatPrice(subtotal, region)}`}
               </Button>
             )}
           </form>
@@ -173,13 +177,13 @@ export default function CheckoutPage() {
                   <span className="text-foreground-muted">
                     {product.name} &times; {quantity}
                   </span>
-                  <span>&pound;{lineTotal}</span>
+                  <span><PriceTag amount={lineTotal} /></span>
                 </li>
               ))}
             </ul>
             <div className="mt-4 flex justify-between border-t border-border pt-4 font-semibold">
               <span>Subtotal</span>
-              <span>&pound;{subtotal}</span>
+              <span><PriceTag amount={subtotal} /></span>
             </div>
           </div>
         </div>

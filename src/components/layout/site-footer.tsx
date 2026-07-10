@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import { EnvelopeSimple, Phone, MapPin } from "@phosphor-icons/react/dist/ssr";
 import { Logo } from "@/components/logo";
 import { navLinks, siteConfig } from "@/lib/site-config";
+import { useRegion } from "@/components/region/region-context";
 
 const legalLinks = [
   { href: "/declaration", label: "Declaration & Liability" },
@@ -9,6 +12,9 @@ const legalLinks = [
 ];
 
 export function SiteFooter() {
+  const { region, data } = useRegion();
+  const visibleLinks = navLinks.filter((link) => (link.regions as readonly string[]).includes(region));
+
   return (
     <footer className="border-t border-border bg-surface">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-4 lg:px-8">
@@ -24,7 +30,7 @@ export function SiteFooter() {
             Navigate
           </h3>
           <ul className="mt-4 space-y-2">
-            {navLinks.map((link) => (
+            {visibleLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
@@ -45,21 +51,29 @@ export function SiteFooter() {
             <li className="flex items-start gap-2">
               <MapPin size={18} className="mt-0.5 shrink-0 text-accent" aria-hidden />
               <span>
-                {siteConfig.location.city}, {siteConfig.location.country}
+                {data.city}, {data.country}
                 <br />
                 Remote tuning worldwide
               </span>
             </li>
             <li className="flex items-center gap-2">
               <Phone size={18} className="shrink-0 text-accent" aria-hidden />
-              <a href={siteConfig.phoneHref} className="hover:text-foreground">
-                {siteConfig.phone}
+              <a href={data.phoneHref} className="hover:text-foreground">
+                {data.phone}
               </a>
             </li>
+            {data.whatsapp && data.whatsappHref && (
+              <li className="flex items-center gap-2">
+                <Phone size={18} className="shrink-0 text-accent" aria-hidden />
+                <a href={data.whatsappHref} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">
+                  {data.whatsapp} (WhatsApp)
+                </a>
+              </li>
+            )}
             <li className="flex items-center gap-2">
               <EnvelopeSimple size={18} className="shrink-0 text-accent" aria-hidden />
-              <a href={`mailto:${siteConfig.email}`} className="hover:text-foreground">
-                {siteConfig.email}
+              <a href={`mailto:${data.email}`} className="hover:text-foreground">
+                {data.email}
               </a>
             </li>
           </ul>

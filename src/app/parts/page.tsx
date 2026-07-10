@@ -2,12 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Wrench } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
+import { LinkButton } from "@/components/ui/button";
 import { ProductImagePlaceholder } from "@/components/product-tile";
+import { PriceTag } from "@/components/region/price-tag";
 import { products, categories } from "@/lib/products";
 import { useCart } from "@/components/cart/cart-context";
+import { useRegion } from "@/components/region/region-context";
 
 export default function PartsPage() {
+  const { data } = useRegion();
   const [activeCategory, setActiveCategory] = useState<string | "All">("All");
   const { addItem } = useCart();
 
@@ -15,6 +20,31 @@ export default function PartsPage() {
     activeCategory === "All"
       ? products
       : products.filter((p) => p.category === activeCategory);
+
+  if (!data.services.parts) {
+    return (
+      <Section>
+        <Container className="max-w-2xl text-center">
+          <Wrench size={48} className="mx-auto text-foreground-subtle" aria-hidden />
+          <h1 className="font-display mt-6 text-4xl">Parts Shop Not Available Here</h1>
+          <p className="mt-4 text-foreground-muted">
+            Our parts shop currently serves UK customers only. In{" "}
+            {data.country}, we offer remote tuning, rolling road dyno tuning,
+            custom wiring and ECU installation, and engine swaps/builds at
+            our {data.city} workshop.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <LinkButton href="/tuning" size="lg">
+              Explore Tuning
+            </LinkButton>
+            <LinkButton href="/engine-swaps" size="lg" variant="secondary">
+              Engine Swaps
+            </LinkButton>
+          </div>
+        </Container>
+      </Section>
+    );
+  }
 
   return (
     <>
@@ -85,7 +115,7 @@ export default function PartsPage() {
                   </p>
                   <div className="mt-4 flex items-center justify-between">
                     <span className="font-display text-2xl">
-                      {product.price === null ? "Ask for Pricing" : `£${product.price}`}
+                      <PriceTag amount={product.price} />
                     </span>
                     {product.price === null ? (
                       <Link

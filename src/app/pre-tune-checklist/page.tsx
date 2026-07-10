@@ -6,6 +6,7 @@ import { CheckCircle, Circle, MagnifyingGlass } from "@phosphor-icons/react/dist
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { preDynoTests } from "@/lib/site-config";
+import { PriceTag } from "@/components/region/price-tag";
 
 const CHECKLIST_ITEMS = [
   "Fresh engine oil & filter change",
@@ -95,7 +96,7 @@ export default function PreTuneChecklistPage() {
                   className="rounded-md border border-border-strong bg-surface-2 px-4 py-2 text-sm text-foreground-muted"
                 >
                   {test.name}{" "}
-                  <span className="text-accent">from &pound;{test.priceFrom}</span>
+                  <span className="text-accent">from <PriceTag amount={test.priceFrom} /></span>
                 </li>
               ))}
             </ul>

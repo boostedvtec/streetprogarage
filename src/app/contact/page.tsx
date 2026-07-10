@@ -1,19 +1,30 @@
 "use client";
 
-import { useState } from "react";
-import { Phone, EnvelopeSimple, MapPin, InstagramLogo } from "@phosphor-icons/react/dist/ssr";
+import { useMemo, useState } from "react";
+import { Phone, EnvelopeSimple, MapPin, InstagramLogo, WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { FieldWrap, TextInput, TextArea, RadioGroup } from "@/components/form/fields";
 import { siteConfig } from "@/lib/site-config";
+import { useRegion } from "@/components/region/region-context";
 
-const TOPICS = ["General Enquiry", "Remote Tuning", "Rolling Road Dyno Tune", "Parts"] as const;
+function getTopics(services: { parts: boolean; engineSwaps: boolean }): string[] {
+  const topics = ["General Enquiry", "Remote Tuning", "Rolling Road Dyno Tune"];
+  if (services.parts) topics.push("Parts");
+  if (services.engineSwaps) topics.push("Engine Swaps");
+  return topics;
+}
 
 export default function ContactPage() {
+  const { data } = useRegion();
+  const topics = useMemo(() => getTopics(data.services), [data.services]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [topic, setTopic] = useState<string>(TOPICS[0]);
+  const [topicState, setTopic] = useState<string>(topics[0]);
+  // Falls back to the first valid topic if the region changes and the
+  // previously selected one (e.g. "Parts") is no longer offered.
+  const topic = topics.includes(topicState) ? topicState : topics[0];
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
 
@@ -55,32 +66,57 @@ export default function ContactPage() {
                 <div>
                   <h2 className="font-semibold">Location</h2>
                   <p className="mt-1 text-sm text-foreground-muted">
-                    {siteConfig.location.city}, {siteConfig.location.country}
+                    {data.city}, {data.country}
                   </p>
                   <p className="mt-1 text-xs text-foreground-subtle">
-                    {siteConfig.location.note}
+                    {data.locationNote}
                   </p>
                 </div>
               </div>
+              <iframe
+                title={`${data.city} workshop map`}
+                src={`https://www.google.com/maps?q=${encodeURIComponent(data.mapQuery)}&output=embed`}
+                className="mt-4 h-48 w-full rounded-lg border border-border-strong"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
             </div>
             <div className="rounded-xl border border-border bg-surface p-6">
               <div className="flex items-start gap-3">
                 <Phone size={22} className="mt-0.5 shrink-0 text-accent" aria-hidden />
                 <div>
                   <h2 className="font-semibold">Phone</h2>
-                  <a href={siteConfig.phoneHref} className="mt-1 block text-sm text-foreground-muted hover:text-foreground">
-                    {siteConfig.phone}
+                  <a href={data.phoneHref} className="mt-1 block text-sm text-foreground-muted hover:text-foreground">
+                    {data.phone}
                   </a>
                 </div>
               </div>
             </div>
+            {data.whatsapp && data.whatsappHref && (
+              <div className="rounded-xl border border-border bg-surface p-6">
+                <div className="flex items-start gap-3">
+                  <WhatsappLogo size={22} className="mt-0.5 shrink-0 text-accent" aria-hidden />
+                  <div>
+                    <h2 className="font-semibold">WhatsApp</h2>
+                    <a
+                      href={data.whatsappHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1 block text-sm text-foreground-muted hover:text-foreground"
+                    >
+                      {data.whatsapp}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
             <div className="rounded-xl border border-border bg-surface p-6">
               <div className="flex items-start gap-3">
                 <EnvelopeSimple size={22} className="mt-0.5 shrink-0 text-accent" aria-hidden />
                 <div>
                   <h2 className="font-semibold">Email</h2>
-                  <a href={`mailto:${siteConfig.email}`} className="mt-1 block text-sm text-foreground-muted hover:text-foreground">
-                    {siteConfig.email}
+                  <a href={`mailto:${data.email}`} className="mt-1 block text-sm text-foreground-muted hover:text-foreground">
+                    {data.email}
                   </a>
                 </div>
               </div>
@@ -118,7 +154,7 @@ export default function ContactPage() {
                   </FieldWrap>
                 </div>
                 <FieldWrap label="What's this about?" required>
-                  <RadioGroup name="topic" options={TOPICS} value={topic} onChange={setTopic} />
+                  <RadioGroup name="topic" options={topics} value={topic} onChange={setTopic} />
                 </FieldWrap>
                 <FieldWrap label="Message" required>
                   <TextArea value={message} onChange={setMessage} rows={5} required />
