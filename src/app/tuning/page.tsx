@@ -338,7 +338,7 @@ function TuningPageContent() {
             <p className="mt-4 text-foreground-muted leading-relaxed">
               Added on top of the <PriceTag price={naTunePackages.remoteTune.price} /> basic tune
               price above — applies the same way across remote, road and{" "}
-              {dynoServiceLabel(region).toLowerCase()} tuning.
+              {region === "pk" ? "dyno" : "rolling road dyno"} tuning.
             </p>
           </div>
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
