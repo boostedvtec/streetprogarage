@@ -21,11 +21,9 @@ export const siteConfig = {
 } as const;
 
 export const navLinks = [
-  { href: "/remote-tuning", label: "Remote Tuning" },
-  { href: "/rolling-road", label: "Rolling Road" },
+  { href: "/tuning", label: "Tuning" },
   { href: "/custom-wiring", label: "Custom Wiring" },
   { href: "/parts", label: "Parts" },
-  { href: "/gallery", label: "Dyno Results" },
   { href: "/contact", label: "Contact" },
 ] as const;
 

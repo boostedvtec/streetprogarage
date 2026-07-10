@@ -15,7 +15,7 @@ import { LinkButton } from "@/components/ui/button";
 import { buildPhotos, dynoResults } from "@/lib/builds";
 
 const heroFeatures = [
-  { icon: Gauge, label: "Remote Tuning" },
+  { icon: Gauge, label: "ECU Tuning" },
   { icon: ChartLineUp, label: "Rolling Road" },
   { icon: Wrench, label: "Parts & Fitting" },
 ];
@@ -23,19 +23,11 @@ const heroFeatures = [
 const services = [
   {
     icon: Gauge,
-    title: "Remote ECU Tuning",
+    title: "ECU Tuning",
     description:
-      "Custom-built tunes from scratch — no cookie-cutter stage kits. Stock ECU reflash via HP Tuners or standalone ECU tuning, delivered anywhere in the world.",
-    href: "/remote-tuning",
-    cta: "Explore Remote Tuning",
-  },
-  {
-    icon: ChartLineUp,
-    title: "Rolling Road Tuning",
-    description:
-      "In-house rolling road dyno sessions in Manchester, UK. £100/hr with full datalogging and real-time adjustment on the day.",
-    href: "/rolling-road",
-    cta: "Book Rolling Road",
+      "Custom-built tunes from scratch — remote, road-logged, or live on our Manchester rolling road. No cookie-cutter stage kits, ever.",
+    href: "/tuning",
+    cta: "Explore Tuning",
   },
   {
     icon: Wrench,
@@ -110,7 +102,7 @@ export default function Home() {
                   Get a Quote
                   <ArrowRight size={20} weight="bold" aria-hidden />
                 </LinkButton>
-                <LinkButton href="/rolling-road" size="lg" variant="secondary">
+                <LinkButton href="/tuning?type=rolling-road" size="lg" variant="secondary">
                   Book Rolling Road
                 </LinkButton>
               </div>
@@ -170,7 +162,7 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
             {services.map(({ icon: Icon, title, description, href, cta }) => (
               <div
                 key={title}
@@ -262,10 +254,10 @@ export default function Home() {
               </h2>
             </div>
             <Link
-              href="/gallery"
+              href="/quote"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent"
             >
-              View full gallery
+              Get your own tune
               <ArrowRight size={16} weight="bold" aria-hidden />
             </Link>
           </div>
@@ -274,7 +266,7 @@ export default function Home() {
             {dynoResults.slice(0, 3).map((result) => (
               <Link
                 key={result.src}
-                href="/gallery"
+                href="/quote"
                 className="group relative aspect-[4/3] overflow-hidden rounded-xl border border-border bg-surface"
               >
                 <Image

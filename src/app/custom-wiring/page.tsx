@@ -50,7 +50,7 @@ export default function CustomWiringPage() {
             <LinkButton href="/quote" size="lg">
               Get a Quote
             </LinkButton>
-            <LinkButton href="/remote-tuning" size="lg" variant="secondary">
+            <LinkButton href="/tuning" size="lg" variant="secondary">
               See Supported ECUs
             </LinkButton>
           </div>
