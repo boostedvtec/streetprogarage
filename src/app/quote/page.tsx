@@ -170,9 +170,19 @@ export default function QuotePage() {
           <CheckCircle size={56} weight="fill" className="mx-auto text-accent" aria-hidden />
           <h1 className="font-display mt-6 text-4xl">Build List Received</h1>
           <p className="mt-4 text-foreground-muted">
-            Thanks {form.name || "there"} — we&rsquo;ve received your build list and
-            ballpark estimate of <strong className="text-foreground">{formatResolvedAmount(quote.low, region)}&ndash;{formatResolvedAmount(quote.high, region)}</strong>.
-            We&rsquo;ll follow up by email at {form.email} with your exact quote.
+            {region === "pk" ? (
+              <>
+                Thanks {form.name || "there"} — we&rsquo;ve received your build
+                list. We&rsquo;ll follow up by email at {form.email} with your
+                quote.
+              </>
+            ) : (
+              <>
+                Thanks {form.name || "there"} — we&rsquo;ve received your build list and
+                ballpark estimate of <strong className="text-foreground">{formatResolvedAmount(quote.low, region)}&ndash;{formatResolvedAmount(quote.high, region)}</strong>.
+                We&rsquo;ll follow up by email at {form.email} with your exact quote.
+              </>
+            )}
           </p>
           <Button className="mt-8" onClick={() => window.location.assign("/")}>
             Back to Home
@@ -186,10 +196,13 @@ export default function QuotePage() {
     <Section>
       <Container>
         <Eyebrow>Build List &amp; Quote</Eyebrow>
-        <h1 className="font-display mt-4 text-5xl">Get Your Ballpark Quote</h1>
+        <h1 className="font-display mt-4 text-5xl">
+          {region === "pk" ? "Submit Your Build List" : "Get Your Ballpark Quote"}
+        </h1>
         <p className="mt-4 max-w-2xl text-foreground-muted">
-          Tell us about your build — every tune is custom-written, so the more
-          detail you give us, the more accurate your estimate will be.
+          {region === "pk"
+            ? "Tell us about your build — every tune is custom-written, so the more detail you give us, the more accurate your quote will be. We'll confirm pricing directly once we've reviewed it."
+            : "Tell us about your build — every tune is custom-written, so the more detail you give us, the more accurate your estimate will be."}
         </p>
 
         {/* Progress */}
@@ -440,24 +453,36 @@ export default function QuotePage() {
                 </FieldWrap>
               )}
 
-              <div className="rounded-xl border border-accent/30 bg-accent-soft p-6">
-                <h2 className="font-display text-2xl">
-                  Ballpark Estimate: {formatResolvedAmount(quote.low, region)}&ndash;{formatResolvedAmount(quote.high, region)}
-                </h2>
-                <ul className="mt-3 space-y-1 text-sm text-foreground-muted">
-                  {quote.breakdown.map((b) => (
-                    <li key={b.label} className="flex justify-between gap-4">
-                      <span>{b.label}</span>
-                      <span>{formatResolvedAmount(b.amount, region)}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-3 text-xs text-foreground-subtle">
-                  This is a ballpark estimate based on your answers — every
-                  tune is custom, so your exact quote is confirmed after we
-                  review your full build.
-                </p>
-              </div>
+              {region === "pk" ? (
+                <div className="rounded-xl border border-accent/30 bg-accent-soft p-6">
+                  <h2 className="font-display text-2xl">Pricing Confirmed After Review</h2>
+                  <p className="mt-3 text-sm text-foreground-muted">
+                    Every tune is custom-written, so we&rsquo;ll quote you
+                    directly based on your build details rather than showing
+                    an automatic estimate here. Submit your build list below
+                    and we&rsquo;ll get back to you with pricing.
+                  </p>
+                </div>
+              ) : (
+                <div className="rounded-xl border border-accent/30 bg-accent-soft p-6">
+                  <h2 className="font-display text-2xl">
+                    Ballpark Estimate: {formatResolvedAmount(quote.low, region)}&ndash;{formatResolvedAmount(quote.high, region)}
+                  </h2>
+                  <ul className="mt-3 space-y-1 text-sm text-foreground-muted">
+                    {quote.breakdown.map((b) => (
+                      <li key={b.label} className="flex justify-between gap-4">
+                        <span>{b.label}</span>
+                        <span>{formatResolvedAmount(b.amount, region)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-3 text-xs text-foreground-subtle">
+                    This is a ballpark estimate based on your answers — every
+                    tune is custom, so your exact quote is confirmed after we
+                    review your full build.
+                  </p>
+                </div>
+              )}
 
               <label className="flex items-start gap-3 rounded-xl border border-border-strong bg-surface-2 p-4 text-sm">
                 <input

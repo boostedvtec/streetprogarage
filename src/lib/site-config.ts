@@ -89,12 +89,12 @@ export const tuningAddOns: AddOn[] = [
   {
     name: "Launch Control",
     description: "Custom launch RPM & anti-stall mapping for consistent starts.",
-    price: { uk: 50, pk: 10000 },
+    price: { uk: 50, pk: null },
   },
   {
     name: "Anti-Lag System (ALS)",
     description: "Anti-lag mapping for turbocharged builds — reduces spool lag.",
-    price: { uk: 100, pk: 10000 },
+    price: { uk: 100, pk: null },
   },
   {
     name: "Pops & Bangs / Overrun Crackle",
@@ -104,12 +104,12 @@ export const tuningAddOns: AddOn[] = [
   {
     name: "Flex Fuel Tuning",
     description: "Ethanol content sensor integration with live-adjusting fuel & timing tables.",
-    price: { uk: 150, pk: 20000 },
+    price: { uk: 150, pk: null },
   },
   {
     name: "Methanol Injection Tuning",
     description: "Progressive methanol injection mapping and safety failsafes.",
-    price: { uk: 100, pk: 10000 },
+    price: { uk: 100, pk: null },
   },
   {
     name: "Mechanical Cam Degree Optimisation",
@@ -187,7 +187,7 @@ export const preDynoTests: PreDynoTest[] = [
 ];
 
 export const rollingRoad = {
-  ratePerHour: { uk: 100, pk: 15000 } as RegionPrice,
+  ratePerHour: { uk: 100, pk: null } as RegionPrice,
   currency: "£",
   location: "Manchester, UK",
   bookingPolicy:
@@ -211,17 +211,17 @@ export const naTunePackages: {
 } = {
   remoteTune: {
     label: "Remote Tune (NA)",
-    price: { uk: 300, pk: 75000 },
+    price: { uk: 300, pk: null },
     description: "A custom tune written live over a remote connection — no dyno time required.",
   },
   roadTune: {
     label: "Road Tune (NA)",
-    price: { uk: 300, pk: 75000 },
+    price: { uk: 300, pk: null },
     description: "A custom tune written from road-driven datalogs — no dyno time required.",
   },
   dynoTune: {
     label: "Rolling Road Dyno Tune (NA)",
-    price: { uk: 300, pk: 75000 },
+    price: { uk: 300, pk: null },
     description: "Flat rate for naturally aspirated builds — includes your dyno session.",
   },
 };
@@ -241,13 +241,13 @@ export const forcedInductionUplifts: ForcedInductionUplift[] = [
   {
     key: "stock",
     label: "Stock Internal — Turbo / Supercharged / Nitrous",
-    amount: { uk: 150, pk: 50000 },
+    amount: { uk: 150, pk: null },
     description: "Factory-internal engine running a power adder.",
   },
   {
     key: "built",
     label: "Built Internal — Turbo / Supercharged / Nitrous",
-    amount: { uk: 250, pk: 75000 },
+    amount: { uk: 250, pk: null },
     description: "Aftermarket/forged internals running a power adder.",
   },
 ];
