@@ -6,7 +6,7 @@ import { ArrowLeft, ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/s
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { FieldWrap, TextInput, TextArea, CheckboxGroup, RadioGroup } from "@/components/form/fields";
-import { tuningAddOns, preDynoTests, rollingRoad, forcedInductionUplifts, variablePriceNote } from "@/lib/site-config";
+import { tuningAddOns, preDynoTests, rollingRoad, forcedInductionUplifts, variablePriceNote, dynoHoursGuidance } from "@/lib/site-config";
 import { estimateQuote, type EcuType, type ServiceType, type EngineInternals } from "@/lib/quote";
 import { formatRegionPrice, formatResolvedAmount, resolveRegionPrice, dynoServiceLabel, type Region } from "@/lib/region";
 import { useRegion } from "@/components/region/region-context";
@@ -72,6 +72,7 @@ type FormState = {
   specialRequirement: string;
   serviceType: ServiceType;
   rollingRoadHours: number;
+  rollingRoadHoursTouched: boolean;
   addOns: string[];
   preDyno: string[];
   declarationAccepted: boolean;
@@ -109,6 +110,7 @@ const initialState: FormState = {
   specialRequirement: "",
   serviceType: "remote",
   rollingRoadHours: 2,
+  rollingRoadHoursTouched: false,
   addOns: [],
   preDyno: [],
   declarationAccepted: false,
@@ -135,6 +137,14 @@ export default function QuotePage() {
     pk: null,
   };
 
+  const isForcedInduction = form.aspiration.some((a) =>
+    (FORCED_INDUCTION_ASPIRATIONS as readonly string[]).includes(a)
+  );
+  // Naturally aspirated engines without a power adder typically need less
+  // dyno time than forced induction or otherwise complex builds.
+  const suggestedHours = isForcedInduction ? 2 : 1;
+  const effectiveHours = form.rollingRoadHoursTouched ? form.rollingRoadHours : suggestedHours;
+
   const quote = estimateQuote({
     region,
     serviceType: form.serviceType,
@@ -143,7 +153,7 @@ export default function QuotePage() {
     engineInternals: form.engineInternals,
     addOns: form.addOns,
     preDyno: form.preDyno,
-    rollingRoadHours: form.rollingRoadHours,
+    rollingRoadHours: effectiveHours,
   });
 
   const isLastStep = step === STEP_LABELS.length - 1;
@@ -419,14 +429,17 @@ export default function QuotePage() {
                   label={`Estimated ${dynoServiceLabel(region)} Hours`}
                   hint={
                     resolveRegionPrice(rollingRoad.ratePerHour, region) === null
-                      ? "Ask for pricing — most tunes need 2-4 hours"
-                      : `${formatRegionPrice(rollingRoad.ratePerHour, region)}/hr — most tunes need 2-4 hours`
+                      ? `Ask for pricing. ${dynoHoursGuidance}`
+                      : `${formatRegionPrice(rollingRoad.ratePerHour, region)}/hr, billed separately from the tune price. ${dynoHoursGuidance}`
                   }
                 >
                   <TextInput
                     type="number"
-                    value={String(form.rollingRoadHours)}
-                    onChange={(v) => set("rollingRoadHours", Number(v) || 1)}
+                    value={String(effectiveHours)}
+                    onChange={(v) => {
+                      set("rollingRoadHours", Number(v) || 1);
+                      set("rollingRoadHoursTouched", true);
+                    }}
                   />
                 </FieldWrap>
               )}

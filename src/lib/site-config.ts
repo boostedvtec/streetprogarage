@@ -118,7 +118,8 @@ export const tuningAddOns: AddOn[] = [
   },
   {
     name: "Extra Revision",
-    description: "Additional tuning revision beyond what's included in your package.",
+    description:
+      "Additional tuning revision beyond what's included in your package. Post-delivery revision requests (e.g. a cold-start issue) are free within 14 days of your final tune — after that, revisions are chargeable at this rate.",
     price: { uk: 50, pk: null },
   },
   {
@@ -194,6 +195,10 @@ export const rollingRoad = {
     "Rolling road dyno tune sessions require pre-booking and a deposit. No-show bookings forfeit the booking fee — it is non-refundable.",
 };
 
+/** Dyno time is billed separately from the flat tune price — this explains the typical range. */
+export const dynoHoursGuidance =
+  "Dyno time is billed separately from the tune price, typically 1 hour for naturally aspirated engines without variable valve timing (VVTi/VTEC), and 2–4 hours for forced induction or more complex builds — the exact time depends on your build list and power target.";
+
 export type TunePackage = {
   label: string;
   price: RegionPrice;
@@ -222,7 +227,8 @@ export const naTunePackages: {
   dynoTune: {
     label: "Rolling Road Dyno Tune (NA)",
     price: { uk: 300, pk: null },
-    description: "Flat rate for naturally aspirated builds — includes your dyno session.",
+    description:
+      "Flat tune rate for naturally aspirated builds — dyno time is billed separately at the hourly rate.",
   },
 };
 

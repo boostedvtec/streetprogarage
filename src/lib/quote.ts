@@ -1,5 +1,5 @@
 import { tuningAddOns, preDynoTests, rollingRoad, naTunePackages, forcedInductionUplifts } from "./site-config";
-import { resolveRegionPrice, dynoServiceLabel, type Region, type RegionPrice } from "./region";
+import { resolveRegionPrice, formatResolvedAmount, dynoServiceLabel, type Region, type RegionPrice } from "./region";
 
 export type ServiceType = "remote" | "rolling-road" | "both";
 export type EcuType = "stock" | "standalone" | "unsure";
@@ -38,16 +38,17 @@ export function estimateQuote(input: QuoteInputs) {
   const hasAnsweredAspiration = input.aspiration.length > 0;
 
   if (hasAnsweredAspiration) {
-    // Confirmed flat-rate tune fee, the same base across every method —
-    // rolling road's dyno session is bundled in. Drop the "(NA)" suffix
-    // once a power adder uplift is being added below, since the base fee
-    // is no longer describing a naturally aspirated build.
+    // Confirmed flat-rate tune fee, the same base across every method.
+    // Dyno time is NOT included — it's billed separately below whenever
+    // the service involves the dyno. Drop the "(NA)" suffix once a power
+    // adder uplift is being added below, since the base fee is no longer
+    // describing a naturally aspirated build.
     const naSuffix = isForcedInduction ? "" : " (NA)";
     const baseLabel =
       input.serviceType === "remote"
         ? `Remote Tune${naSuffix}`
         : input.serviceType === "rolling-road"
-        ? `${dynoServiceLabel(region)}${naSuffix} (incl. dyno session)`
+        ? `${dynoServiceLabel(region)}${naSuffix}`
         : `Road Tune${naSuffix}`;
     breakdown.push({
       label: baseLabel,
@@ -61,6 +62,18 @@ export function estimateQuote(input: QuoteInputs) {
       breakdown.push({
         label: uplift.label,
         amount: resolveRegionPrice(uplift.amount, region),
+      });
+    }
+
+    if (input.serviceType !== "remote") {
+      const hours = Math.max(1, input.rollingRoadHours || (isForcedInduction ? 2 : 1));
+      const rate = resolveRegionPrice(rollingRoad.ratePerHour, region);
+      breakdown.push({
+        label:
+          rate === null
+            ? "Dyno time (ask for pricing)"
+            : `Dyno time (${hours}hr @ ${formatResolvedAmount(rate, region)}/hr)`,
+        amount: rate === null ? null : hours * rate,
       });
     }
   } else {

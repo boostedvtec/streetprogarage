@@ -29,6 +29,7 @@ import {
   preDynoTests,
   rollingRoad,
   variablePriceNote,
+  dynoHoursGuidance,
 } from "@/lib/site-config";
 import { useRegion } from "@/components/region/region-context";
 import { PriceTag } from "@/components/region/price-tag";
@@ -199,6 +200,18 @@ function TuningPageContent() {
                 </p>
               </div>
             </div>
+            <div className="mt-6 flex items-start gap-3 rounded-xl border border-border-strong bg-surface-2 p-6">
+              <Warning size={20} weight="fill" className="mt-0.5 shrink-0 text-accent" aria-hidden />
+              <div>
+                <h3 className="font-semibold">Vehicle Must Be Roadworthy</h3>
+                <p className="mt-1 text-sm text-foreground-muted">
+                  Road tuning involves driving at high speed on public roads
+                  to gather datalogs. Your brakes, tyres, steering and
+                  suspension must be in safe, roadworthy condition before you
+                  start — see the Pre-Tune Checklist for the full list.
+                </p>
+              </div>
+            </div>
           </Container>
         </Section>
       )}
@@ -251,6 +264,16 @@ function TuningPageContent() {
                     address confirmed once your booking is secured.
                   </p>
                 </div>
+              </div>
+
+              <div className="mt-6 rounded-xl border border-border-strong bg-surface-2 p-6">
+                <div className="flex items-center gap-3">
+                  <Info size={20} weight="fill" className="text-accent" aria-hidden />
+                  <h3 className="font-semibold">Dyno Time Is Billed Separately</h3>
+                </div>
+                <p className="mt-2 text-sm text-foreground-muted">
+                  The tune price above does not include dyno time. {dynoHoursGuidance}
+                </p>
               </div>
 
               <div className="mt-6 rounded-xl border border-border-strong bg-surface-2 p-6">
@@ -557,7 +580,7 @@ function TuningPageContent() {
             },
             {
               title: "Revise until it's right",
-              body: "We review your logs and send updated maps, repeating as many revisions as the build needs.",
+              body: "We review your logs and send updated maps, repeating as many revisions as the build needs. If you notice a cold-start issue or want a revision after your final tune, let us know within 14 days — after that, revisions are chargeable.",
             },
             {
               title: "Accept the declaration",

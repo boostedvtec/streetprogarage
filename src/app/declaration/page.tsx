@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Warning, MagnifyingGlass, Scales } from "@phosphor-icons/react/dist/ssr";
+import { Warning, MagnifyingGlass, Scales, ArrowsClockwise } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { preDynoTests } from "@/lib/site-config";
@@ -84,6 +84,22 @@ export default function DeclarationPage() {
             </p>
           </div>
 
+          <div className="mt-8 rounded-xl border border-accent/30 bg-accent-soft p-8">
+            <div className="flex items-center gap-3">
+              <Warning size={26} weight="fill" className="shrink-0 text-accent" aria-hidden />
+              <h2 className="font-display text-2xl">Vehicle Roadworthiness (Road Tuning)</h2>
+            </div>
+            <p className="mt-4 leading-relaxed text-foreground">
+              Road tuning involves driving your vehicle at high speed on
+              public roads to gather datalogs. Your brakes, tyres, steering
+              and suspension must be in safe, roadworthy condition before a
+              road tuning session — see the Pre-Tune Checklist. Street PRO
+              Garage is not responsible for accidents, damage or injury
+              arising from a vehicle that was not roadworthy at the time of
+              tuning.
+            </p>
+          </div>
+
           <div className="mt-8 rounded-xl border border-border bg-surface p-8">
             <h2 className="font-display text-2xl">Why This Matters</h2>
             <p className="mt-4 leading-relaxed text-foreground-muted">
@@ -118,6 +134,21 @@ export default function DeclarationPage() {
                 </li>
               ))}
             </ul>
+          </div>
+
+          <div className="mt-8 rounded-xl border border-border bg-surface p-8">
+            <div className="flex items-center gap-3">
+              <ArrowsClockwise size={24} className="text-accent" aria-hidden />
+              <h2 className="font-display text-2xl">Post-Tune Revisions</h2>
+            </div>
+            <p className="mt-4 leading-relaxed text-foreground-muted">
+              If you notice an issue after your final tune — including a
+              cold-start problem, or you feel the map needs adjusting — get
+              in touch within <strong className="text-foreground">14 days
+              of your final tune</strong> and we&rsquo;ll revise it as part of
+              your original booking. After 14 days, revisions are treated as
+              a new Extra Revision and charged accordingly.
+            </p>
           </div>
 
           <div className="mt-8 rounded-xl border border-border bg-surface p-8">
