@@ -34,7 +34,7 @@ function getServiceTypeOptions(region: Region, city: string): { value: ServiceTy
   ];
 }
 const ECU_TYPE_OPTIONS: { value: EcuType; label: string }[] = [
-  { value: "stock", label: "Stock ECU (HP Tuners reflash)" },
+  { value: "stock", label: "Stock ECU" },
   { value: "standalone", label: "Standalone ECU" },
 ];
 const ECU_TYPE_EXAMPLES: Record<EcuType, string> = {
