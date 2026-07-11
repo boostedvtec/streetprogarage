@@ -38,6 +38,11 @@ const ECU_TYPE_OPTIONS: { value: EcuType; label: string }[] = [
   { value: "standalone", label: "Standalone ECU" },
   { value: "unsure", label: "Not sure yet" },
 ];
+const ECU_TYPE_EXAMPLES: Record<EcuType, string> = {
+  stock: "e.g. Honda P28 (chipped), Hondata, EcuMaster DET3+, HP Tuners",
+  standalone: "e.g. AEM Infinity, Link ECU, MaxxECU, Haltech, Megasquirt",
+  unsure: "",
+};
 
 function SummaryRow({ label, value }: { label: string; value: string }) {
   return (
@@ -367,9 +372,6 @@ export default function QuotePage() {
                   onChange={(v) => set("injectorStatus", v)}
                 />
               </FieldWrap>
-              <FieldWrap label="ECU Configuration" required hint="Make/model of ECU or tuning suite">
-                <TextInput value={form.ecuConfig} onChange={(v) => set("ecuConfig", v)} required />
-              </FieldWrap>
               <FieldWrap label="ECU Platform Type" required hint="Used to scope your ballpark estimate">
                 <RadioGroup
                   name="ecuType"
@@ -378,6 +380,21 @@ export default function QuotePage() {
                   onChange={(label) =>
                     set("ecuType", ECU_TYPE_OPTIONS.find((o) => o.label === label)?.value ?? "unsure")
                   }
+                />
+                {ECU_TYPE_EXAMPLES[form.ecuType] && (
+                  <p className="mt-1.5 text-xs text-foreground-subtle">{ECU_TYPE_EXAMPLES[form.ecuType]}</p>
+                )}
+              </FieldWrap>
+              <FieldWrap
+                label="ECU Configuration"
+                required
+                hint={form.ecuType === "unsure" ? "Make/model of ECU or tuning suite, if known" : "Make/model of your ECU or tuning suite"}
+              >
+                <TextInput
+                  value={form.ecuConfig}
+                  onChange={(v) => set("ecuConfig", v)}
+                  placeholder={ECU_TYPE_EXAMPLES[form.ecuType] || undefined}
+                  required
                 />
               </FieldWrap>
               <FieldWrap label="Catch Can Installed?" required>
