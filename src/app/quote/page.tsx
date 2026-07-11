@@ -39,6 +39,17 @@ const ECU_TYPE_OPTIONS: { value: EcuType; label: string }[] = [
   { value: "unsure", label: "Not sure yet" },
 ];
 
+function SummaryRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <dt className="text-xs font-semibold uppercase tracking-wide text-foreground-subtle">
+        {label}
+      </dt>
+      <dd className="mt-0.5 text-foreground">{value}</dd>
+    </div>
+  );
+}
+
 type FormState = {
   name: string;
   email: string;
@@ -481,36 +492,90 @@ export default function QuotePage() {
                 </FieldWrap>
               )}
 
-              {region === "pk" ? (
-                <div className="rounded-xl border border-accent/30 bg-accent-soft p-6">
-                  <h2 className="font-display text-2xl">Pricing Confirmed After Review</h2>
-                  <p className="mt-3 text-sm text-foreground-muted">
-                    Every tune is custom-written, so we&rsquo;ll quote you
-                    directly based on your build details rather than showing
-                    an automatic estimate here. Submit your build list below
-                    and we&rsquo;ll get back to you with pricing.
-                  </p>
+              <div className="rounded-xl border border-accent/30 bg-accent-soft p-6">
+                <h2 className="font-display text-2xl">Review Your Build</h2>
+                <p className="mt-1 text-xs text-foreground-subtle">
+                  Double-check this before submitting.
+                </p>
+                <dl className="mt-4 grid gap-4 sm:grid-cols-2">
+                  <SummaryRow
+                    label="Vehicle"
+                    value={
+                      form.vehicle || form.engineCode
+                        ? `${form.vehicle || "—"}${form.engineCode ? ` (${form.engineCode})` : ""}`
+                        : "—"
+                    }
+                  />
+                  <SummaryRow label="Aspiration" value={form.aspiration[0] || "—"} />
+                  {isForcedInduction && (
+                    <SummaryRow
+                      label="Engine Internals"
+                      value={
+                        ENGINE_INTERNALS_OPTIONS.find((o) => o.value === form.engineInternals)
+                          ?.label ?? "—"
+                      }
+                    />
+                  )}
+                  <SummaryRow label="Fuel Type" value={form.fuelType || "—"} />
+                  <SummaryRow
+                    label="ECU Platform"
+                    value={ECU_TYPE_OPTIONS.find((o) => o.value === form.ecuType)?.label ?? "—"}
+                  />
+                  <SummaryRow label="Vehicle Application" value={form.vehicleApplication || "—"} />
+                  <SummaryRow
+                    label="Service Type"
+                    value={
+                      serviceTypeOptions.find((o) => o.value === form.serviceType)?.label ?? "—"
+                    }
+                  />
+                  {form.serviceType !== "remote" && (
+                    <SummaryRow
+                      label={`${dynoServiceLabel(region)} Hours`}
+                      value={`${effectiveHours}hr`}
+                    />
+                  )}
+                  <SummaryRow
+                    label="Add-Ons"
+                    value={form.addOns.length ? form.addOns.join(", ") : "None"}
+                  />
+                  {form.serviceType !== "remote" && (
+                    <SummaryRow
+                      label="Pre-Dyno Checks"
+                      value={form.preDyno.length ? form.preDyno.join(", ") : "None"}
+                    />
+                  )}
+                </dl>
+
+                <div className="mt-6 border-t border-border pt-4">
+                  {region === "pk" ? (
+                    <p className="text-sm text-foreground-muted">
+                      Every tune is custom-written, so we&rsquo;ll quote you
+                      directly based on your build details above. Submit your
+                      build list below and we&rsquo;ll get back to you with
+                      pricing.
+                    </p>
+                  ) : (
+                    <>
+                      <p className="font-display text-2xl">
+                        Estimated Price Range: {formatResolvedAmount(quote.low, region)}&ndash;{formatResolvedAmount(quote.high, region)}
+                      </p>
+                      <ul className="mt-3 space-y-1 text-sm text-foreground-muted">
+                        {quote.breakdown.map((b) => (
+                          <li key={b.label} className="flex justify-between gap-4">
+                            <span>{b.label}</span>
+                            <span>{formatResolvedAmount(b.amount, region)}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="mt-3 text-xs text-foreground-subtle">
+                        This is a ballpark estimate based on your answers —
+                        every tune is custom, so your exact quote is
+                        confirmed after we review your full build.
+                      </p>
+                    </>
+                  )}
                 </div>
-              ) : (
-                <div className="rounded-xl border border-accent/30 bg-accent-soft p-6">
-                  <h2 className="font-display text-2xl">
-                    Ballpark Estimate: {formatResolvedAmount(quote.low, region)}&ndash;{formatResolvedAmount(quote.high, region)}
-                  </h2>
-                  <ul className="mt-3 space-y-1 text-sm text-foreground-muted">
-                    {quote.breakdown.map((b) => (
-                      <li key={b.label} className="flex justify-between gap-4">
-                        <span>{b.label}</span>
-                        <span>{formatResolvedAmount(b.amount, region)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="mt-3 text-xs text-foreground-subtle">
-                    This is a ballpark estimate based on your answers — every
-                    tune is custom, so your exact quote is confirmed after we
-                    review your full build.
-                  </p>
-                </div>
-              )}
+              </div>
 
               <label className="flex items-start gap-3 rounded-xl border border-border-strong bg-surface-2 p-4 text-sm">
                 <input
