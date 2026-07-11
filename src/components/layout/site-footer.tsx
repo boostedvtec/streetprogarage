@@ -53,7 +53,13 @@ export function SiteFooter() {
               <span>
                 {data.city}, {data.country}
                 <br />
-                Remote tuning worldwide
+                <span className="text-xs text-foreground-subtle">{data.locationNote}</span>
+                {!data.locationNote.toLowerCase().includes("remote tuning") && (
+                  <>
+                    <br />
+                    Remote tuning worldwide
+                  </>
+                )}
               </span>
             </li>
             <li className="flex items-center gap-2">
