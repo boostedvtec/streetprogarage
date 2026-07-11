@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { EnvelopeSimple, Phone, MapPin } from "@phosphor-icons/react/dist/ssr";
+import { EnvelopeSimple, WhatsappLogo, MapPin } from "@phosphor-icons/react/dist/ssr";
 import { Logo } from "@/components/logo";
 import { navLinks, siteConfig } from "@/lib/site-config";
 import { useRegion } from "@/components/region/region-context";
@@ -57,14 +57,14 @@ export function SiteFooter() {
               </span>
             </li>
             <li className="flex items-center gap-2">
-              <Phone size={18} className="shrink-0 text-accent" aria-hidden />
-              <a href={data.phoneHref} className="hover:text-foreground">
+              <WhatsappLogo size={18} className="shrink-0 text-accent" aria-hidden />
+              <a href={data.phoneHref} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">
                 {data.phone}
               </a>
             </li>
             {data.whatsapp && data.whatsappHref && (
               <li className="flex items-center gap-2">
-                <Phone size={18} className="shrink-0 text-accent" aria-hidden />
+                <WhatsappLogo size={18} className="shrink-0 text-accent" aria-hidden />
                 <a href={data.whatsappHref} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">
                   {data.whatsapp} (WhatsApp)
                 </a>

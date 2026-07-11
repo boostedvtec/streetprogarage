@@ -31,7 +31,9 @@ export const regionData: Record<Region, RegionData> = {
     city: "Manchester",
     country: "United Kingdom",
     phone: "+44 7438 483559",
-    phoneHref: "tel:+447438483559",
+    // Every number on the site is WhatsApp-enabled — link straight to a chat
+    // rather than a phone dialer.
+    phoneHref: "https://wa.me/447438483559",
     whatsapp: null,
     whatsappHref: null,
     email: "fradybooth@gmail.com",
@@ -53,13 +55,13 @@ export const regionData: Record<Region, RegionData> = {
     city: "Karachi",
     country: "Pakistan",
     phone: "+92 346 2767382",
-    phoneHref: "tel:+923462767382",
+    phoneHref: "https://wa.me/923462767382",
     whatsapp: "+92 321 3356171",
     whatsappHref: "https://wa.me/923213356171",
     email: "fradybooth@gmail.com",
     locationNote:
-      "Workshop based in Nazimabad, Karachi, Pakistan. Exact address confirmed upon booking.",
-    mapQuery: "Nazimabad, Karachi, Pakistan",
+      "Workshop on Shamim Street, Gulberg Town, Karachi, Pakistan. Exact address confirmed upon booking.",
+    mapQuery: "24.9290278,67.0648889",
     services: {
       remoteTuning: true,
       rollingRoadDyno: true,

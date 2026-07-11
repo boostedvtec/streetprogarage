@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { List, X, Phone, ShoppingCart } from "@phosphor-icons/react/dist/ssr";
+import { List, X, WhatsappLogo, ShoppingCart } from "@phosphor-icons/react/dist/ssr";
 import { Logo } from "@/components/logo";
 import { navLinks } from "@/lib/site-config";
 import { useCart } from "@/components/cart/cart-context";
@@ -52,9 +52,11 @@ export function SiteHeader() {
         <div className="hidden items-center gap-3 lg:flex">
           <a
             href={data.phoneHref}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-2 text-sm font-medium text-foreground-muted transition-colors hover:text-foreground"
           >
-            <Phone size={18} weight="fill" aria-hidden />
+            <WhatsappLogo size={18} weight="fill" aria-hidden />
             {data.phone}
           </a>
           <RegionSwitcher />
@@ -104,9 +106,11 @@ export function SiteHeader() {
           <div className="mt-4 flex flex-col gap-3 border-t border-border pt-4">
             <a
               href={data.phoneHref}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-2 text-sm font-medium text-foreground-muted"
             >
-              <Phone size={18} weight="fill" aria-hidden />
+              <WhatsappLogo size={18} weight="fill" aria-hidden />
               {data.phone}
             </a>
             <Link

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Phone, EnvelopeSimple, MapPin, InstagramLogo, WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
+import { EnvelopeSimple, MapPin, InstagramLogo, WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { FieldWrap, TextInput, TextArea, RadioGroup } from "@/components/form/fields";
@@ -84,10 +84,15 @@ export default function ContactPage() {
             </div>
             <div className="rounded-xl border border-border bg-surface p-6">
               <div className="flex items-start gap-3">
-                <Phone size={22} className="mt-0.5 shrink-0 text-accent" aria-hidden />
+                <WhatsappLogo size={22} className="mt-0.5 shrink-0 text-accent" aria-hidden />
                 <div>
-                  <h2 className="font-semibold">Phone</h2>
-                  <a href={data.phoneHref} className="mt-1 block text-sm text-foreground-muted hover:text-foreground">
+                  <h2 className="font-semibold">Phone / WhatsApp</h2>
+                  <a
+                    href={data.phoneHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1 block text-sm text-foreground-muted hover:text-foreground"
+                  >
                     {data.phone}
                   </a>
                 </div>
