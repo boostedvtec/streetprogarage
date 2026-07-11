@@ -36,7 +36,6 @@ function getServiceTypeOptions(region: Region, city: string): { value: ServiceTy
 const ECU_TYPE_OPTIONS: { value: EcuType; label: string }[] = [
   { value: "stock", label: "Stock ECU (HP Tuners reflash)" },
   { value: "standalone", label: "Standalone ECU" },
-  { value: "unsure", label: "Not sure yet" },
 ];
 const ECU_TYPE_EXAMPLES: Record<EcuType, string> = {
   stock: "e.g. Honda P28 (chipped), Hondata, EcuMaster DET3+, HP Tuners",
@@ -381,22 +380,21 @@ export default function QuotePage() {
                     set("ecuType", ECU_TYPE_OPTIONS.find((o) => o.label === label)?.value ?? "unsure")
                   }
                 />
-                {ECU_TYPE_EXAMPLES[form.ecuType] && (
-                  <p className="mt-1.5 text-xs text-foreground-subtle">{ECU_TYPE_EXAMPLES[form.ecuType]}</p>
-                )}
               </FieldWrap>
-              <FieldWrap
-                label="ECU Configuration"
-                required
-                hint={form.ecuType === "unsure" ? "Make/model of ECU or tuning suite, if known" : "Make/model of your ECU or tuning suite"}
-              >
-                <TextInput
-                  value={form.ecuConfig}
-                  onChange={(v) => set("ecuConfig", v)}
-                  placeholder={ECU_TYPE_EXAMPLES[form.ecuType] || undefined}
+              {form.ecuType !== "unsure" && (
+                <FieldWrap
+                  label="ECU Configuration"
                   required
-                />
-              </FieldWrap>
+                  hint={`${ECU_TYPE_EXAMPLES[form.ecuType]} — make/model of your ECU or tuning suite`}
+                >
+                  <TextInput
+                    value={form.ecuConfig}
+                    onChange={(v) => set("ecuConfig", v)}
+                    placeholder={ECU_TYPE_EXAMPLES[form.ecuType]}
+                    required
+                  />
+                </FieldWrap>
+              )}
               <FieldWrap label="Catch Can Installed?" required>
                 <RadioGroup name="catchCan" options={YES_NO} value={form.catchCan} onChange={(v) => set("catchCan", v)} />
               </FieldWrap>
