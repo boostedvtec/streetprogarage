@@ -1,5 +1,8 @@
 import type { RegionPrice } from "./region";
 
+/** Canonical production domain — used for sitemap, robots.txt, canonical links and structured data. */
+export const siteUrl = "https://www.streetprogarage.com";
+
 export const siteConfig = {
   name: "Street PRO Garage",
   shortName: "SPG",
@@ -43,6 +46,11 @@ export const supportedEcus: EcuCategory[] = [
     note: "Credit-locked platform — see HP Tuners Credits below.",
   },
   {
+    category: "Honda-Specific Platforms (Piggyback & Chipped ECU)",
+    ecus: ["Honda P28 (chipped)", "Hondata S300", "Hondavert", "HTS", "Neptune RTP"],
+    note: "Covers Civic and Integra D-series, B-series and K-series builds.",
+  },
+  {
     category: "Standalone ECUs",
     ecus: [
       "MaxxECU",
@@ -52,9 +60,24 @@ export const supportedEcus: EcuCategory[] = [
       "Megasquirt",
       "ME (Motorsport Electronics)",
       "AEM Infinity",
-      "EcuMaster",
+      "EcuMaster (incl. DET3+)",
     ],
   },
+];
+
+export type VehiclePlatform = {
+  make: string;
+  models: string;
+  engines: string[];
+};
+
+/** Makes, models and engine codes we regularly tune — used on the Tuning page for platform coverage. */
+export const tunedVehiclePlatforms: VehiclePlatform[] = [
+  { make: "Honda", models: "Civic & Integra", engines: ["D14", "D16", "B16", "B18"] },
+  { make: "Toyota", models: "Supra & MR2", engines: ["2JZGTE", "1JZGTE", "2ZZ"] },
+  { make: "Mitsubishi", models: "Lancer Evo V, VI, VII, VIII, IX & X", engines: ["4G63T"] },
+  { make: "Subaru", models: "Impreza WRX & STI", engines: [] },
+  { make: "Mazda", models: "MX-5 — naturally aspirated, turbo & supercharged", engines: [] },
 ];
 
 export type EcuBrandLogo = {

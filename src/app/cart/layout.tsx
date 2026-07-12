@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Checkout | Street PRO Garage",
+  title: "Cart | Street PRO Garage",
   robots: { index: false, follow: false },
 };
 
-export default function CheckoutLayout({ children }: { children: React.ReactNode }) {
+export default function CartLayout({ children }: { children: React.ReactNode }) {
   return children;
 }

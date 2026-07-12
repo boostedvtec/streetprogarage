@@ -9,6 +9,7 @@ import {
   ChartLineUp,
   Info,
   Circuitry,
+  Car,
   CheckCircle,
   Clock,
   Warning,
@@ -30,6 +31,7 @@ import {
   rollingRoad,
   variablePriceNote,
   dynoHoursGuidance,
+  tunedVehiclePlatforms,
 } from "@/lib/site-config";
 import { useRegion } from "@/components/region/region-context";
 import { PriceTag } from "@/components/region/price-tag";
@@ -427,6 +429,53 @@ function TuningPageContent() {
               <BrandLogo key={logo.name} {...logo} />
             ))}
           </div>
+        </Container>
+      </Section>
+
+      {/* Shared: Makes & models */}
+      <Section>
+        <Container>
+          <div className="max-w-2xl">
+            <Eyebrow>Platforms</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl">
+              Makes &amp; Models We Tune
+            </h2>
+            <p className="mt-4 text-foreground-muted leading-relaxed">
+              Daily driver, track day or drag-only build — a sample of the
+              platforms we regularly work with.
+            </p>
+          </div>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {tunedVehiclePlatforms.map((platform) => (
+              <div
+                key={platform.make}
+                className="rounded-xl border border-border bg-surface p-8"
+              >
+                <div className="flex items-center gap-3">
+                  <Car size={24} className="text-accent" aria-hidden />
+                  <h3 className="font-display text-xl">{platform.make}</h3>
+                </div>
+                <p className="mt-3 text-sm text-foreground-muted">{platform.models}</p>
+                {platform.engines.length > 0 && (
+                  <ul className="mt-5 flex flex-wrap gap-2">
+                    {platform.engines.map((engine) => (
+                      <li
+                        key={engine}
+                        className="rounded-full border border-border-strong bg-surface-2 px-3 py-1 text-xs font-medium text-foreground-muted"
+                      >
+                        {engine}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+          <p className="mt-6 text-xs text-foreground-subtle">
+            Don&rsquo;t see your platform listed? Submit your build list — every
+            tune is custom-written, so if it&rsquo;s got an ECU we can talk to, we
+            can tune it.
+          </p>
         </Container>
       </Section>
 

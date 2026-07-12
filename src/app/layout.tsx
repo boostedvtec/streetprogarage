@@ -6,6 +6,50 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { CartProvider } from "@/components/cart/cart-context";
 import { RegionProvider } from "@/components/region/region-context";
 import { RegionGate } from "@/components/region/region-gate";
+import { siteUrl } from "@/lib/site-config";
+
+/**
+ * Two AutoRepair listings (one per workshop) so both locations can surface
+ * independently in local search / Google Business results.
+ */
+const businessJsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "AutoRepair",
+    name: "Street PRO Garage",
+    image: `${siteUrl}/images/Logo.png`,
+    url: siteUrl,
+    telephone: "+44 7438 483559",
+    email: "fradybooth@gmail.com",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Manchester",
+      addressCountry: "GB",
+    },
+    areaServed: ["United Kingdom", "Worldwide (remote tuning)"],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "AutoRepair",
+    name: "Street PRO Garage",
+    image: `${siteUrl}/images/Logo.png`,
+    url: siteUrl,
+    telephone: "+92 346 2767382",
+    email: "fradybooth@gmail.com",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Shamim Street, Gulberg Town",
+      addressLocality: "Karachi",
+      addressCountry: "PK",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 24.9290278,
+      longitude: 67.0648889,
+    },
+    areaServed: ["Pakistan", "Worldwide (remote tuning)"],
+  },
+];
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -21,9 +65,26 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Street PRO Garage | Remote ECU Tuning, Rolling Road Dyno Tuning & Performance Parts",
   description:
     "Street PRO Garage delivers custom-built remote ECU tuning worldwide, rolling road dyno tuning in Manchester UK, and performance parts sales, fitting and diagnostics.",
+  openGraph: {
+    siteName: "Street PRO Garage",
+    title: "Street PRO Garage | Remote ECU Tuning, Rolling Road Dyno Tuning & Performance Parts",
+    description:
+      "Custom-built remote ECU tuning worldwide, rolling road dyno tuning in Manchester UK, and performance parts sales, fitting and diagnostics.",
+    url: siteUrl,
+    type: "website",
+    images: [`${siteUrl}/images/Logo.png`],
+  },
+  twitter: {
+    card: "summary",
+    title: "Street PRO Garage | Remote ECU Tuning, Rolling Road Dyno Tuning & Performance Parts",
+    description:
+      "Custom-built remote ECU tuning worldwide, rolling road dyno tuning in Manchester UK, and performance parts sales, fitting and diagnostics.",
+    images: [`${siteUrl}/images/Logo.png`],
+  },
 };
 
 export default function RootLayout({
@@ -37,6 +98,10 @@ export default function RootLayout({
       className={`${bebasNeue.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground font-body">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
+        />
         <RegionProvider>
           <CartProvider>
             <RegionGate />
