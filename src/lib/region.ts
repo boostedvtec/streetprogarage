@@ -36,7 +36,7 @@ export const regionData: Record<Region, RegionData> = {
     phoneHref: "https://wa.me/447438483559",
     whatsapp: null,
     whatsappHref: null,
-    email: "fradybooth@gmail.com",
+    email: "info@streetprogarage.com",
     locationNote:
       "Rolling road & workshop services based in Manchester, UK. Remote tuning available worldwide. Full address provided upon booking confirmation.",
     mapQuery: "Manchester, UK",
@@ -58,7 +58,7 @@ export const regionData: Record<Region, RegionData> = {
     phoneHref: "https://wa.me/923462767382",
     whatsapp: "+92 321 3356171",
     whatsappHref: "https://wa.me/923213356171",
-    email: "fradybooth@gmail.com",
+    email: "info@streetprogarage.com",
     locationNote:
       "Workshop on Shamim Street, Gulberg Town, Karachi, Pakistan. Exact address confirmed upon booking.",
     mapQuery: "24.9290278,67.0648889",

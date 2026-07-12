@@ -20,7 +20,7 @@ const businessJsonLd = [
     image: `${siteUrl}/images/Logo.png`,
     url: siteUrl,
     telephone: "+44 7438 483559",
-    email: "fradybooth@gmail.com",
+    email: "info@streetprogarage.com",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Manchester",
@@ -35,7 +35,7 @@ const businessJsonLd = [
     image: `${siteUrl}/images/Logo.png`,
     url: siteUrl,
     telephone: "+92 346 2767382",
-    email: "fradybooth@gmail.com",
+    email: "info@streetprogarage.com",
     address: {
       "@type": "PostalAddress",
       streetAddress: "Shamim Street, Gulberg Town",

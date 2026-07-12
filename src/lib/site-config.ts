@@ -11,7 +11,7 @@ export const siteConfig = {
     "Custom-built remote ECU tuning worldwide, rolling road dyno tuning in Manchester UK, and performance parts sales, fitting & diagnostics.",
   phone: "+44 7438 483559",
   phoneHref: "tel:+447438483559",
-  email: "fradybooth@gmail.com",
+  email: "info@streetprogarage.com",
   location: {
     city: "Manchester",
     country: "United Kingdom",
