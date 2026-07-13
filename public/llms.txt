@@ -1,0 +1,40 @@
+# Street PRO Garage
+
+> Custom-built remote ECU tuning worldwide, rolling road dyno tuning in Manchester, UK, custom ECU wiring/installation, and performance parts sales & fitting. A second workshop in Karachi, Pakistan handles dyno tuning and full engine swaps/builds. No generic Stage 1/2/3 kits — every tune is written from scratch for the specific vehicle, parts, fuel and goals.
+
+## Locations
+
+- Manchester, United Kingdom — rolling road dyno tuning, remote tuning, custom wiring, performance parts sales & fitting.
+- Karachi, Pakistan — dyno tuning, remote tuning, custom wiring, engine swaps & builds.
+- Remote ECU tuning is available worldwide regardless of location.
+
+## Platforms & Vehicles
+
+- Stock ECU reflashing via HP Tuners and Hondata, across Honda, Subaru and Mitsubishi Evo platforms (HP Tuners credit-locked, purchased separately by the customer).
+- Honda-specific platforms: P28 (chipped), Hondata S300, Hondavert, HTS, Neptune RTP — covering D-series, B-series and K-series Civic and Integra builds.
+- Standalone ECUs: AEM Infinity, Link ECU, MaxxECU, Haltech, Speeduino, Megasquirt, ME (Motorsport Electronics), EcuMaster (including DET3+).
+- Commonly tuned platforms: Honda Civic & Integra (D14, D16, B16, B18), Toyota Supra & MR2 (2JZGTE, 1JZGTE, 2ZZ), Mitsubishi Lancer Evo V–X (4G63T), Subaru Impreza WRX & STI, Mazda MX-5 (naturally aspirated, turbo, supercharged).
+- Fuel types supported: Pump Gas Premium, E85, and Flex Fuel (blend of both).
+
+## Key Pages
+
+- [Tuning](/tuning): Remote tuning, road tuning, and rolling road dyno tuning — methods, pricing structure, and supported ECU platforms.
+- [Custom Wiring](/custom-wiring): Standalone/piggyback ECU wiring, ECU installation, sensor integration, gauge fitting.
+- [Parts](/parts): Performance parts sales with professional fitting and diagnostics (UK).
+- [Engine Swaps](/engine-swaps): Full engine swaps and custom builds (Pakistan).
+- [FAQ](/faq): Answers to common questions about platforms, pricing structure, and process.
+- [Build List & Quote](/quote): Submit a build list for a ballpark quote (UK) or a manually confirmed quote (Pakistan).
+- [Pre-Tune Checklist](/pre-tune-checklist): Readiness checklist before booking a tune.
+- [Declaration & Liability](/declaration): Terms customers accept before tuning begins.
+- [Contact](/contact): Phone/WhatsApp, email, and location details for both workshops.
+
+## Policies Worth Knowing
+
+- Dyno time is billed separately from the tune price — not included in the flat tuning fee.
+- Free tune revisions within 14 days of the final tune; chargeable after that window.
+- Road tuning requires the vehicle to be in safe, roadworthy condition (brakes, tyres, steering, suspension) since it involves driving at speed on public roads to gather datalogs.
+
+## Contact
+
+- Email: info@streetprogarage.com
+- Website: https://www.streetprogarage.com

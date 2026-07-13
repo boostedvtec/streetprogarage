@@ -30,6 +30,7 @@ export const navLinks = [
   { href: "/custom-wiring", label: "Custom Wiring", regions: ["uk", "pk"] },
   { href: "/engine-swaps", label: "Engine Swaps", regions: ["pk"] },
   { href: "/parts", label: "Parts", regions: ["uk"] },
+  { href: "/faq", label: "FAQ", regions: ["uk", "pk"] },
   { href: "/contact", label: "Contact", regions: ["uk", "pk"] },
 ] as const;
 

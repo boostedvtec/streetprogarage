@@ -9,6 +9,25 @@ import { RegionGate } from "@/components/region/region-gate";
 import { siteUrl } from "@/lib/site-config";
 
 /**
+ * Topics the business has genuine expertise in — gives search and AI answer
+ * engines a clearer topical signal than free-text descriptions alone.
+ */
+const knowsAbout = [
+  "ECU Tuning",
+  "Rolling Road Dyno Tuning",
+  "Remote ECU Tuning",
+  "Honda P28",
+  "Hondata S300",
+  "AEM Infinity",
+  "Link ECU",
+  "MaxxECU",
+  "EcuMaster DET3+",
+  "HP Tuners",
+  "Turbo Tuning",
+  "Flex Fuel Tuning",
+];
+
+/**
  * Two AutoRepair listings (one per workshop) so both locations can surface
  * independently in local search / Google Business results.
  */
@@ -21,6 +40,8 @@ const businessJsonLd = [
     url: siteUrl,
     telephone: "+44 7438 483559",
     email: "info@streetprogarage.com",
+    priceRange: "££",
+    knowsAbout,
     address: {
       "@type": "PostalAddress",
       addressLocality: "Manchester",
@@ -36,6 +57,7 @@ const businessJsonLd = [
     url: siteUrl,
     telephone: "+92 346 2767382",
     email: "info@streetprogarage.com",
+    knowsAbout,
     address: {
       "@type": "PostalAddress",
       streetAddress: "Shamim Street, Gulberg Town",
