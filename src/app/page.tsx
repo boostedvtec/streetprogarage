@@ -9,7 +9,6 @@ import {
   ArrowRight,
   CheckCircle,
   ChartLineUp,
-  Quotes,
   PlugsConnected,
   Engine,
 } from "@phosphor-icons/react/dist/ssr";
@@ -310,56 +309,6 @@ export default function Home() {
                   {result.label}
                 </span>
               </Link>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      {/* Testimonials preview */}
-      <Section>
-        <Container>
-          <div className="max-w-2xl">
-            <Eyebrow>Customer Reviews</Eyebrow>
-            <h2 className="font-display mt-4 text-4xl sm:text-5xl">
-              What builders are saying
-            </h2>
-          </div>
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            {[
-              {
-                quote:
-                  "Sample review — replace with a real customer quote once your first tunes are delivered.",
-                name: "Sample Customer",
-                vehicle: "Placeholder build",
-              },
-              {
-                quote:
-                  "Sample review — replace with a real customer quote once your first tunes are delivered.",
-                name: "Sample Customer",
-                vehicle: "Placeholder build",
-              },
-              {
-                quote:
-                  "Sample review — replace with a real customer quote once your first tunes are delivered.",
-                name: "Sample Customer",
-                vehicle: "Placeholder build",
-              },
-            ].map((t, i) => (
-              <figure
-                key={i}
-                className="flex flex-col rounded-xl border border-border bg-surface p-8"
-              >
-                <Quotes size={28} weight="fill" className="text-accent" aria-hidden />
-                <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-foreground-muted italic">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-                <figcaption className="mt-6 text-sm font-semibold">
-                  {t.name}
-                  <span className="block font-normal text-foreground-subtle">
-                    {t.vehicle}
-                  </span>
-                </figcaption>
-              </figure>
             ))}
           </div>
         </Container>
