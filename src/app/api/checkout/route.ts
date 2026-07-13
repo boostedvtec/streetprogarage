@@ -13,7 +13,12 @@ type CheckoutPayload = {
 };
 
 export async function POST(request: Request) {
-  const body = (await request.json()) as CheckoutPayload;
+  let body: CheckoutPayload;
+  try {
+    body = (await request.json()) as CheckoutPayload;
+  } catch {
+    return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
+  }
 
   if (!body.customer?.email || !body.lines?.length) {
     return NextResponse.json(
