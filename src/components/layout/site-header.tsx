@@ -34,8 +34,8 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="mx-auto flex min-h-[184px] max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:px-8">
-        <Logo imgClassName="h-[168px]" />
+      <div className="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:min-h-[268px] lg:px-8">
+        <Logo imgClassName="h-16 lg:h-[252px]" />
 
         <nav className="hidden lg:flex lg:items-center lg:gap-1">
           {visibleLinks.map((link) => (

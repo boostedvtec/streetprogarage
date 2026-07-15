@@ -11,7 +11,7 @@ export function Logo({ className, imgClassName }: LogoProps) {
   return (
     <Link
       href="/"
-      className={clsx("flex items-center group", className)}
+      className={clsx("flex shrink-0 items-center group", className)}
       aria-label="Street Pro Garage home"
     >
       <Image
@@ -21,7 +21,7 @@ export function Logo({ className, imgClassName }: LogoProps) {
         height={1023}
         priority
         className={clsx(
-          "w-auto shrink-0 transition-transform group-hover:scale-105",
+          "w-auto shrink-0 object-contain transition-transform group-hover:scale-105 [aspect-ratio:1538/1023]",
           imgClassName ?? "h-14"
         )}
       />
