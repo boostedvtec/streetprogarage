@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { formatSubmission, sendNotificationEmail } from "@/lib/mailer";
+import { formatSubmission, renderSubmissionEmail, sendNotificationEmail } from "@/lib/mailer";
 
 export async function POST(request: Request) {
   let body;
@@ -20,9 +20,11 @@ export async function POST(request: Request) {
 
   let emailSent = false;
   try {
+    const subject = `New Contact Form Message from ${body.name}`;
     emailSent = await sendNotificationEmail({
-      subject: `New Contact Form Message from ${body.name}`,
+      subject,
       text: formatSubmission(body),
+      html: renderSubmissionEmail(subject, body),
       replyTo: body.email,
     });
   } catch (err) {
