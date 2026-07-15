@@ -38,7 +38,7 @@ export function Modal({
       role="presentation"
     >
       <div
-        className="absolute inset-0 bg-black/50"
+        className="absolute inset-0 bg-graphite/60"
         onClick={onClose}
         aria-hidden
       />

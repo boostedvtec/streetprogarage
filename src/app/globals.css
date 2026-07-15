@@ -10,10 +10,13 @@
   --color-foreground-muted: #57595f;
   --color-foreground-subtle: #6b6d73;
 
-  --color-accent: #da2c1b;
-  --color-accent-hover: #c22415;
+  --color-accent: #f37021;
+  --color-accent-hover: #d95f0f;
   --color-accent-foreground: #ffffff;
-  --color-accent-soft: rgba(218, 44, 27, 0.08);
+  --color-accent-soft: rgba(243, 112, 33, 0.08);
+
+  --color-graphite: #262626;
+  --color-graphite-foreground: #ffffff;
 
   --color-success: #16a34a;
   --color-warning: #b45309;
@@ -37,6 +40,9 @@
   --color-accent-hover: var(--color-accent-hover);
   --color-accent-foreground: var(--color-accent-foreground);
   --color-accent-soft: var(--color-accent-soft);
+
+  --color-graphite: var(--color-graphite);
+  --color-graphite-foreground: var(--color-graphite-foreground);
 
   --color-success: var(--color-success);
   --color-warning: var(--color-warning);

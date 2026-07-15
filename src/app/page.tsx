@@ -305,7 +305,7 @@ export default function Home() {
                   sizes="(min-width: 1024px) 33vw, 50vw"
                   className="object-cover transition-transform group-hover:scale-105"
                 />
-                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 py-3 text-xs font-medium text-white">
+                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-graphite/80 to-transparent px-4 py-3 text-xs font-medium text-white">
                   {result.label}
                 </span>
               </Link>
