@@ -17,8 +17,8 @@ export function Logo({ className, imgClassName }: LogoProps) {
       <Image
         src="/images/Logo.png"
         alt="Street Pro Garage"
-        width={613}
-        height={407}
+        width={1538}
+        height={1023}
         priority
         className={clsx(
           "w-auto shrink-0 transition-transform group-hover:scale-105",
