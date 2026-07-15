@@ -68,7 +68,7 @@ function TachStrip() {
 }
 
 const navLinkClass =
-  "font-display relative rounded-md px-3 py-2 text-sm tracking-wide text-foreground-muted transition-colors hover:text-foreground after:absolute after:bottom-0.5 after:left-3 after:right-3 after:h-[2px] after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-200 after:content-[''] hover:after:scale-x-100";
+  "font-body relative rounded-md px-3 py-2 text-base font-semibold tracking-normal text-foreground-muted transition-colors hover:text-foreground after:absolute after:bottom-0.5 after:left-3 after:right-3 after:h-[2px] after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-200 after:content-[''] hover:after:scale-x-100";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -77,8 +77,8 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 bg-background/95 shadow-[0_1px_3px_rgba(23,20,15,0.08)] backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:min-h-[268px] lg:px-8">
-        <Logo imgClassName="h-16 lg:h-[252px]" />
+      <div className="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:min-h-[134px] lg:px-8">
+        <Logo imgClassName="h-16 lg:h-[126px]" />
 
         <nav className="hidden lg:flex lg:items-center lg:gap-1">
           {visibleLinks.map((link) => (
