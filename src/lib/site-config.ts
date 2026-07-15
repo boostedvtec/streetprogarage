@@ -27,12 +27,12 @@ export const siteConfig = {
 
 export const navLinks = [
   { href: "/tuning", label: "Tuning", regions: ["uk", "pk"] },
-  { href: "/projects", label: "Our Projects", regions: ["uk", "pk"] },
   { href: "/custom-wiring", label: "Custom Wiring", regions: ["uk", "pk"] },
-  { href: "/engine-swaps", label: "Engine Swaps", regions: ["pk"] },
   { href: "/parts", label: "Parts", regions: ["uk"] },
-  { href: "/faq", label: "FAQ", regions: ["uk", "pk"] },
+  { href: "/engine-swaps", label: "Engine Swaps", regions: ["pk"] },
+  { href: "/projects", label: "Our Projects", regions: ["uk", "pk"] },
   { href: "/our-story", label: "Our Story", regions: ["uk", "pk"] },
+  { href: "/faq", label: "FAQ", regions: ["uk", "pk"] },
   { href: "/contact", label: "Contact", regions: ["uk", "pk"] },
 ] as const;
 

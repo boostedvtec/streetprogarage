@@ -54,10 +54,11 @@ export function SiteHeader() {
             href={data.phoneHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm font-medium text-foreground-muted transition-colors hover:text-foreground"
+            aria-label={`WhatsApp us: ${data.phone}`}
+            title={data.phone}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md text-foreground-muted transition-colors hover:bg-surface hover:text-foreground"
           >
-            <WhatsappLogo size={18} weight="fill" aria-hidden />
-            {data.phone}
+            <WhatsappLogo size={20} weight="fill" aria-hidden />
           </a>
           <RegionSwitcher />
           {data.services.parts && <CartLink />}
