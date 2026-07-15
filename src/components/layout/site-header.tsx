@@ -27,23 +27,62 @@ function CartLink() {
   );
 }
 
+/** Interpolates between two hex colors at t (0-1). */
+function mixHex(from: string, to: string, t: number): string {
+  const parse = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  const [r1, g1, b1] = parse(from);
+  const [r2, g2, b2] = parse(to);
+  const mix = (a: number, b: number) => Math.round(a + (b - a) * t);
+  return `rgb(${mix(r1, r2)}, ${mix(g1, g2)}, ${mix(b1, b2)})`;
+}
+
+/**
+ * Signature detail: a tachometer sweep — thin gauge ticks that shift from
+ * graphite (idle) to accent orange (redline) left-to-right, standing in for
+ * the header's bottom border. A literal nod to the dyno/rev-counter world
+ * this brand tunes in, rather than a generic gradient rule.
+ */
+const TICK_COUNT = 56;
+
+function TachStrip() {
+  return (
+    <div className="flex h-[5px] w-full" aria-hidden>
+      {Array.from({ length: TICK_COUNT }).map((_, i) => {
+        const t = i / (TICK_COUNT - 1);
+        const tall = i % 7 === 0;
+        return (
+          <span
+            key={i}
+            className="flex-1"
+            style={{
+              backgroundColor: mixHex("#262626", "#f37021", t),
+              height: tall ? "100%" : "60%",
+              alignSelf: "flex-end",
+              marginRight: i === TICK_COUNT - 1 ? 0 : "1px",
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+const navLinkClass =
+  "font-display relative rounded-md px-3 py-2 text-sm tracking-wide text-foreground-muted transition-colors hover:text-foreground after:absolute after:bottom-0.5 after:left-3 after:right-3 after:h-[2px] after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-200 after:content-[''] hover:after:scale-x-100";
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { region, data } = useRegion();
   const visibleLinks = navLinks.filter((link) => (link.regions as readonly string[]).includes(region));
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+    <header className="sticky top-0 z-50 bg-background/95 shadow-[0_1px_3px_rgba(23,20,15,0.08)] backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:min-h-[268px] lg:px-8">
         <Logo imgClassName="h-16 lg:h-[252px]" />
 
         <nav className="hidden lg:flex lg:items-center lg:gap-1">
           {visibleLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="rounded-md px-3 py-2 text-sm font-medium text-foreground-muted transition-colors hover:bg-surface hover:text-foreground"
-            >
+            <Link key={link.href} href={link.href} className={navLinkClass}>
               {link.label}
             </Link>
           ))}
@@ -64,7 +103,7 @@ export function SiteHeader() {
           {data.services.parts && <CartLink />}
           <Link
             href="/quote"
-            className="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent-hover cursor-pointer"
+            className="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground shadow-[0_4px_14px_rgba(243,112,33,0.35)] transition-colors hover:bg-accent-hover cursor-pointer"
           >
             Get a Quote
           </Link>
@@ -85,6 +124,8 @@ export function SiteHeader() {
           </button>
         </div>
       </div>
+
+      <TachStrip />
 
       {open && (
         <nav
