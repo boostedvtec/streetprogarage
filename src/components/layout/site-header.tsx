@@ -55,7 +55,7 @@ function TachStrip() {
             key={i}
             className="flex-1"
             style={{
-              backgroundColor: mixHex("#262626", "#f37021", t),
+              backgroundColor: mixHex("#262626", "#cf5f1c", t),
               height: tall ? "100%" : "60%",
               alignSelf: "flex-end",
               marginRight: i === TICK_COUNT - 1 ? 0 : "1px",
@@ -87,8 +87,8 @@ export function SiteHeader() {
       </div>
 
       <header className="sticky top-0 z-50 bg-background/95 shadow-[0_1px_3px_rgba(23,20,15,0.08)] backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="mx-auto flex min-h-[106px] max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:min-h-[142px] lg:px-8">
-        <Logo imgClassName="h-[90px] lg:h-[126px]" />
+      <div className="mx-auto flex min-h-[241px] max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:min-h-[331px] lg:px-8">
+        <Logo imgClassName="h-[225px] lg:h-[315px]" />
 
         <nav className="hidden lg:flex lg:items-center lg:gap-1">
           {visibleLinks.map((link) => (
@@ -113,7 +113,7 @@ export function SiteHeader() {
           {data.services.parts && <CartLink />}
           <Link
             href="/quote"
-            className="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground shadow-[0_4px_14px_rgba(243,112,33,0.35)] transition-colors hover:bg-accent-hover cursor-pointer"
+            className="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground shadow-[0_4px_14px_rgba(207,95,28,0.35)] transition-colors hover:bg-accent-hover cursor-pointer"
           >
             Get a Quote
           </Link>

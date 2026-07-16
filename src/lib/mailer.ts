@@ -58,7 +58,7 @@ export function renderSubmissionEmail(title: string, body: Record<string, unknow
           <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:8px;overflow:hidden;border:1px solid #e5e5e5;max-width:600px;">
             <tr>
               <td style="background:#262626;padding:20px 24px;">
-                <span style="color:#ffffff;font-size:18px;font-weight:700;letter-spacing:0.5px;">STREET <span style="color:#f37021;">PRO</span> GARAGE</span>
+                <span style="color:#ffffff;font-size:18px;font-weight:700;letter-spacing:0.5px;">STREET <span style="color:#cf5f1c;">PRO</span> GARAGE</span>
               </td>
             </tr>
             <tr>
