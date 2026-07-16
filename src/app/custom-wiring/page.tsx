@@ -11,7 +11,7 @@ import { LinkButton } from "@/components/ui/button";
 import { UkOnlySection } from "@/components/region/uk-only-section";
 
 export const metadata: Metadata = {
-  title: "Custom Wiring & ECU Installation | Street PRO Garage",
+  title: "Wiring & ECU Installation | Street PRO Garage",
   description:
     "Custom wiring for standalone and piggyback ECUs, gauge installation, and Honda P28 ECU socketing service at Street PRO Garage.",
 };
@@ -41,7 +41,7 @@ export default function CustomWiringPage() {
         <Container className="py-16 sm:py-20">
           <Eyebrow>Wiring &amp; Installation</Eyebrow>
           <h1 className="font-display mt-4 text-5xl sm:text-6xl">
-            Custom Wiring
+            Wiring
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground-muted">
             From standalone ECU harnesses to gauge installs and Honda ECU

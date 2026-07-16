@@ -106,7 +106,7 @@ export default function EngineSwapsPage() {
                 Clean harness integration for the swapped engine and its ECU
                 — see our{" "}
                 <Link href="/custom-wiring" className="text-accent underline">
-                  Custom Wiring
+                  Wiring
                 </Link>{" "}
                 page for the full wiring scope.
               </p>

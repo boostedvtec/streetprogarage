@@ -6,7 +6,7 @@ import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/lib/projects";
 
 export const metadata: Metadata = {
-  title: "Our Projects | Street PRO Garage",
+  title: "Projects | Street PRO Garage",
   description:
     "Completed builds from Street PRO Garage — build list, dyno results and photos/video for every tune.",
 };
@@ -16,7 +16,7 @@ export default function ProjectsPage() {
     <>
       <div className="border-b border-border bg-surface/50">
         <Container className="py-16 sm:py-20">
-          <Eyebrow>Our Projects</Eyebrow>
+          <Eyebrow>Projects</Eyebrow>
           <h1 className="font-display mt-4 text-5xl sm:text-6xl">Builds We&rsquo;ve Tuned</h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground-muted">
             Every project here follows the same format — the build list, the

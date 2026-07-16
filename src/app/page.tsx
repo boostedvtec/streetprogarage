@@ -39,7 +39,7 @@ function getServices(regionData: RegionData) {
     },
     {
       icon: PlugsConnected,
-      title: "Custom Wiring",
+      title: "Wiring",
       description:
         "Standalone and piggyback ECU wiring, gauge installation, and Honda P28 ECU socketing service.",
       href: "/custom-wiring",

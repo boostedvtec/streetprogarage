@@ -87,8 +87,8 @@ export function SiteHeader() {
       </div>
 
       <header className="sticky top-0 z-50 bg-background/95 shadow-[0_1px_3px_rgba(23,20,15,0.08)] backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:min-h-20 lg:px-8">
-        <Logo imgClassName="h-10 lg:h-14" />
+      <div className="mx-auto flex min-h-[76px] max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:min-h-[100px] lg:px-8">
+        <Logo imgClassName="h-[60px] lg:h-[84px]" />
 
         <nav className="hidden lg:flex lg:items-center lg:gap-1">
           {visibleLinks.map((link) => (
