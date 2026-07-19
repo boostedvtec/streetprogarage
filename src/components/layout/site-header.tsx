@@ -86,9 +86,13 @@ export function SiteHeader() {
         </p>
       </div>
 
-      <header className="sticky top-0 z-50 bg-background/95 shadow-[0_1px_3px_rgba(23,20,15,0.08)] backdrop-blur supports-[backdrop-filter]:bg-background/80">
+      <header className="sticky top-0 z-50 max-h-[20vh] overflow-hidden bg-background/95 shadow-[0_1px_3px_rgba(23,20,15,0.08)] backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:min-h-20 lg:px-8">
-        <Logo imgClassName="h-12 lg:h-14" />
+        {/* Sized in vh (not fixed px) so the logo scales with viewport
+            height while the header's max-h-[20vh] above guarantees it —
+            plus padding and the tach strip below — never exceeds 20% of
+            the screen, on any device. */}
+        <Logo imgClassName="h-[clamp(64px,15vh,140px)] lg:h-[clamp(80px,16vh,160px)]" />
 
         <nav className="hidden lg:flex lg:items-center lg:gap-1">
           {visibleLinks.map((link) => (
