@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { CartProvider } from "@/components/cart/cart-context";
 import { RegionProvider } from "@/components/region/region-context";
-import { RegionGate } from "@/components/region/region-gate";
 import { TidioWidget } from "@/components/chat/tidio-widget";
 import { siteUrl } from "@/lib/site-config";
+import { REGION_STORAGE_KEY, type Region } from "@/lib/region";
 
 /**
  * Topics the business has genuine expertise in — gives search and AI answer
@@ -110,11 +111,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const initialRegion: Region = cookieStore.get(REGION_STORAGE_KEY)?.value === "pk" ? "pk" : "uk";
+
   return (
     <html
       lang="en"
@@ -125,9 +129,8 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
         />
-        <RegionProvider>
+        <RegionProvider initialRegion={initialRegion}>
           <CartProvider>
-            <RegionGate />
             <SiteHeader />
             <main className="flex-1">{children}</main>
             <SiteFooter />

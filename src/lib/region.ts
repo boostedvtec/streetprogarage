@@ -1,5 +1,14 @@
 export type Region = "uk" | "pk";
 
+/**
+ * Shared localStorage/cookie key for the visitor's region. Lives here
+ * (a plain, non-"use client" module) rather than in region-context.tsx
+ * so server code (layout.tsx, proxy.ts) importing it gets the real string
+ * — importing a const from a "use client" module into server code instead
+ * resolves to an opaque client reference, not the value.
+ */
+export const REGION_STORAGE_KEY = "spg-region";
+
 export type RegionData = {
   value: Region;
   label: string;

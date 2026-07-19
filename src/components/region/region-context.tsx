@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import { regionData, type Region, type RegionData } from "@/lib/region";
+import { regionData, REGION_STORAGE_KEY, type Region, type RegionData } from "@/lib/region";
 
 type RegionContextValue = {
   region: Region;
@@ -10,22 +10,32 @@ type RegionContextValue = {
 };
 
 const RegionContext = createContext<RegionContextValue | null>(null);
-export const REGION_STORAGE_KEY = "spg-region";
 
-export function RegionProvider({ children }: { children: ReactNode }) {
-  const [region, setRegionState] = useState<Region>("uk");
+export function RegionProvider({
+  children,
+  initialRegion = "uk",
+}: {
+  children: ReactNode;
+  initialRegion?: Region;
+}) {
+  // `initialRegion` comes from the server (resolved from the visitor's
+  // geolocation, via the `spg-region` cookie set in proxy.ts), so this
+  // already matches what was server-rendered — no hydration mismatch.
+  const [region, setRegionState] = useState<Region>(initialRegion);
 
   useEffect(() => {
-    // Reading localStorage must happen post-mount (it doesn't exist during
-    // SSR) — starting `region` at the default and syncing here avoids a
-    // hydration mismatch that a useState lazy initializer would cause instead.
+    // Safety net for visitors whose localStorage preference (from an
+    // explicit manual switch) predates or outlives the region cookie.
     try {
       const raw = window.localStorage.getItem(REGION_STORAGE_KEY);
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (raw === "uk" || raw === "pk") setRegionState(raw);
+      if ((raw === "uk" || raw === "pk") && raw !== region) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setRegionState(raw);
+      }
     } catch {
       // ignore malformed storage
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setRegion = (next: Region) => {
@@ -34,6 +44,11 @@ export function RegionProvider({ children }: { children: ReactNode }) {
       window.localStorage.setItem(REGION_STORAGE_KEY, next);
     } catch {
       // ignore storage write failures (private browsing, etc.)
+    }
+    try {
+      document.cookie = `${REGION_STORAGE_KEY}=${next}; path=/; max-age=${60 * 60 * 24 * 365}`;
+    } catch {
+      // ignore cookie write failures
     }
   };
 
