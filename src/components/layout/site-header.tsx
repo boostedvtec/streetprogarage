@@ -88,15 +88,7 @@ export function SiteHeader() {
 
       <header className="sticky top-0 z-50 bg-background/95 shadow-[0_1px_3px_rgba(23,20,15,0.08)] backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:min-h-20 lg:px-8">
-        {/* Fixed-footprint slot reserves normal row space/height; the logo
-            inside is absolutely positioned and larger than the slot, so it
-            visually overflows the header without growing the sticky bar. */}
-        <div className="relative h-12 w-[120px] shrink-0 lg:h-16 lg:w-[144px]">
-          <Logo
-            className="absolute left-0 top-1/2 -translate-y-1/2"
-            imgClassName="h-20 lg:h-24"
-          />
-        </div>
+        <Logo imgClassName="h-12 lg:h-14" />
 
         <nav className="hidden lg:flex lg:items-center lg:gap-1">
           {visibleLinks.map((link) => (

@@ -6,6 +6,7 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { CartProvider } from "@/components/cart/cart-context";
 import { RegionProvider } from "@/components/region/region-context";
 import { RegionGate } from "@/components/region/region-gate";
+import { TidioWidget } from "@/components/chat/tidio-widget";
 import { siteUrl } from "@/lib/site-config";
 
 /**
@@ -130,6 +131,7 @@ export default function RootLayout({
             <SiteHeader />
             <main className="flex-1">{children}</main>
             <SiteFooter />
+            <TidioWidget />
           </CartProvider>
         </RegionProvider>
       </body>
