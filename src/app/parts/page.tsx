@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
-import { Wrench } from "@phosphor-icons/react/dist/ssr";
+import { Wrench, MagnifyingGlass } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { ProductImagePlaceholder } from "@/components/product-tile";
@@ -14,12 +14,21 @@ import { useRegion } from "@/components/region/region-context";
 export default function PartsPage() {
   const { data } = useRegion();
   const [activeCategory, setActiveCategory] = useState<string | "All">("All");
+  const [search, setSearch] = useState("");
   const { addItem, allProducts } = useCart();
 
-  const visibleProducts =
-    activeCategory === "All"
-      ? allProducts
-      : allProducts.filter((p) => p.category === activeCategory);
+  const visibleProducts = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    return allProducts.filter((p) => {
+      if (activeCategory !== "All" && p.category !== activeCategory) return false;
+      if (!query) return true;
+      const haystack = [p.name, p.brand, p.category, p.compatibility, ...(p.tags ?? [])]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      return haystack.includes(query);
+    });
+  }, [allProducts, activeCategory, search]);
 
   if (!data.services.parts) {
     return (
@@ -64,35 +73,41 @@ export default function PartsPage() {
 
       <Section>
         <Container>
-          <div className="flex flex-wrap gap-2">
-            <button
-              type="button"
-              onClick={() => setActiveCategory("All")}
-              className={`cursor-pointer rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
-                activeCategory === "All"
-                  ? "border-accent bg-accent-soft text-accent"
-                  : "border-border-strong bg-surface text-foreground-muted hover:text-foreground"
-              }`}
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="relative flex-1">
+              <MagnifyingGlass
+                size={18}
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-foreground-subtle"
+                aria-hidden
+              />
+              <input
+                type="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search parts — try a brand, engine code or car (e.g. AEM, 4G63T, BMW)…"
+                aria-label="Search parts"
+                className="h-11 w-full rounded-md border border-border-strong bg-surface pl-10 pr-3 text-sm text-foreground outline-none focus:border-accent"
+              />
+            </div>
+            <select
+              value={activeCategory}
+              onChange={(e) => setActiveCategory(e.target.value)}
+              aria-label="Filter by category"
+              className="h-11 cursor-pointer rounded-md border border-border-strong bg-surface px-3 text-sm font-medium text-foreground outline-none focus:border-accent sm:w-56"
             >
-              All
-            </button>
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setActiveCategory(cat)}
-                className={`cursor-pointer rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
-                  activeCategory === cat
-                    ? "border-accent bg-accent-soft text-accent"
-                    : "border-border-strong bg-surface text-foreground-muted hover:text-foreground"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+              <option value="All">All Categories</option>
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
           </div>
+          <p className="mt-3 text-sm text-foreground-subtle">
+            {visibleProducts.length} part{visibleProducts.length === 1 ? "" : "s"}
+          </p>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {visibleProducts.map((product) => (
               <div
                 key={product.slug}
@@ -110,9 +125,26 @@ export default function PartsPage() {
                       {product.name}
                     </h2>
                   </Link>
-                  <p className="mt-2 flex-1 text-sm text-foreground-muted">
-                    {product.compatibility}
-                  </p>
+                  <div className="mt-2 flex-1">
+                    <p className="text-sm text-foreground-muted">{product.compatibility}</p>
+                    {(product.brand || (product.tags && product.tags.length > 0)) && (
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {product.brand && (
+                          <span className="rounded-full bg-graphite px-2.5 py-0.5 text-[11px] font-semibold text-graphite-foreground">
+                            {product.brand}
+                          </span>
+                        )}
+                        {product.tags?.map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-full border border-border-strong px-2.5 py-0.5 text-[11px] font-medium text-foreground-muted"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                   <div className="mt-4 flex items-center justify-between">
                     <span className="font-display text-2xl">
                       {product.price === null
@@ -145,6 +177,16 @@ export default function PartsPage() {
               </div>
             ))}
           </div>
+
+          {visibleProducts.length === 0 && (
+            <div className="mt-10 rounded-xl border border-dashed border-border-strong bg-surface p-12 text-center">
+              <p className="text-foreground-muted">
+                No parts found
+                {search.trim() && ` for “${search.trim()}”`}
+                {activeCategory !== "All" && ` in ${activeCategory}`}.
+              </p>
+            </div>
+          )}
         </Container>
       </Section>
     </>

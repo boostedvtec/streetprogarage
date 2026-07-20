@@ -90,6 +90,64 @@ export async function fetchEcumasterCatalog(): Promise<EcumasterProduct[]> {
   return items;
 }
 
+/**
+ * Part-type and vehicle/engine tags inferred from the product name alone —
+ * RRRShop's JSON doesn't give us a taxonomy, and their own description/spec
+ * copy isn't ours to reuse, so this is pattern-matched from names only.
+ */
+const TAG_PATTERNS: [RegExp, string][] = [
+  // Part type
+  [/\bECU\b|\bEMU\b|plug[- ]in ecu|pnp ecu/i, "Aftermarket ECU"],
+  [/\badu\b/i, "Dash Display"],
+  [/\bpmu/i, "Power Management Unit"],
+  [/wiring|loom/i, "Wiring/Loom"],
+  [/adaptor|adapter/i, "Adaptor Harness"],
+  [/keyboard|keypad/i, "Switch Panel"],
+  [/comms cable|connection cable|dash cable|\bcable\b/i, "Cable"],
+  [/lambda/i, "Wideband/Lambda"],
+  [/\bgps\b|usb to can|serial bluetooth|canbus bluetooth|wheel speed to can/i, "CAN Module"],
+  [/battery isolator/i, "Battery Isolator"],
+  [/data logger|\bedl\b/i, "Data Logger"],
+  [/steering wheel/i, "Steering Wheel"],
+  [/digital gear|gear display/i, "Gear Display"],
+  [/\bdbw\b/i, "Drive-By-Wire"],
+  [/h-bridge/i, "H-Bridge Driver"],
+  [/gdi driver/i, "GDI Driver"],
+  [/vanos/i, "VANOS Adaptor"],
+  [/potentiometer/i, "Potentiometer"],
+  [/\bmount\b/i, "Mounting"],
+  [/shirt/i, "Merchandise"],
+  [/temperature camera/i, "IR Temperature Sensor"],
+  [/\bmodule\b/i, "CAN Module"],
+  [/\bsensor\b/i, "Sensor"],
+  [/display|\bmfd\b/i, "Display"],
+  [/\bswitch\b/i, "Switch"],
+
+  // Vehicle / engine
+  [/\bbmw\b|\be36\b|\bm50\b|\bs54\b/i, "BMW"],
+  [/\btoyota\b|\bmr2\b|\bcelica\b|\bsupra\b|\b2jz\b|\b3sgte\b|\b1zz\b|\b2zz\b/i, "Toyota"],
+  [/\bnissan\b|\brb20\b|\brb25\b|\brb26\b|\bsr20\b/i, "Nissan"],
+  [/\bhonda\b|\bk20\b|\bcivic\b|\bintegra\b/i, "Honda"],
+  [/\bford\b|fiesta st150/i, "Ford"],
+  [/\bfiat\b|abarth|tjet/i, "Fiat"],
+  [/\blotus\b|\belise\b|\bexige\b/i, "Lotus"],
+  [/\bmini\b|\br50\b|\br53\b/i, "Mini"],
+  [/\bvw\b|golf|volkswagen/i, "VW"],
+  [/\baudi\b/i, "Audi"],
+  [/\bsubaru\b/i, "Subaru"],
+  [/\bmazda\b|\bmx5\b|\bmx-5\b/i, "Mazda"],
+  [/\bmitsubishi\b|\bevo\b/i, "Mitsubishi"],
+  [/\bvr6\b|1\.8t|\bbam\b|\bapy\b|\barx\b|\bary\b|\baum\b|\bauq\b/i, "VW/Audi VR6 & 1.8T"],
+];
+
+function deriveTags(name: string): string[] {
+  const tags = new Set<string>();
+  for (const [pattern, tag] of TAG_PATTERNS) {
+    if (pattern.test(name)) tags.add(tag);
+  }
+  return Array.from(tags);
+}
+
 /** Maps a synced EcuMaster catalog entry into the shared Product shape used across the site. */
 export function toDisplayProduct(item: EcumasterProduct): Product {
   return {
@@ -101,5 +159,7 @@ export function toDisplayProduct(item: EcumasterProduct): Product {
     fitting: true,
     compatibility: "EcuMaster ecosystem — confirm compatibility before ordering",
     exVat: true,
+    brand: "EcuMaster",
+    tags: deriveTags(item.name),
   };
 }

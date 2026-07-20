@@ -9,6 +9,10 @@ export type Product = {
   compatibility: string;
   /** True if `price` excludes VAT (VAT gets added at checkout) rather than being the final price. */
   exVat?: boolean;
+  /** Manufacturer, e.g. "AEM", "EcuMaster" — shown as a tag and searchable. */
+  brand?: string;
+  /** Free-form tags (part type, engine code, car make) shown as badges and searchable. */
+  tags?: string[];
 };
 
 export const categories = [
@@ -34,6 +38,7 @@ export const products: Product[] = [
       "Uprated hybrid turbo core with billet compressor wheel — supports mid-range power builds. Professional fitting available.",
     fitting: true,
     compatibility: "Honda K-Series, Subaru EJ/FA, Mitsubishi 4G63",
+    tags: ["Turbo", "Honda K-Series", "Subaru EJ/FA", "Mitsubishi 4G63"],
   },
   {
     slug: "adjustable-boost-controller",
@@ -44,6 +49,7 @@ export const products: Product[] = [
       "In-cabin adjustable boost controller for precise, repeatable boost targets.",
     fitting: true,
     compatibility: "Universal — turbocharged applications",
+    tags: ["Boost Controller", "Universal"],
   },
   {
     slug: "1000cc-fuel-injectors-set",
@@ -54,6 +60,7 @@ export const products: Product[] = [
       "High-impedance 1000cc injectors, matched flow set — suited to high-boost, high-power builds.",
     fitting: true,
     compatibility: "Honda K/B-Series, Subaru EJ/FA, Mitsubishi 4G63",
+    tags: ["Fuel Injectors", "Honda K/B-Series", "Subaru EJ/FA", "Mitsubishi 4G63"],
   },
   {
     slug: "flex-fuel-sensor-kit",
@@ -64,6 +71,7 @@ export const products: Product[] = [
       "Ethanol content & fuel temperature sensor kit with inline fitting hardware — required for Flex Fuel tuning.",
     fitting: true,
     compatibility: "Universal",
+    tags: ["Flex Fuel Sensor", "Universal"],
   },
   {
     slug: "walbro-450-fuel-pump",
@@ -74,6 +82,8 @@ export const products: Product[] = [
       "High-flow drop-in fuel pump for supporting power well beyond stock injector limits.",
     fitting: true,
     compatibility: "Honda, Subaru, Mitsubishi — check tank compatibility",
+    brand: "Walbro",
+    tags: ["Fuel Pump", "Honda", "Subaru", "Mitsubishi"],
   },
   {
     slug: "maxxecu-street-plug-in",
@@ -84,6 +94,8 @@ export const products: Product[] = [
       "Plug-in standalone ECU with full tuning capability — includes base setup as part of fitting.",
     fitting: true,
     compatibility: "Model-specific plug-in loom — confirm your vehicle",
+    brand: "MaxxECU",
+    tags: ["Aftermarket ECU"],
   },
   {
     slug: "wideband-afr-gauge",
@@ -94,6 +106,8 @@ export const products: Product[] = [
       "AEM digital wideband air/fuel ratio gauge with data output for logging — required for most tuning packages.",
     fitting: true,
     compatibility: "Universal",
+    brand: "AEM",
+    tags: ["Wideband", "Gauge"],
   },
   {
     slug: "honda-p28-socketed-ecu-refurbished",
@@ -104,6 +118,8 @@ export const products: Product[] = [
       "Pre-socketed, bench-tested Honda P28 ECU, refurbished and ready to run — chip-swappable straight out of the box.",
     fitting: true,
     compatibility: "Honda OBD1 — confirm engine bay compatibility before ordering",
+    brand: "Honda",
+    tags: ["Aftermarket ECU", "Honda OBD1"],
   },
   {
     slug: "honda-obd1-base-map-chip",
@@ -114,6 +130,8 @@ export const products: Product[] = [
       "Base map tuning chip for Honda OBD1 ECUs. Add your engine code (D-, B-, H- or F-series) in the order notes before purchase so we supply the correct base map.",
     fitting: false,
     compatibility: "Honda OBD1 D/B/H/F-series — confirm engine code before ordering",
+    brand: "Honda",
+    tags: ["ECU Chip", "Honda OBD1"],
   },
   {
     slug: "ecumaster-det3-plus",
@@ -124,6 +142,8 @@ export const products: Product[] = [
       "Standalone plug-in ECU — price varies by vehicle and kit. Ask for a quote for your specific application.",
     fitting: true,
     compatibility: "Model-specific plug-in loom — confirm your vehicle",
+    brand: "EcuMaster",
+    tags: ["Aftermarket ECU"],
   },
   {
     slug: "aluminium-front-mount-intercooler",
@@ -134,6 +154,7 @@ export const products: Product[] = [
       "Larger core front-mount intercooler for reduced charge temperatures under sustained boost.",
     fitting: true,
     compatibility: "Model-specific core & pipe kit — confirm your vehicle",
+    tags: ["Intercooler"],
   },
   {
     slug: "oil-cooler-kit",
@@ -144,6 +165,7 @@ export const products: Product[] = [
       "Thermostatic oil cooler kit to protect engine oil temperatures during track and dyno use.",
     fitting: true,
     compatibility: "Universal — mounting kit varies by vehicle",
+    tags: ["Oil Cooler", "Universal"],
   },
   {
     slug: "cat-back-exhaust-system",
@@ -154,6 +176,7 @@ export const products: Product[] = [
       "Mandrel-bent stainless cat-back system for improved flow — pairs well with pops & bangs tuning.",
     fitting: true,
     compatibility: "Model-specific fitment — confirm your vehicle",
+    tags: ["Exhaust"],
   },
   {
     slug: "decat-downpipe",
@@ -164,6 +187,7 @@ export const products: Product[] = [
       "High-flow de-cat downpipe for turbocharged applications — off-road use only.",
     fitting: true,
     compatibility: "Model-specific fitment — confirm your vehicle",
+    tags: ["Downpipe", "Exhaust"],
   },
   {
     slug: "stage-2-clutch-kit",
@@ -174,6 +198,7 @@ export const products: Product[] = [
       "Uprated clutch kit rated for moderate power increases over stock, with organic/kevlar friction disc.",
     fitting: true,
     compatibility: "Model-specific fitment — confirm your vehicle",
+    tags: ["Clutch"],
   },
 ];
 

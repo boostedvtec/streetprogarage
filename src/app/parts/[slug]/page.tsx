@@ -59,6 +59,23 @@ export default async function ProductPage(props: PageProps<"/parts/[slug]">) {
                 £{product.price.toFixed(2)} + VAT
               </p>
             )}
+            {(product.brand || (product.tags && product.tags.length > 0)) && (
+              <div className="mt-4 flex flex-wrap gap-1.5">
+                {product.brand && (
+                  <span className="rounded-full bg-graphite px-2.5 py-0.5 text-xs font-semibold text-graphite-foreground">
+                    {product.brand}
+                  </span>
+                )}
+                {product.tags?.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-border-strong px-2.5 py-0.5 text-xs font-medium text-foreground-muted"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
             <p className="mt-6 text-foreground-muted leading-relaxed">
               {product.description}
             </p>
