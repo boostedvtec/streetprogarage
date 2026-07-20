@@ -7,6 +7,8 @@ export type Product = {
   description: string;
   fitting: boolean;
   compatibility: string;
+  /** True if `price` excludes VAT (VAT gets added at checkout) rather than being the final price. */
+  exVat?: boolean;
 };
 
 export const categories = [

@@ -6,19 +6,20 @@ import { Wrench } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { ProductImagePlaceholder } from "@/components/product-tile";
-import { products, categories } from "@/lib/products";
+import { categories } from "@/lib/products";
+import { displayPrice } from "@/lib/vat";
 import { useCart } from "@/components/cart/cart-context";
 import { useRegion } from "@/components/region/region-context";
 
 export default function PartsPage() {
   const { data } = useRegion();
   const [activeCategory, setActiveCategory] = useState<string | "All">("All");
-  const { addItem } = useCart();
+  const { addItem, allProducts } = useCart();
 
   const visibleProducts =
     activeCategory === "All"
-      ? products
-      : products.filter((p) => p.category === activeCategory);
+      ? allProducts
+      : allProducts.filter((p) => p.category === activeCategory);
 
   if (!data.services.parts) {
     return (
@@ -114,7 +115,14 @@ export default function PartsPage() {
                   </p>
                   <div className="mt-4 flex items-center justify-between">
                     <span className="font-display text-2xl">
-                      {product.price === null ? "Ask for Pricing" : `£${product.price}`}
+                      {product.price === null
+                        ? "Ask for Pricing"
+                        : `£${displayPrice(product.price, Boolean(product.exVat)).toFixed(2)}`}
+                      {product.exVat && product.price !== null && (
+                        <span className="ml-1.5 block text-xs font-normal text-foreground-subtle">
+                          £{product.price.toFixed(2)} + VAT
+                        </span>
+                      )}
                     </span>
                     {product.price === null ? (
                       <Link

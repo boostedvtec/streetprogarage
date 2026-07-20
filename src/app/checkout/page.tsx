@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/components/cart/cart-context";
 
 export default function CheckoutPage() {
-  const { detailedLines, subtotal, lines, clear } = useCart();
+  const { detailedLines, subtotal, vatTotal, grandTotal, lines, clear } = useCart();
   const router = useRouter();
   const [paymentMethod, setPaymentMethod] = useState<"stripe" | "paypal">("stripe");
   const [status, setStatus] = useState<"idle" | "submitting" | "message">("idle");
@@ -160,7 +160,7 @@ export default function CheckoutPage() {
               </div>
             ) : (
               <Button type="submit" size="lg" disabled={status === "submitting"}>
-                {status === "submitting" ? "Processing..." : `Pay £${subtotal}`}
+                {status === "submitting" ? "Processing..." : `Pay £${grandTotal.toFixed(2)}`}
               </Button>
             )}
           </form>
@@ -168,18 +168,29 @@ export default function CheckoutPage() {
           <div className="h-fit rounded-xl border border-border bg-surface p-6">
             <h2 className="font-display text-xl">Order Summary</h2>
             <ul className="mt-4 flex flex-col gap-3 text-sm">
-              {detailedLines.map(({ product, quantity, lineTotal }) => (
+              {detailedLines.map(({ product, quantity, lineGrandTotal }) => (
                 <li key={product.slug} className="flex justify-between gap-2">
                   <span className="text-foreground-muted">
                     {product.name} &times; {quantity}
+                    {product.exVat && " (inc. VAT)"}
                   </span>
-                  <span>&pound;{lineTotal}</span>
+                  <span>&pound;{lineGrandTotal.toFixed(2)}</span>
                 </li>
               ))}
             </ul>
-            <div className="mt-4 flex justify-between border-t border-border pt-4 font-semibold">
+            <div className="mt-4 flex justify-between border-t border-border pt-4 text-sm text-foreground-muted">
               <span>Subtotal</span>
-              <span>&pound;{subtotal}</span>
+              <span>&pound;{subtotal.toFixed(2)}</span>
+            </div>
+            {vatTotal > 0 && (
+              <div className="mt-1 flex justify-between text-sm text-foreground-muted">
+                <span>VAT</span>
+                <span>&pound;{vatTotal.toFixed(2)}</span>
+              </div>
+            )}
+            <div className="mt-2 flex justify-between border-t border-border pt-2 font-semibold">
+              <span>Total</span>
+              <span>&pound;{grandTotal.toFixed(2)}</span>
             </div>
           </div>
         </div>

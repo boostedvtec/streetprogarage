@@ -6,9 +6,11 @@ import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { ProductImagePlaceholder } from "@/components/product-tile";
 import { useCart } from "@/components/cart/cart-context";
+import { displayPrice } from "@/lib/vat";
 
 export default function CartPage() {
-  const { detailedLines, setQuantity, removeItem, subtotal, itemCount } = useCart();
+  const { detailedLines, setQuantity, removeItem, subtotal, vatTotal, grandTotal, itemCount } =
+    useCart();
 
   return (
     <Section>
@@ -28,7 +30,7 @@ export default function CartPage() {
         ) : (
           <div className="mt-10 grid gap-10 lg:grid-cols-[2fr_1fr]">
             <ul className="flex flex-col gap-4">
-              {detailedLines.map(({ product, quantity, lineTotal }) => (
+              {detailedLines.map(({ product, quantity, lineGrandTotal }) => (
                 <li
                   key={product.slug}
                   className="flex gap-4 rounded-xl border border-border bg-surface p-4"
@@ -44,7 +46,11 @@ export default function CartPage() {
                           {product.name}
                         </Link>
                         <p className="text-sm text-foreground-muted">
-                          {product.price === null ? "Ask for pricing" : `£${product.price} each`}
+                          {product.price === null
+                            ? "Ask for pricing"
+                            : `£${displayPrice(product.price, Boolean(product.exVat)).toFixed(2)} each${
+                                product.exVat ? " (inc. VAT)" : ""
+                              }`}
                         </p>
                       </div>
                       <button
@@ -76,7 +82,7 @@ export default function CartPage() {
                           <Plus size={14} aria-hidden />
                         </button>
                       </div>
-                      <span className="font-display text-xl">&pound;{lineTotal}</span>
+                      <span className="font-display text-xl">&pound;{lineGrandTotal.toFixed(2)}</span>
                     </div>
                   </div>
                 </li>
@@ -87,9 +93,19 @@ export default function CartPage() {
               <h2 className="font-display text-xl">Order Summary</h2>
               <div className="mt-4 flex justify-between text-sm text-foreground-muted">
                 <span>Subtotal</span>
-                <span>&pound;{subtotal}</span>
+                <span>&pound;{subtotal.toFixed(2)}</span>
               </div>
-              <p className="mt-1 text-xs text-foreground-subtle">
+              {vatTotal > 0 && (
+                <div className="mt-1 flex justify-between text-sm text-foreground-muted">
+                  <span>VAT</span>
+                  <span>&pound;{vatTotal.toFixed(2)}</span>
+                </div>
+              )}
+              <div className="mt-2 flex justify-between border-t border-border pt-2 font-semibold">
+                <span>Total</span>
+                <span>&pound;{grandTotal.toFixed(2)}</span>
+              </div>
+              <p className="mt-2 text-xs text-foreground-subtle">
                 Fitting labour and shipping are quoted at checkout.
               </p>
               <LinkButton href="/checkout" size="lg" className="mt-6 w-full">

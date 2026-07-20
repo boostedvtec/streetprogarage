@@ -1,20 +1,33 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getProductBySlug, products } from "@/lib/products";
+import { getProductBySlug, products, type Product } from "@/lib/products";
+import { getEcumasterProducts } from "@/lib/ecumaster-store";
+import { toDisplayProduct } from "@/lib/ecumaster";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { ProductImagePlaceholder } from "@/components/product-tile";
 import { LinkButton } from "@/components/ui/button";
+import { displayPrice } from "@/lib/vat";
 import { ProductAddToCart } from "./add-to-cart";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
 }
 
+/** Static products resolve instantly; EcuMaster products (synced separately) are looked up as a fallback. */
+async function resolveProduct(slug: string): Promise<Product | undefined> {
+  const staticMatch = getProductBySlug(slug);
+  if (staticMatch) return staticMatch;
+
+  const catalog = await getEcumasterProducts();
+  const match = catalog.products.find((p) => p.slug === slug);
+  return match ? toDisplayProduct(match) : undefined;
+}
+
 export async function generateMetadata(
   props: PageProps<"/parts/[slug]">
 ): Promise<Metadata> {
   const { slug } = await props.params;
-  const product = getProductBySlug(slug);
+  const product = await resolveProduct(slug);
   if (!product) return {};
   return {
     title: `${product.name} | Street PRO Garage`,
@@ -24,7 +37,7 @@ export async function generateMetadata(
 
 export default async function ProductPage(props: PageProps<"/parts/[slug]">) {
   const { slug } = await props.params;
-  const product = getProductBySlug(slug);
+  const product = await resolveProduct(slug);
 
   if (!product) notFound();
 
@@ -37,8 +50,15 @@ export default async function ProductPage(props: PageProps<"/parts/[slug]">) {
           <div>
             <h1 className="font-display text-4xl sm:text-5xl">{product.name}</h1>
             <p className="font-display mt-4 text-3xl text-accent">
-              {product.price === null ? "Ask for Pricing" : `£${product.price}`}
+              {product.price === null
+                ? "Ask for Pricing"
+                : `£${displayPrice(product.price, Boolean(product.exVat)).toFixed(2)}`}
             </p>
+            {product.exVat && product.price !== null && (
+              <p className="mt-1 text-sm text-foreground-subtle">
+                £{product.price.toFixed(2)} + VAT
+              </p>
+            )}
             <p className="mt-6 text-foreground-muted leading-relaxed">
               {product.description}
             </p>

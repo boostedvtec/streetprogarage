@@ -8,11 +8,23 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { products, type Product } from "@/lib/products";
+import { products as staticProducts, type Product } from "@/lib/products";
+import { vatAmount } from "@/lib/vat";
 
 export type CartLine = {
   slug: string;
   quantity: number;
+};
+
+export type DetailedCartLine = {
+  product: Product;
+  quantity: number;
+  /** Ex-VAT line total. */
+  lineTotal: number;
+  /** VAT on this line — 0 unless product.exVat is set. */
+  lineVat: number;
+  /** lineTotal + lineVat. */
+  lineGrandTotal: number;
 };
 
 type CartContextValue = {
@@ -22,8 +34,15 @@ type CartContextValue = {
   setQuantity: (slug: string, quantity: number) => void;
   clear: () => void;
   itemCount: number;
+  /** Ex-VAT subtotal across all lines. */
   subtotal: number;
-  detailedLines: { product: Product; quantity: number; lineTotal: number }[];
+  /** Total VAT across all lines (0 unless the cart has any exVat products). */
+  vatTotal: number;
+  /** subtotal + vatTotal — the amount actually charged. */
+  grandTotal: number;
+  detailedLines: DetailedCartLine[];
+  /** Static catalog merged with the live EcuMaster catalog. */
+  allProducts: Product[];
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -32,6 +51,7 @@ const STORAGE_KEY = "spg-cart";
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
   const [hydrated, setHydrated] = useState(false);
+  const [ecumasterProducts, setEcumasterProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     // Reading localStorage must happen post-mount (it doesn't exist during
@@ -51,6 +71,22 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (!hydrated) return;
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(lines));
   }, [lines, hydrated]);
+
+  useEffect(() => {
+    fetch("/api/ecumaster-products")
+      .then((res) => res.json())
+      .then((data: { products?: Product[] }) => {
+        setEcumasterProducts(data.products ?? []);
+      })
+      .catch(() => {
+        // No live catalog available — the static products list still works fine.
+      });
+  }, []);
+
+  const allProducts = useMemo(
+    () => [...staticProducts, ...ecumasterProducts],
+    [ecumasterProducts]
+  );
 
   const addItem = (slug: string, quantity = 1) => {
     setLines((prev) => {
@@ -82,24 +118,42 @@ export function CartProvider({ children }: { children: ReactNode }) {
     () =>
       lines
         .map((line) => {
-          const product = products.find((p) => p.slug === line.slug);
+          const product = allProducts.find((p) => p.slug === line.slug);
           if (!product) return null;
+          const lineTotal = (product.price ?? 0) * line.quantity;
+          const lineVat = product.exVat ? vatAmount(lineTotal) : 0;
           return {
             product,
             quantity: line.quantity,
-            lineTotal: (product.price ?? 0) * line.quantity,
+            lineTotal,
+            lineVat,
+            lineGrandTotal: lineTotal + lineVat,
           };
         })
-        .filter((l): l is { product: Product; quantity: number; lineTotal: number } => l !== null),
-    [lines]
+        .filter((l): l is DetailedCartLine => l !== null),
+    [lines, allProducts]
   );
 
   const itemCount = detailedLines.reduce((sum, l) => sum + l.quantity, 0);
   const subtotal = detailedLines.reduce((sum, l) => sum + l.lineTotal, 0);
+  const vatTotal = detailedLines.reduce((sum, l) => sum + l.lineVat, 0);
+  const grandTotal = subtotal + vatTotal;
 
   return (
     <CartContext.Provider
-      value={{ lines, addItem, removeItem, setQuantity, clear, itemCount, subtotal, detailedLines }}
+      value={{
+        lines,
+        addItem,
+        removeItem,
+        setQuantity,
+        clear,
+        itemCount,
+        subtotal,
+        vatTotal,
+        grandTotal,
+        detailedLines,
+        allProducts,
+      }}
     >
       {children}
     </CartContext.Provider>
