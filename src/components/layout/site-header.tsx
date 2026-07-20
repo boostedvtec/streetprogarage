@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
-import { List, X, WhatsappLogo, ShoppingCart } from "@phosphor-icons/react/dist/ssr";
+import { List, X, WhatsappLogo, ShoppingCart, CaretDown } from "@phosphor-icons/react/dist/ssr";
 import { Logo } from "@/components/logo";
 import { navLinks } from "@/lib/site-config";
+import { categories } from "@/lib/products";
 import { useCart } from "@/components/cart/cart-context";
 import { useRegion } from "@/components/region/region-context";
 import { RegionSwitcher } from "@/components/region/region-switcher";
@@ -72,8 +73,18 @@ const navLinkClass =
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [categoryMenuOpen, setCategoryMenuOpen] = useState(false);
+  const [categoryMenuTop, setCategoryMenuTop] = useState(0);
+  const headerRef = useRef<HTMLElement>(null);
   const { region, data } = useRegion();
   const visibleLinks = navLinks.filter((link) => (link.regions as readonly string[]).includes(region));
+
+  function openCategoryMenu() {
+    if (headerRef.current) {
+      setCategoryMenuTop(headerRef.current.getBoundingClientRect().bottom);
+    }
+    setCategoryMenuOpen(true);
+  }
 
   return (
     <>
@@ -86,20 +97,42 @@ export function SiteHeader() {
         </p>
       </div>
 
-      <header className="sticky top-0 z-50 max-h-[20vh] overflow-hidden bg-background/95 shadow-[0_1px_3px_rgba(23,20,15,0.08)] backdrop-blur supports-[backdrop-filter]:bg-background/80">
+      <header
+        ref={headerRef}
+        className="sticky top-0 z-50 bg-background/95 shadow-[0_1px_3px_rgba(23,20,15,0.08)] backdrop-blur supports-[backdrop-filter]:bg-background/80"
+      >
+      {/* This inner wrapper (not <header> itself) carries the height cap, so
+          the category dropdown and mobile menu below aren't clipped by it —
+          overflow-hidden on <header> would cut off anything that needs to
+          extend past its own bounds. */}
+      <div className="max-h-[20vh] overflow-hidden">
       <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-6 lg:min-h-20 lg:px-8">
         {/* Sized in vh (not fixed px) so the logo scales with viewport
-            height while the header's max-h-[20vh] above guarantees it —
+            height while the wrapper's max-h-[20vh] above guarantees it —
             plus padding and the tach strip below — never exceeds 20% of
             the screen, on any device. */}
         <Logo imgClassName="h-[clamp(64px,15vh,140px)] lg:h-[clamp(80px,16vh,160px)]" />
 
         <nav className="hidden lg:flex lg:items-center lg:gap-1">
-          {visibleLinks.map((link) => (
-            <Link key={link.href} href={link.href} className={navLinkClass}>
-              {link.label}
-            </Link>
-          ))}
+          {visibleLinks.map((link) =>
+            link.href === "/parts" ? (
+              <div
+                key={link.href}
+                className="relative"
+                onMouseEnter={openCategoryMenu}
+                onMouseLeave={() => setCategoryMenuOpen(false)}
+              >
+                <Link href={link.href} className={navLinkClass}>
+                  {link.label}
+                  <CaretDown size={11} className="ml-1 inline" aria-hidden />
+                </Link>
+              </div>
+            ) : (
+              <Link key={link.href} href={link.href} className={navLinkClass}>
+                {link.label}
+              </Link>
+            )
+          )}
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
@@ -140,6 +173,7 @@ export function SiteHeader() {
       </div>
 
       <TachStrip />
+      </div>
 
       {open && (
         <nav
@@ -180,6 +214,39 @@ export function SiteHeader() {
         </nav>
       )}
       </header>
+
+      {/* Rendered outside <header> deliberately — header's backdrop-blur
+          makes it a containing block for position:fixed descendants, which
+          would offset this panel by the header's own viewport position
+          instead of the true viewport top. */}
+      {data.services.parts && categoryMenuOpen && (
+        <div
+          style={{ top: categoryMenuTop }}
+          className="fixed left-0 right-0 z-40 hidden border-b border-border bg-surface shadow-lg lg:block"
+          onMouseEnter={() => setCategoryMenuOpen(true)}
+          onMouseLeave={() => setCategoryMenuOpen(false)}
+        >
+          <div className="mx-auto flex max-w-7xl flex-wrap gap-2 px-4 py-4 sm:px-6 lg:px-8">
+            <Link
+              href="/parts"
+              onClick={() => setCategoryMenuOpen(false)}
+              className="rounded-full border border-accent bg-accent-soft px-3 py-1.5 text-sm font-medium text-accent"
+            >
+              All Parts
+            </Link>
+            {categories.map((cat) => (
+              <Link
+                key={cat}
+                href={`/parts?category=${encodeURIComponent(cat)}`}
+                onClick={() => setCategoryMenuOpen(false)}
+                className="rounded-full border border-border-strong px-3 py-1.5 text-sm font-medium text-foreground-muted transition-colors hover:border-accent hover:text-foreground"
+              >
+                {cat}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </>
   );
 }

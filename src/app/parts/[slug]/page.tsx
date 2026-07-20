@@ -53,6 +53,11 @@ export default async function ProductPage(props: PageProps<"/parts/[slug]">) {
               {product.price === null
                 ? "Ask for Pricing"
                 : `£${displayPrice(product.price, Boolean(product.exVat)).toFixed(2)}`}
+              {product.exVat && product.price !== null && (
+                <span className="ml-1.5 text-base font-normal text-foreground-subtle">
+                  inc. VAT
+                </span>
+              )}
             </p>
             {product.exVat && product.price !== null && (
               <p className="mt-1 text-sm text-foreground-subtle">
