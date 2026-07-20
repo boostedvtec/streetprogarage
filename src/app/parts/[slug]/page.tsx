@@ -6,7 +6,6 @@ import { toDisplayProduct } from "@/lib/ecumaster";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { ProductImagePlaceholder } from "@/components/product-tile";
 import { LinkButton } from "@/components/ui/button";
-import { displayPrice } from "@/lib/vat";
 import { ProductAddToCart } from "./add-to-cart";
 
 export function generateStaticParams() {
@@ -50,19 +49,10 @@ export default async function ProductPage(props: PageProps<"/parts/[slug]">) {
           <div>
             <h1 className="font-display text-4xl sm:text-5xl">{product.name}</h1>
             <p className="font-display mt-4 text-3xl text-accent">
-              {product.price === null
-                ? "Ask for Pricing"
-                : `£${displayPrice(product.price, Boolean(product.exVat)).toFixed(2)}`}
-              {product.exVat && product.price !== null && (
-                <span className="ml-1.5 text-base font-normal text-foreground-subtle">
-                  inc. VAT
-                </span>
-              )}
+              {product.price === null ? "Ask for Pricing" : `£${product.price.toFixed(2)}`}
             </p>
-            {product.exVat && product.price !== null && (
-              <p className="mt-1 text-sm text-foreground-subtle">
-                £{product.price.toFixed(2)} + VAT
-              </p>
+            {product.price !== null && (
+              <p className="mt-1 text-sm text-foreground-subtle">excl. VAT</p>
             )}
             {(product.brand || (product.tags && product.tags.length > 0)) && (
               <div className="mt-4 flex flex-wrap gap-1.5">

@@ -48,9 +48,7 @@ export default function CartPage() {
                         <p className="text-sm text-foreground-muted">
                           {product.price === null
                             ? "Ask for pricing"
-                            : `£${displayPrice(product.price, Boolean(product.exVat)).toFixed(2)} each${
-                                product.exVat ? " (inc. VAT)" : ""
-                              }`}
+                            : `£${displayPrice(product.price, true).toFixed(2)} each (inc. VAT)`}
                         </p>
                       </div>
                       <button

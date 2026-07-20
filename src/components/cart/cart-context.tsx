@@ -21,7 +21,7 @@ export type DetailedCartLine = {
   quantity: number;
   /** Ex-VAT line total. */
   lineTotal: number;
-  /** VAT on this line — 0 unless product.exVat is set. */
+  /** VAT on this line — applied to every product's price. */
   lineVat: number;
   /** lineTotal + lineVat. */
   lineGrandTotal: number;
@@ -36,7 +36,7 @@ type CartContextValue = {
   itemCount: number;
   /** Ex-VAT subtotal across all lines. */
   subtotal: number;
-  /** Total VAT across all lines (0 unless the cart has any exVat products). */
+  /** Total VAT across all lines — every product's price is treated as ex-VAT. */
   vatTotal: number;
   /** subtotal + vatTotal — the amount actually charged. */
   grandTotal: number;
@@ -121,7 +121,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           const product = allProducts.find((p) => p.slug === line.slug);
           if (!product) return null;
           const lineTotal = (product.price ?? 0) * line.quantity;
-          const lineVat = product.exVat ? vatAmount(lineTotal) : 0;
+          const lineVat = vatAmount(lineTotal);
           return {
             product,
             quantity: line.quantity,

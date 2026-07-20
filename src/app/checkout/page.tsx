@@ -171,8 +171,7 @@ export default function CheckoutPage() {
               {detailedLines.map(({ product, quantity, lineGrandTotal }) => (
                 <li key={product.slug} className="flex justify-between gap-2">
                   <span className="text-foreground-muted">
-                    {product.name} &times; {quantity}
-                    {product.exVat && " (inc. VAT)"}
+                    {product.name} &times; {quantity} (inc. VAT)
                   </span>
                   <span>&pound;{lineGrandTotal.toFixed(2)}</span>
                 </li>
