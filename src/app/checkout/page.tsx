@@ -168,12 +168,12 @@ export default function CheckoutPage() {
           <div className="h-fit rounded-xl border border-border bg-surface p-6">
             <h2 className="font-display text-xl">Order Summary</h2>
             <ul className="mt-4 flex flex-col gap-3 text-sm">
-              {detailedLines.map(({ product, quantity, lineGrandTotal }) => (
+              {detailedLines.map(({ product, quantity, lineTotal }) => (
                 <li key={product.slug} className="flex justify-between gap-2">
                   <span className="text-foreground-muted">
-                    {product.name} &times; {quantity} (inc. VAT)
+                    {product.name} &times; {quantity}
                   </span>
-                  <span>&pound;{lineGrandTotal.toFixed(2)}</span>
+                  <span>&pound;{lineTotal.toFixed(2)}</span>
                 </li>
               ))}
             </ul>

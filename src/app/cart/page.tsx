@@ -6,7 +6,6 @@ import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { ProductImagePlaceholder } from "@/components/product-tile";
 import { useCart } from "@/components/cart/cart-context";
-import { displayPrice } from "@/lib/vat";
 
 export default function CartPage() {
   const { detailedLines, setQuantity, removeItem, subtotal, vatTotal, grandTotal, itemCount } =
@@ -30,7 +29,7 @@ export default function CartPage() {
         ) : (
           <div className="mt-10 grid gap-10 lg:grid-cols-[2fr_1fr]">
             <ul className="flex flex-col gap-4">
-              {detailedLines.map(({ product, quantity, lineGrandTotal }) => (
+              {detailedLines.map(({ product, quantity, lineTotal }) => (
                 <li
                   key={product.slug}
                   className="flex gap-4 rounded-xl border border-border bg-surface p-4"
@@ -48,7 +47,7 @@ export default function CartPage() {
                         <p className="text-sm text-foreground-muted">
                           {product.price === null
                             ? "Ask for pricing"
-                            : `£${displayPrice(product.price, true).toFixed(2)} each (inc. VAT)`}
+                            : `£${product.price.toFixed(2)} each`}
                         </p>
                       </div>
                       <button
@@ -80,7 +79,7 @@ export default function CartPage() {
                           <Plus size={14} aria-hidden />
                         </button>
                       </div>
-                      <span className="font-display text-xl">&pound;{lineGrandTotal.toFixed(2)}</span>
+                      <span className="font-display text-xl">&pound;{lineTotal.toFixed(2)}</span>
                     </div>
                   </div>
                 </li>
