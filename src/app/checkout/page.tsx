@@ -2,17 +2,22 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Info, CreditCard } from "@phosphor-icons/react/dist/ssr";
+import { Info, CreditCard, Truck } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/components/cart/cart-context";
+import { deliveryOptions, defaultDeliveryOptionId, getDeliveryOption } from "@/lib/delivery";
 
 export default function CheckoutPage() {
   const { detailedLines, subtotal, vatTotal, grandTotal, lines, clear } = useCart();
   const router = useRouter();
   const [paymentMethod, setPaymentMethod] = useState<"stripe" | "paypal">("stripe");
+  const [deliveryOptionId, setDeliveryOptionId] = useState(defaultDeliveryOptionId);
   const [status, setStatus] = useState<"idle" | "submitting" | "message">("idle");
   const [message, setMessage] = useState("");
+
+  const deliveryCost = getDeliveryOption(deliveryOptionId)?.price ?? 0;
+  const payTotal = grandTotal + deliveryCost;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -32,6 +37,7 @@ export default function CheckoutPage() {
         },
         lines,
         paymentMethod,
+        deliveryOptionId,
       }),
     });
     const data = await res.json();
@@ -110,6 +116,42 @@ export default function CheckoutPage() {
             </div>
 
             <div className="rounded-xl border border-border bg-surface p-6">
+              <div className="flex items-center gap-2">
+                <Truck size={20} className="text-accent" aria-hidden />
+                <h2 className="font-display text-xl">Delivery Options</h2>
+              </div>
+              <label className="mt-4 flex flex-col gap-1.5 text-sm">
+                Choose a delivery method
+                <select
+                  name="deliveryOptionId"
+                  value={deliveryOptionId}
+                  onChange={(e) => setDeliveryOptionId(e.target.value)}
+                  className="h-11 cursor-pointer rounded-md border border-border-strong bg-surface-2 px-3 text-foreground outline-none focus:border-accent"
+                >
+                  {(["UK", "Europe", "Rest of World"] as const).map((region) => (
+                    <optgroup key={region} label={region}>
+                      {deliveryOptions
+                        .filter((o) => o.region === region)
+                        .map((o) => (
+                          <option key={o.id} value={o.id}>
+                            {o.name} — £{o.price.toFixed(2)}
+                          </option>
+                        ))}
+                    </optgroup>
+                  ))}
+                </select>
+              </label>
+              <p className="mt-2 text-xs text-foreground-subtle">
+                Large or oversized parts may need a bespoke courier rate — we&rsquo;ll
+                confirm before dispatch if that applies. See{" "}
+                <a href="/delivery-information" className="text-accent underline">
+                  Delivery Information
+                </a>
+                .
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-border bg-surface p-6">
               <h2 className="font-display text-xl">Payment Method</h2>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 {(["stripe", "paypal"] as const).map((method) => (
@@ -160,7 +202,7 @@ export default function CheckoutPage() {
               </div>
             ) : (
               <Button type="submit" size="lg" disabled={status === "submitting"}>
-                {status === "submitting" ? "Processing..." : `Pay £${grandTotal.toFixed(2)}`}
+                {status === "submitting" ? "Processing..." : `Pay £${payTotal.toFixed(2)}`}
               </Button>
             )}
           </form>
@@ -187,9 +229,13 @@ export default function CheckoutPage() {
                 <span>&pound;{vatTotal.toFixed(2)}</span>
               </div>
             )}
+            <div className="mt-1 flex justify-between text-sm text-foreground-muted">
+              <span>Delivery</span>
+              <span>&pound;{deliveryCost.toFixed(2)}</span>
+            </div>
             <div className="mt-2 flex justify-between border-t border-border pt-2 font-semibold">
               <span>Total</span>
-              <span>&pound;{grandTotal.toFixed(2)}</span>
+              <span>&pound;{payTotal.toFixed(2)}</span>
             </div>
           </div>
         </div>

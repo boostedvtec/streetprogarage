@@ -9,6 +9,8 @@ import { useRegion } from "@/components/region/region-context";
 const legalLinks = [
   { href: "/declaration", label: "Declaration & Liability" },
   { href: "/finance-warranty", label: "Finance & Warranty" },
+  { href: "/delivery-information", label: "Delivery Information", partsOnly: true },
+  { href: "/returns-policy", label: "Returns Policy", partsOnly: true },
 ];
 
 export function SiteFooter() {
@@ -92,13 +94,15 @@ export function SiteFooter() {
             &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
           <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            {legalLinks.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className="hover:text-foreground-muted">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
+            {legalLinks
+              .filter((link) => !link.partsOnly || data.services.parts)
+              .map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="hover:text-foreground-muted">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
           </ul>
         </div>
       </div>

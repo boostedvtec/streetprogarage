@@ -10,6 +10,7 @@ type CheckoutPayload = {
   };
   lines: { slug: string; quantity: number }[];
   paymentMethod: "stripe" | "paypal";
+  deliveryOptionId?: string;
 };
 
 export async function POST(request: Request) {
