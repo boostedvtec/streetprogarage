@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { List, X, WhatsappLogo, ShoppingCart, CaretDown } from "@phosphor-icons/react/dist/ssr";
 import { Logo } from "@/components/logo";
@@ -76,14 +76,32 @@ export function SiteHeader() {
   const [categoryMenuOpen, setCategoryMenuOpen] = useState(false);
   const [categoryMenuTop, setCategoryMenuTop] = useState(0);
   const headerRef = useRef<HTMLElement>(null);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { region, data } = useRegion();
   const visibleLinks = navLinks.filter((link) => (link.regions as readonly string[]).includes(region));
 
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    };
+  }, []);
+
   function openCategoryMenu() {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
     if (headerRef.current) {
       setCategoryMenuTop(headerRef.current.getBoundingClientRect().bottom);
     }
     setCategoryMenuOpen(true);
+  }
+
+  /** Delayed close so quickly moving the cursor from the nav link down to
+      the panel (crossing the header padding / tach strip gap between them)
+      doesn't close the menu before it gets there. */
+  function scheduleCloseCategoryMenu() {
+    closeTimerRef.current = setTimeout(() => setCategoryMenuOpen(false), 250);
   }
 
   return (
@@ -120,7 +138,7 @@ export function SiteHeader() {
                 key={link.href}
                 className="relative"
                 onMouseEnter={openCategoryMenu}
-                onMouseLeave={() => setCategoryMenuOpen(false)}
+                onMouseLeave={scheduleCloseCategoryMenu}
               >
                 <Link href={link.href} className={navLinkClass}>
                   {link.label}
@@ -223,8 +241,8 @@ export function SiteHeader() {
         <div
           style={{ top: categoryMenuTop }}
           className="fixed left-0 right-0 z-40 hidden border-b border-border bg-surface shadow-lg lg:block"
-          onMouseEnter={() => setCategoryMenuOpen(true)}
-          onMouseLeave={() => setCategoryMenuOpen(false)}
+          onMouseEnter={openCategoryMenu}
+          onMouseLeave={scheduleCloseCategoryMenu}
         >
           <div className="mx-auto flex max-w-7xl flex-wrap gap-2 px-4 py-4 sm:px-6 lg:px-8">
             <Link
