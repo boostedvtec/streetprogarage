@@ -230,8 +230,9 @@ function TuningPageContent() {
                 <div className="flex-1">
                   <h2 className="font-display text-3xl">{dynoServiceLabel(region)}</h2>
                   <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
-                    Tune live on our in-house dyno in {data.city} with full
-                    datalogging and real-time adjustment.
+                    Tune live on our in-house 2WD dyno with an eddy current
+                    brake in {data.city}, with full datalogging and
+                    real-time adjustment.
                   </p>
                 </div>
                 <span className="font-display text-3xl text-accent">
