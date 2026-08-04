@@ -287,6 +287,14 @@ function TuningPageContent() {
                   {rollingRoad.bookingPolicy}
                 </p>
               </div>
+
+              <p className="mt-6 text-sm text-foreground-muted">
+                Already have a tune and just want logged pulls? See{" "}
+                <Link href="/dyno-rental" className="text-accent underline">
+                  Dyno Rental
+                </Link>{" "}
+                — per run or per hour, no tuning included.
+              </p>
             </Container>
           </Section>
 

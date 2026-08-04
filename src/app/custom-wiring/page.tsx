@@ -9,6 +9,7 @@ import {
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { UkOnlySection } from "@/components/region/uk-only-section";
+import { HarnessBuilderForm } from "@/components/wiring/harness-builder-form";
 
 export const metadata: Metadata = {
   title: "Wiring & ECU Installation | Street PRO Garage",
@@ -47,14 +48,6 @@ export default function CustomWiringPage() {
             From standalone ECU harnesses to gauge installs and Honda ECU
             socketing — the wiring work behind every tune, done properly.
           </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <LinkButton href="/quote" size="lg">
-              Get a Quote
-            </LinkButton>
-            <LinkButton href="/tuning" size="lg" variant="secondary">
-              See Supported ECUs
-            </LinkButton>
-          </div>
         </Container>
       </div>
 
@@ -92,6 +85,35 @@ export default function CustomWiringPage() {
           </div>
         </Container>
       </Section>
+
+      {/* Wiring diagram / custom harness builder */}
+      <div className="relative overflow-hidden border-y border-border bg-graphite">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(115deg, #cf5f1c 0px, #cf5f1c 1px, transparent 1px, transparent 64px), repeating-linear-gradient(25deg, #ffffff 0px, #ffffff 1px, transparent 1px, transparent 48px)",
+          }}
+          aria-hidden
+        />
+        <Section className="relative">
+          <Container>
+            <Eyebrow>Wiring Diagram</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl text-white sm:text-5xl">
+              Build Your Custom Wiring Harness
+            </h2>
+            <p className="mt-4 max-w-2xl text-white/70">
+              Tell us your ECU, engine and sensor setup and we&rsquo;ll spec a
+              purpose-built harness for it — same approach as a proper
+              flying-lead build, just wired to your exact configuration
+              instead of a generic kit.
+            </p>
+            <div className="mt-10 max-w-3xl">
+              <HarnessBuilderForm />
+            </div>
+          </Container>
+        </Section>
+      </div>
 
       {/* Gauge installation */}
       <Section className="border-y border-border bg-surface/50">

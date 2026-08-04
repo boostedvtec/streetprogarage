@@ -28,6 +28,7 @@ export const siteConfig = {
 export const navLinks = [
   { href: "/tuning", label: "Tuning", regions: ["uk", "pk"] },
   { href: "/custom-wiring", label: "Wiring", regions: ["uk", "pk"] },
+  { href: "/dyno-rental", label: "Dyno Rental", regions: ["uk", "pk"] },
   { href: "/parts", label: "Parts", regions: ["uk"] },
   { href: "/engine-swaps", label: "Engine Swaps", regions: ["pk"] },
   { href: "/projects", label: "Projects", regions: ["uk", "pk"] },
@@ -221,6 +222,19 @@ export const rollingRoad = {
   location: "Manchester, UK",
   bookingPolicy:
     "Rolling road dyno tune sessions require pre-booking and a deposit. No-show bookings forfeit the booking fee — it is non-refundable.",
+};
+
+/**
+ * Dyno time rented on its own — no tuning included. For customers who
+ * already have a map and just want logged pulls, want to verify their own
+ * tune, or need before/after runs. Separate from `rollingRoad`, which is
+ * the dyno time billed as part of a tuning session.
+ */
+export const dynoRental = {
+  perTwoRuns: { uk: 50, pk: null } as RegionPrice,
+  perHour: { uk: 100, pk: null } as RegionPrice,
+  bookingPolicy:
+    "Dyno rental sessions require pre-booking and a deposit. No-show bookings forfeit the booking fee — it is non-refundable.",
 };
 
 /** Dyno time is billed separately from the flat tune price — this explains the typical range. */
