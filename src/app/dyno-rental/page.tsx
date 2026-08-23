@@ -16,7 +16,6 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
-import { PriceTag } from "@/components/region/price-tag";
 import { dynoRental } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -143,33 +142,22 @@ export default function DynoRentalPage() {
 
       <Section className="border-y border-border bg-surface/50">
         <Container>
-          <div className="grid gap-6 sm:grid-cols-2">
-            <div className="rounded-xl border border-border bg-surface p-8">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent-soft text-accent">
-                <Gauge size={26} weight="bold" aria-hidden />
+          <div className="rounded-xl border border-accent/30 bg-accent-soft p-8 text-center sm:text-left">
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-white/60 text-accent">
+                  <Gauge size={26} weight="bold" aria-hidden />
+                </div>
+                <div>
+                  <h2 className="font-display text-2xl">Book by the Run or by the Hour</h2>
+                  <p className="mt-1 text-sm leading-relaxed text-foreground-muted">
+                    Get in touch for current dyno rental rates and availability.
+                  </p>
+                </div>
               </div>
-              <h2 className="font-display mt-6 text-2xl">2 Runs</h2>
-              <p className="font-display mt-2 text-4xl text-accent">
-                <PriceTag price={dynoRental.perTwoRuns} />
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
-                Two pulls — ideal for a before/after check, or verifying a
-                change you&rsquo;ve just made against a baseline run.
-              </p>
-            </div>
-            <div className="rounded-xl border border-accent/30 bg-accent-soft p-8">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white/60 text-accent">
-                <ChartLineUp size={26} weight="bold" aria-hidden />
-              </div>
-              <h2 className="font-display mt-6 text-2xl">Per Hour</h2>
-              <p className="font-display mt-2 text-4xl text-accent">
-                <PriceTag price={dynoRental.perHour} />
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
-                A block of dyno time for multiple runs — better value if
-                you&rsquo;re logging several changes or self-tuning across a
-                session.
-              </p>
+              <LinkButton href="/contact" size="lg" className="shrink-0">
+                Get Rates
+              </LinkButton>
             </div>
           </div>
 
