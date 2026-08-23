@@ -27,10 +27,7 @@ export function ProjectCard({ project }: { project: Project }) {
       )}
 
       <div className="p-6 sm:p-8">
-        <span className="inline-flex items-center rounded-full border border-border-strong bg-surface-2 px-3 py-1 text-xs font-medium uppercase tracking-wide text-foreground-subtle">
-          {project.region === "pk" ? "Karachi" : "Manchester"}
-        </span>
-        <h3 className="font-display mt-3 text-2xl">{project.title}</h3>
+        <h3 className="font-display text-2xl">{project.title}</h3>
         <p className="mt-1 text-sm font-medium text-foreground-muted">{project.vehicle}</p>
         <p className="mt-3 text-sm leading-relaxed text-foreground-muted">{project.summary}</p>
 
