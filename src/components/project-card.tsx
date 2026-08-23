@@ -5,24 +5,26 @@ import type { Project } from "@/lib/projects";
 export function ProjectCard({ project }: { project: Project }) {
   return (
     <article className="overflow-hidden rounded-xl border border-border bg-surface">
-      <div className="relative aspect-video w-full bg-surface-2">
-        {project.media.type === "image" ? (
-          <Image
-            src={project.media.src}
-            alt={project.media.alt}
-            fill
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover"
-          />
-        ) : (
-          <video
-            src={project.media.src}
-            poster={project.media.poster}
-            controls
-            className="h-full w-full object-cover"
-          />
-        )}
-      </div>
+      {project.media && (
+        <div className="relative aspect-video w-full bg-surface-2">
+          {project.media.type === "image" ? (
+            <Image
+              src={project.media.src}
+              alt={project.media.alt}
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
+            />
+          ) : (
+            <video
+              src={project.media.src}
+              poster={project.media.poster}
+              controls
+              className="h-full w-full object-cover"
+            />
+          )}
+        </div>
+      )}
 
       <div className="p-6 sm:p-8">
         <span className="inline-flex items-center rounded-full border border-border-strong bg-surface-2 px-3 py-1 text-xs font-medium uppercase tracking-wide text-foreground-subtle">
