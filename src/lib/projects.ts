@@ -17,13 +17,15 @@ export type Project = {
     power: string;
     torque?: string;
   };
-  media: ProjectMedia;
+  /** Optional — a project can be listed with just the build list + dyno result if no photo/video is available. */
+  media?: ProjectMedia;
 };
 
 /**
  * Real completed builds only — no placeholder/sample entries. Add new
  * projects here as they're finished; each one follows the same format
- * (build list + dyno graph + photo/video) rendered by ProjectCard.
+ * (build list + dyno graph, plus an optional photo/video) rendered by
+ * ProjectCard.
  *
  * Example shape for reference when adding a new one:
  *
@@ -82,11 +84,6 @@ export const projects: Project[] = [
       alt: "Honda D16 turbo dyno graph, 207 HP at 7000 RPM on a Maxspeeding turbo kit at 8 PSI",
       power: "207 WHP",
       torque: "167 lb-ft",
-    },
-    media: {
-      type: "image",
-      src: "/images/builds/d16-turbo.jpg",
-      alt: "Turbo Honda Civic D16 hatchback with front-mount intercooler and oil cooler",
     },
   },
 ];
