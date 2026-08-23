@@ -51,8 +51,13 @@ export const supportedEcus: EcuCategory[] = [
   },
   {
     category: "Honda-Specific Platforms (Piggyback & Chipped ECU)",
-    ecus: ["Honda P28 (chipped)", "Hondata S300", "Hondavert", "HTS", "Neptune RTP"],
-    note: "Covers Civic and Integra D-series, B-series and K-series builds.",
+    ecus: ["Honda P28 (chipped)", "Hondata S300", "Hondata KPro", "Hondavert", "HTS", "Neptune RTP"],
+    note: "Covers Civic and Integra D-series, B-series, H-series and K-series builds.",
+  },
+  {
+    category: "Nissan-Specific (Piggyback / Reflash)",
+    ecus: ["Nistune (stock ECU reflash)"],
+    note: "Covers SR20DET Pulsar, Sentra and Sunny platforms.",
   },
   {
     category: "Standalone ECUs",
@@ -77,10 +82,36 @@ export type VehiclePlatform = {
 
 /** Makes, models and engine codes we regularly tune — used on the Tuning page for platform coverage. */
 export const tunedVehiclePlatforms: VehiclePlatform[] = [
-  { make: "Honda", models: "Civic & Integra", engines: ["D14", "D16", "B16", "B18"] },
-  { make: "Toyota", models: "Supra & MR2", engines: ["2JZGTE", "1JZGTE", "2ZZ"] },
-  { make: "Mitsubishi", models: "Lancer Evo V, VI, VII, VIII, IX & X", engines: ["4G63T"] },
-  { make: "Subaru", models: "Impreza WRX & STI", engines: [] },
+  {
+    make: "Honda — OBD1",
+    models: "Civic, CRX, Del Sol & Prelude — D/B/H-series swaps, incl. mini D16 swaps",
+    engines: ["D16", "B16", "B18", "B20", "H22", "H23"],
+  },
+  {
+    make: "Honda — K-Series",
+    models: "Civic (incl. EP3 Type R) K20/K24 — Hondata KPro, MaxxECU or Haltech standalone",
+    engines: ["K20", "K24"],
+  },
+  {
+    make: "Toyota",
+    models: "Supra & MR2 Turbo — 2JZGTE & 3SGTE on AEM Infinity, 2ZZ-GE on EcuMaster",
+    engines: ["2JZGTE", "3SGTE", "2ZZ-GE"],
+  },
+  {
+    make: "Mitsubishi",
+    models: "Lancer Evo IV–VI & VII–IX — stock ECU, AEM Infinity, MegaSquirt or MaxxECU standalone",
+    engines: ["4G63T"],
+  },
+  {
+    make: "Subaru",
+    models: "Impreza WRX & STI — UK 2000 model, 2001–04 (race ROM upgrade), 2005–2021",
+    engines: [],
+  },
+  {
+    make: "Nissan",
+    models: "Pulsar GTiR — stock ECU on Nistune, or Link ECU standalone",
+    engines: ["SR20DET"],
+  },
   { make: "Mazda", models: "MX-5 — naturally aspirated, turbo & supercharged", engines: [] },
 ];
 
