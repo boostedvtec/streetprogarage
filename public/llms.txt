@@ -30,6 +30,13 @@
 ## Key Pages
 
 - [Tuning](/tuning): Remote tuning, road tuning, and rolling road dyno tuning — methods, pricing structure, and supported ECU platforms.
+- [Honda OBD1 Tuning](/tuning/honda-obd1): D/B/H/F-series Civic, CRX, Del Sol & Prelude tuning.
+- [Honda K & R-Series Tuning](/tuning/honda-k-series): K20/K24/R18 Civic and EP3 Type R tuning.
+- [Subaru WRX/STI Tuning](/tuning/subaru-wrx-sti): UK 2000, 2001–05 and 2006-onward Impreza WRX/STI tuning.
+- [Mitsubishi Evo Tuning](/tuning/mitsubishi-evo): Lancer Evo I–III, IV–VI and VIII–IX (4G63T) tuning.
+- [Toyota Supra & MR2 Tuning](/tuning/toyota-supra-mr2): 2JZGTE, 3SGTE and 2ZZ-GE tuning.
+- [Mazda Miata/MX-5 Tuning](/tuning/mazda-miata-mx5): NA, turbo and supercharged Miata tuning.
+- [Nissan Pulsar GTiR Tuning](/tuning/nissan-pulsar): SR20DET tuning on Nistune or Link ECU.
 - [Custom Wiring](/custom-wiring): Standalone/piggyback ECU wiring, ECU installation, sensor integration, gauge fitting, and diagnostics for stuck or incomplete builds.
 - [Parts](/parts): Performance parts sales with professional fitting and diagnostics (UK).
 - [Engine Swaps](/engine-swaps): Full engine swaps and custom builds (Pakistan).
