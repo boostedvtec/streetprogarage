@@ -52,7 +52,7 @@ export const supportedEcus: EcuCategory[] = [
   {
     category: "Honda-Specific Platforms (Piggyback & Chipped ECU)",
     ecus: ["Honda P28 (chipped)", "Hondata S300", "Hondata KPro", "Hondavert", "HTS", "Neptune RTP"],
-    note: "Covers Civic and Integra D-series, B-series, H-series and K-series builds.",
+    note: "Covers Civic and Integra D-series, B-series, H-series, F-series, K-series and R-series builds.",
   },
   {
     category: "Nissan-Specific (Piggyback / Reflash)",
@@ -71,6 +71,7 @@ export const supportedEcus: EcuCategory[] = [
       "AEM Infinity",
       "EcuMaster (incl. DET3+)",
     ],
+    note: "Speeduino and MegaSquirt builds tuned via TunerStudio.",
   },
 ];
 
@@ -84,13 +85,13 @@ export type VehiclePlatform = {
 export const tunedVehiclePlatforms: VehiclePlatform[] = [
   {
     make: "Honda — OBD1",
-    models: "Civic, CRX, Del Sol & Prelude — D/B/H-series swaps, incl. mini D16 swaps",
-    engines: ["D16", "B16", "B18", "B20", "H22", "H23"],
+    models: "Civic, CRX, Del Sol & Prelude — D/B/H/F-series swaps, incl. mini D16 swaps",
+    engines: ["D16", "B16", "B18", "B20", "H22", "H23", "F20B", "F22", "F23"],
   },
   {
-    make: "Honda — K-Series",
-    models: "Civic (incl. EP3 Type R) K20/K24 — Hondata KPro, MaxxECU or Haltech standalone",
-    engines: ["K20", "K24"],
+    make: "Honda — K & R-Series",
+    models: "Civic (incl. EP3 Type R) K20/K24 & R18 — Hondata KPro, MaxxECU or Haltech standalone",
+    engines: ["K20", "K24", "R18"],
   },
   {
     make: "Toyota",
@@ -99,12 +100,12 @@ export const tunedVehiclePlatforms: VehiclePlatform[] = [
   },
   {
     make: "Mitsubishi",
-    models: "Lancer Evo IV–VI & VII–IX — stock ECU, AEM Infinity, MegaSquirt or MaxxECU standalone",
+    models: "Lancer Evo I–III, IV–VI & VIII–IX — stock ECU, AEM Infinity, MegaSquirt or MaxxECU standalone",
     engines: ["4G63T"],
   },
   {
     make: "Subaru",
-    models: "Impreza WRX & STI — UK 2000 model, 2001–04 (race ROM upgrade), 2005–2021",
+    models: "Impreza WRX & STI — UK 2000 model, 2001–05 (race ROM upgrade), 2006 onward",
     engines: [],
   },
   {
@@ -112,7 +113,7 @@ export const tunedVehiclePlatforms: VehiclePlatform[] = [
     models: "Pulsar GTiR — stock ECU on Nistune, or Link ECU standalone",
     engines: ["SR20DET"],
   },
-  { make: "Mazda", models: "MX-5 — naturally aspirated, turbo & supercharged", engines: [] },
+  { make: "Mazda", models: "Miata/MX-5 — naturally aspirated, turbo & supercharged", engines: [] },
 ];
 
 export type EcuBrandLogo = {

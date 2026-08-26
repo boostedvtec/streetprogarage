@@ -23,7 +23,7 @@ export const faqItems: FaqItem[] = [
   {
     question: "Which standalone ECUs do you support?",
     answer:
-      "AEM Infinity, Link ECU, MaxxECU, Haltech, Speeduino, Megasquirt, ME (Motorsport Electronics), and EcuMaster (including the DET3+). If your ECU can be logged and tuned, we can very likely work with it — submit your build list if you're not sure.",
+      "AEM Infinity, Link ECU, MaxxECU, Haltech, Speeduino, Megasquirt (both tuned via TunerStudio), ME (Motorsport Electronics), and EcuMaster (including the DET3+). If your ECU can be logged and tuned, we can very likely work with it — submit your build list if you're not sure.",
   },
   {
     question: "What's the difference between remote tuning, road tuning, and rolling road dyno tuning?",
@@ -38,7 +38,12 @@ export const faqItems: FaqItem[] = [
   {
     question: "What makes and models do you regularly tune?",
     answer:
-      "Honda Civic and Integra (D14, D16, B16, B18), Toyota Supra and MR2 (2JZGTE, 1JZGTE, 2ZZ), Mitsubishi Lancer Evo V through X (4G63T), Subaru Impreza WRX and STI, and Mazda MX-5 in naturally aspirated, turbo and supercharged form — plus plenty of other platforms on request.",
+      "Honda Civic, Integra, CRX, Del Sol and Prelude across D-series, B-series, H-series and F-series OBD1 engines, plus K20/K24 and R18 K/R-series builds. Toyota Supra and MR2 (2JZGTE, 3SGTE), Toyota 2ZZ-GE, Mitsubishi Lancer Evo I–III, IV–VI and VIII–IX (4G63T), Subaru Impreza WRX and STI across the UK 2000 model, 2001–05 (race ROM upgrade) and 2006-onward generations, Nissan Pulsar GTiR (SR20DET), and Mazda Miata/MX-5 in naturally aspirated, turbo and supercharged form — plus plenty of other JDM swaps on request.",
+  },
+  {
+    question: "I'm stuck mid-build or my project is incomplete — can you help?",
+    answer:
+      "Yes — this is one of the most common jobs we take on. If a build has stalled, a previous shop left it half-finished, or you're not sure what's wrong after a swap or wiring job, send us the build list and we'll diagnose where it stands and what's needed to get it running and tuned properly, rather than starting over from scratch.",
   },
   {
     question: "Can I get a revision after my final tune?",
