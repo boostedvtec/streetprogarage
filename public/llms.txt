@@ -11,15 +11,26 @@
 ## Platforms & Vehicles
 
 - Stock ECU reflashing via HP Tuners and Hondata, across Honda, Subaru and Mitsubishi Evo platforms (HP Tuners credit-locked, purchased separately by the customer).
-- Honda-specific platforms: P28 (chipped), Hondata S300, Hondavert, HTS, Neptune RTP — covering D-series, B-series and K-series Civic and Integra builds.
-- Standalone ECUs: AEM Infinity, Link ECU, MaxxECU, Haltech, Speeduino, Megasquirt, ME (Motorsport Electronics), EcuMaster (including DET3+).
-- Commonly tuned platforms: Honda Civic & Integra (D14, D16, B16, B18), Toyota Supra & MR2 (2JZGTE, 1JZGTE, 2ZZ), Mitsubishi Lancer Evo V–X (4G63T), Subaru Impreza WRX & STI, Mazda MX-5 (naturally aspirated, turbo, supercharged).
+- Honda-specific platforms: P28 (chipped), Hondata S300, Hondata KPro, Hondavert, HTS, Neptune RTP — covering D-series, B-series, H-series, F-series, K-series and R-series Civic, Integra, CRX, Del Sol and Prelude builds.
+- Nissan-specific: Nistune (stock ECU reflash) — SR20DET Pulsar GTiR, Sentra and Sunny platforms.
+- Standalone ECUs: AEM Infinity, Link ECU, MaxxECU, Haltech, Speeduino, Megasquirt (tuned via TunerStudio), ME (Motorsport Electronics), EcuMaster (including DET3+).
+- Honda: D16, B16, B18, B20, H22, H23, F20B/F22/F23, K20, K24, R18 — Civic, CRX, Del Sol, Prelude (OBD1 and K/R-series), including mini D16 swaps.
+- Toyota: MR2 Turbo (3SGTE), Supra (2JZGTE), and 2ZZ-GE — AEM Infinity or EcuMaster.
+- Mitsubishi: Lancer Evo I–III, IV–VI and VIII–IX (4G63T) — stock ECU, AEM Infinity, MegaSquirt or MaxxECU standalone.
+- Subaru: Impreza WRX & STI — UK 2000 model, 2001–05 (with race ROM upgrade), and 2006-onward models.
+- Nissan: Pulsar GTiR (SR20DET) — stock ECU on Nistune, or Link ECU standalone.
+- Mazda: Miata/MX-5, naturally aspirated, turbo and supercharged.
+- Plus other JDM engine swaps and platforms on request — if it's got an ECU we can talk to, we can very likely tune it.
 - Fuel types supported: Pump Gas Premium, E85, and Flex Fuel (blend of both).
+
+## Stuck or Incomplete Builds
+
+- A common job: diagnosing a stalled project, a half-finished swap, or a car another shop couldn't get running/tuned. Send the build list and we assess where it stands rather than starting over.
 
 ## Key Pages
 
 - [Tuning](/tuning): Remote tuning, road tuning, and rolling road dyno tuning — methods, pricing structure, and supported ECU platforms.
-- [Custom Wiring](/custom-wiring): Standalone/piggyback ECU wiring, ECU installation, sensor integration, gauge fitting.
+- [Custom Wiring](/custom-wiring): Standalone/piggyback ECU wiring, ECU installation, sensor integration, gauge fitting, and diagnostics for stuck or incomplete builds.
 - [Parts](/parts): Performance parts sales with professional fitting and diagnostics (UK).
 - [Engine Swaps](/engine-swaps): Full engine swaps and custom builds (Pakistan).
 - [FAQ](/faq): Answers to common questions about platforms, pricing structure, and process.
