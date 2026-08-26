@@ -79,6 +79,8 @@ export type VehiclePlatform = {
   make: string;
   models: string;
   engines: string[];
+  /** Slug of the matching entry in platform-pages.ts, if a dedicated deep-dive page exists. */
+  slug?: string;
 };
 
 /** Makes, models and engine codes we regularly tune — used on the Tuning page for platform coverage. */
@@ -87,33 +89,44 @@ export const tunedVehiclePlatforms: VehiclePlatform[] = [
     make: "Honda — OBD1",
     models: "Civic, CRX, Del Sol & Prelude — D/B/H/F-series swaps, incl. mini D16 swaps",
     engines: ["D16", "B16", "B18", "B20", "H22", "H23", "F20B", "F22", "F23"],
+    slug: "honda-obd1",
   },
   {
     make: "Honda — K & R-Series",
     models: "Civic (incl. EP3 Type R) K20/K24 & R18 — Hondata KPro, MaxxECU or Haltech standalone",
     engines: ["K20", "K24", "R18"],
+    slug: "honda-k-series",
   },
   {
     make: "Toyota",
     models: "Supra & MR2 Turbo — 2JZGTE & 3SGTE on AEM Infinity, 2ZZ-GE on EcuMaster",
     engines: ["2JZGTE", "3SGTE", "2ZZ-GE"],
+    slug: "toyota-supra-mr2",
   },
   {
     make: "Mitsubishi",
     models: "Lancer Evo I–III, IV–VI & VIII–IX — stock ECU, AEM Infinity, MegaSquirt or MaxxECU standalone",
     engines: ["4G63T"],
+    slug: "mitsubishi-evo",
   },
   {
     make: "Subaru",
     models: "Impreza WRX & STI — UK 2000 model, 2001–05 (race ROM upgrade), 2006 onward",
     engines: [],
+    slug: "subaru-wrx-sti",
   },
   {
     make: "Nissan",
     models: "Pulsar GTiR — stock ECU on Nistune, or Link ECU standalone",
     engines: ["SR20DET"],
+    slug: "nissan-pulsar",
   },
-  { make: "Mazda", models: "Miata/MX-5 — naturally aspirated, turbo & supercharged", engines: [] },
+  {
+    make: "Mazda",
+    models: "Miata/MX-5 — naturally aspirated, turbo & supercharged",
+    engines: [],
+    slug: "mazda-miata-mx5",
+  },
 ];
 
 export type EcuBrandLogo = {
