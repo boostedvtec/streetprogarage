@@ -16,6 +16,7 @@ import {
   MapPin,
   MagnifyingGlass,
   BookOpen,
+  ArrowRight,
 } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton, Button } from "@/components/ui/button";
@@ -455,30 +456,47 @@ function TuningPageContent() {
             </p>
           </div>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {tunedVehiclePlatforms.map((platform) => (
-              <div
-                key={platform.make}
-                className="rounded-xl border border-border bg-surface p-8"
-              >
-                <div className="flex items-center gap-3">
-                  <Car size={24} className="text-accent" aria-hidden />
-                  <h3 className="font-display text-xl">{platform.make}</h3>
+            {tunedVehiclePlatforms.map((platform) => {
+              const cardClassName =
+                "rounded-xl border border-border bg-surface p-8" +
+                (platform.slug ? " transition-colors hover:border-accent/50" : "");
+              const content = (
+                <>
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <Car size={24} className="text-accent" aria-hidden />
+                      <h3 className="font-display text-xl">{platform.make}</h3>
+                    </div>
+                    {platform.slug && (
+                      <ArrowRight size={16} weight="bold" className="shrink-0 text-accent" aria-hidden />
+                    )}
+                  </div>
+                  <p className="mt-3 text-sm text-foreground-muted">{platform.models}</p>
+                  {platform.engines.length > 0 && (
+                    <ul className="mt-5 flex flex-wrap gap-2">
+                      {platform.engines.map((engine) => (
+                        <li
+                          key={engine}
+                          className="rounded-full border border-border-strong bg-surface-2 px-3 py-1 text-xs font-medium text-foreground-muted"
+                        >
+                          {engine}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </>
+              );
+
+              return platform.slug ? (
+                <Link key={platform.make} href={`/tuning/${platform.slug}`} className={cardClassName}>
+                  {content}
+                </Link>
+              ) : (
+                <div key={platform.make} className={cardClassName}>
+                  {content}
                 </div>
-                <p className="mt-3 text-sm text-foreground-muted">{platform.models}</p>
-                {platform.engines.length > 0 && (
-                  <ul className="mt-5 flex flex-wrap gap-2">
-                    {platform.engines.map((engine) => (
-                      <li
-                        key={engine}
-                        className="rounded-full border border-border-strong bg-surface-2 px-3 py-1 text-xs font-medium text-foreground-muted"
-                      >
-                        {engine}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
+              );
+            })}
           </div>
           <p className="mt-6 text-xs text-foreground-subtle">
             Don&rsquo;t see your platform listed? Submit your build list — every
