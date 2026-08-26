@@ -5,6 +5,7 @@ import {
   Cpu,
   CheckCircle,
   Info,
+  MagnifyingGlass,
 } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
@@ -14,7 +15,7 @@ import { HarnessBuilderForm } from "@/components/wiring/harness-builder-form";
 export const metadata: Metadata = {
   title: "Wiring & ECU Installation | Street PRO Garage",
   description:
-    "Custom wiring for standalone and piggyback ECUs, gauge installation, and Honda P28 ECU socketing service at Street PRO Garage.",
+    "Custom wiring for standalone and piggyback ECUs, gauge installation, Honda P28 ECU socketing, and diagnostics for stuck or incomplete builds at Street PRO Garage.",
 };
 
 const wiringServices = [
@@ -239,6 +240,47 @@ export default function CustomWiringPage() {
         </Container>
       </Section>
       </UkOnlySection>
+
+      {/* Stuck mid-build / diagnostics */}
+      <Section className="border-t border-border bg-surface/50">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
+            <div>
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent-soft text-accent">
+                <MagnifyingGlass size={26} weight="bold" aria-hidden />
+              </div>
+              <h2 className="font-display mt-6 text-3xl sm:text-4xl">
+                Stuck Mid-Build or Not Sure What&rsquo;s Wrong?
+              </h2>
+              <p className="mt-4 text-foreground-muted leading-relaxed">
+                One of the most common jobs we take on — a stalled project, a
+                half-finished swap, or wiring done elsewhere that won&rsquo;t
+                start, idle, or log right. We diagnose where the build
+                actually stands and pick it up from there, rather than
+                insisting on a rewire from scratch.
+              </p>
+            </div>
+            <ul className="grid gap-3">
+              {[
+                "Diagnose wiring faults from a previous install — ours or another shop's",
+                "Pick up incomplete engine swaps and finish the wiring/ECU install",
+                "Work out why a standalone or piggyback ECU won't start, idle or log correctly",
+                "Honest assessment of salvage-vs-rewire on a messy or damaged harness",
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <CheckCircle
+                    size={20}
+                    weight="fill"
+                    className="mt-0.5 shrink-0 text-accent"
+                    aria-hidden
+                  />
+                  <span className="text-foreground-muted">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Container>
+      </Section>
 
       <Section className="border-t border-border">
         <Container>
