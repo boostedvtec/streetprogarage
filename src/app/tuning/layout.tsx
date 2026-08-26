@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "ECU Tuning — AEM, MaxxECU, Hondata, HP Tuners | Street PRO Garage",
+  title: "ECU Tuning — AEM, MaxxECU, Hondata, Link, HP Tuners | Street PRO Garage",
   description:
-    "Remote, road-logged and rolling road dyno tuning in Manchester. Stock ECU (HP Tuners, Hondata S300, Honda P28) and standalone ECUs — AEM, Link, MaxxECU, EcuMaster DET3+ — for Civic, Integra, Supra, Evo, WRX/STI and MX5 builds.",
+    "Remote, road-logged and rolling road dyno tuning in Manchester. Stock ECU (HP Tuners, Hondata S300/KPro, Nistune) and standalone — AEM, Link, MaxxECU, Haltech, EcuMaster, TunerStudio — for Honda D/B/H/F/K/R-series, Evo I–IX, WRX/STI, Supra, MR2, Pulsar and MX5/Miata builds.",
 };
 
 export default function TuningLayout({ children }: { children: React.ReactNode }) {
