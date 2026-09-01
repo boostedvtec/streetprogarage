@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { EnvelopeSimple, MapPin, InstagramLogo, WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
+import { EnvelopeSimple, MapPin, InstagramLogo, FacebookLogo, WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { FieldWrap, TextInput, TextArea, RadioGroup } from "@/components/form/fields";
@@ -127,12 +127,35 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-            <div className="rounded-xl border border-dashed border-border-strong bg-surface p-6">
+            <div className="rounded-xl border border-border bg-surface p-6">
               <div className="flex items-start gap-3">
-                <InstagramLogo size={22} className="mt-0.5 shrink-0 text-foreground-subtle" aria-hidden />
+                <InstagramLogo size={22} className="mt-0.5 shrink-0 text-accent" aria-hidden />
                 <div>
-                  <h2 className="font-semibold">Social</h2>
-                  <p className="mt-1 text-sm text-foreground-subtle">{siteConfig.social.note}</p>
+                  <h2 className="font-semibold">Instagram</h2>
+                  <a
+                    href={siteConfig.social.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1 block text-sm text-foreground-muted hover:text-foreground"
+                  >
+                    {siteConfig.social.instagramHandle}
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-xl border border-border bg-surface p-6">
+              <div className="flex items-start gap-3">
+                <FacebookLogo size={22} className="mt-0.5 shrink-0 text-accent" aria-hidden />
+                <div>
+                  <h2 className="font-semibold">Facebook</h2>
+                  <a
+                    href={siteConfig.social.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1 block text-sm text-foreground-muted hover:text-foreground"
+                  >
+                    Street PRO Garage
+                  </a>
                 </div>
               </div>
             </div>
