@@ -31,34 +31,6 @@ export function SiteFooter() {
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-foreground-muted">
             {siteConfig.description}
           </p>
-          <ul className="mt-5 flex items-center gap-4">
-            {siteConfig.social.instagram && (
-              <li>
-                <a
-                  href={siteConfig.social.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Street PRO Garage on Instagram"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border-strong bg-surface-2 text-foreground-muted transition-colors hover:border-accent/50 hover:text-accent"
-                >
-                  <InstagramLogo size={18} aria-hidden />
-                </a>
-              </li>
-            )}
-            {siteConfig.social.facebook && (
-              <li>
-                <a
-                  href={siteConfig.social.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Street PRO Garage on Facebook"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border-strong bg-surface-2 text-foreground-muted transition-colors hover:border-accent/50 hover:text-accent"
-                >
-                  <FacebookLogo size={18} aria-hidden />
-                </a>
-              </li>
-            )}
-          </ul>
         </div>
 
         <div>
