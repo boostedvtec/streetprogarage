@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { CartProvider } from "@/components/cart/cart-context";
 import { RegionProvider } from "@/components/region/region-context";
 import { TidioWidget } from "@/components/chat/tidio-widget";
-import { siteUrl } from "@/lib/site-config";
+import { siteUrl, siteConfig } from "@/lib/site-config";
 import { REGION_STORAGE_KEY, type Region } from "@/lib/region";
 
 /**
@@ -45,6 +45,11 @@ const knowsAbout = [
   "Nissan Pulsar GTiR Tuning",
 ];
 
+/** Social profile URLs — linked via schema.org `sameAs` so search/AI engines associate them with the business. */
+const sameAs = [siteConfig.social.instagram, siteConfig.social.facebook].filter(
+  (url): url is string => Boolean(url)
+);
+
 /**
  * Two AutoRepair listings (one per workshop) so both locations can surface
  * independently in local search / Google Business results.
@@ -60,6 +65,7 @@ const businessJsonLd = [
     email: "info@streetprogarage.com",
     priceRange: "££",
     knowsAbout,
+    sameAs,
     address: {
       "@type": "PostalAddress",
       addressLocality: "Manchester",
@@ -76,6 +82,7 @@ const businessJsonLd = [
     telephone: "+92 346 2767382",
     email: "info@streetprogarage.com",
     knowsAbout,
+    sameAs,
     address: {
       "@type": "PostalAddress",
       streetAddress: "Shamim Street, Gulberg Town",
