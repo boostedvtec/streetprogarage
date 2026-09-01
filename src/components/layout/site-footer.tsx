@@ -118,6 +118,32 @@ export function SiteFooter() {
                 {data.email}
               </a>
             </li>
+            {siteConfig.social.instagram && (
+              <li className="flex items-center gap-2">
+                <InstagramLogo size={18} className="shrink-0 text-accent" aria-hidden />
+                <a
+                  href={siteConfig.social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground"
+                >
+                  {siteConfig.social.instagramHandle}
+                </a>
+              </li>
+            )}
+            {siteConfig.social.facebook && (
+              <li className="flex items-center gap-2">
+                <FacebookLogo size={18} className="shrink-0 text-accent" aria-hidden />
+                <a
+                  href={siteConfig.social.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground"
+                >
+                  Facebook
+                </a>
+              </li>
+            )}
           </ul>
         </div>
       </div>
