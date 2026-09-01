@@ -18,10 +18,11 @@ export const siteConfig = {
     note: "Rolling road & workshop services based in Manchester, UK. Remote tuning available worldwide. Full address provided upon booking confirmation.",
   },
   social: {
-    instagram: null,
-    facebook: null,
+    instagram: "https://www.instagram.com/streetprogarage/?hl=en",
+    instagramHandle: "@streetprogarage",
+    facebook: "https://www.facebook.com/profile.php?id=61593606914618",
     tiktok: null,
-    note: "Social channels launching soon.",
+    note: "Follow along for build updates, dyno pulls and behind-the-scenes tuning.",
   },
 } as const;
 
