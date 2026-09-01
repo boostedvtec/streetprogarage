@@ -46,9 +46,8 @@ const knowsAbout = [
 ];
 
 /** Social profile URLs — linked via schema.org `sameAs` so search/AI engines associate them with the business. */
-const sameAs = [siteConfig.social.instagram, siteConfig.social.facebook].filter(
-  (url): url is string => Boolean(url)
-);
+const socialUrls: (string | null)[] = [siteConfig.social.instagram, siteConfig.social.facebook];
+const sameAs = socialUrls.filter((url): url is string => Boolean(url));
 
 /**
  * Two AutoRepair listings (one per workshop) so both locations can surface
