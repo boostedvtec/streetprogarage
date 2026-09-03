@@ -8,7 +8,7 @@ import { projects } from "@/lib/projects";
 export const metadata: Metadata = {
   title: "Projects | Street PRO Garage",
   description:
-    "Completed builds from Street PRO Garage — build list, dyno results and photos/video for every tune.",
+    "Completed builds from Street PRO Garage — build list, dyno or road-tune results, and photos/video for every job.",
 };
 
 export default function ProjectsPage() {
@@ -20,8 +20,9 @@ export default function ProjectsPage() {
           <h1 className="font-display mt-4 text-5xl sm:text-6xl">Builds We&rsquo;ve Tuned</h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground-muted">
             Every project here follows the same format — the build list, the
-            dyno result, and a photo or video from the session. We add new
-            ones as builds are finished.
+            result, and a photo or video from the job. Some are dyno-proven
+            with a logged graph, others are road-tuned — both get the same
+            care. We add new ones as builds are finished.
           </p>
         </Container>
       </div>
