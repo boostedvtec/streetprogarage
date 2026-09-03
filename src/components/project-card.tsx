@@ -50,17 +50,19 @@ export function ProjectCard({ project }: { project: Project }) {
           <div>
             <div className="flex items-center gap-2">
               <ChartLineUp size={18} className="text-accent" aria-hidden />
-              <h4 className="font-semibold">Dyno Result</h4>
+              <h4 className="font-semibold">{project.dyno.image ? "Dyno Result" : "Result"}</h4>
             </div>
-            <div className="relative mt-3 aspect-[4/3] w-full overflow-hidden rounded-lg border border-border-strong bg-surface-2">
-              <Image
-                src={project.dyno.image}
-                alt={project.dyno.alt}
-                fill
-                sizes="(min-width: 1024px) 25vw, 50vw"
-                className="object-cover"
-              />
-            </div>
+            {project.dyno.image && (
+              <div className="relative mt-3 aspect-[4/3] w-full overflow-hidden rounded-lg border border-border-strong bg-surface-2">
+                <Image
+                  src={project.dyno.image}
+                  alt={project.dyno.alt ?? ""}
+                  fill
+                  sizes="(min-width: 1024px) 25vw, 50vw"
+                  className="object-cover"
+                />
+              </div>
+            )}
             <p className="mt-3 font-display text-2xl text-accent">
               {project.dyno.power}
               {project.dyno.torque && (
