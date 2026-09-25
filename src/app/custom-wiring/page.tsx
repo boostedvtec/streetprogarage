@@ -13,9 +13,9 @@ import { UkOnlySection } from "@/components/region/uk-only-section";
 import { HarnessBuilderForm } from "@/components/wiring/harness-builder-form";
 
 export const metadata: Metadata = {
-  title: "Wiring & ECU Installation | Street PRO Garage",
+  title: "Standalone ECU Installation & Custom Wiring Harness | Street PRO Garage",
   description:
-    "Custom wiring for standalone and piggyback ECUs, gauge installation, Honda P28 ECU socketing, and diagnostics for stuck or incomplete builds at Street PRO Garage.",
+    "Standalone ECU installation and custom wiring harnesses for MaxxECU, Link, Haltech, AEM, EcuMaster and Megasquirt. Gauge fitting, Honda P28 ECU socketing, and diagnostics for stuck or half-finished JDM builds. Get a quote.",
 };
 
 const wiringServices = [
