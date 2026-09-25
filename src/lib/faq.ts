@@ -16,9 +16,14 @@ export const faqItems: FaqItem[] = [
       "Street PRO Garage writes custom ECU tunes from scratch — no generic Stage 1/2/3 kits. We offer remote tuning (live or road-logged), rolling road dyno tuning in Manchester, UK, custom ECU wiring and installation, and performance parts sales with fitting (UK). In Pakistan, we also do full engine swaps and builds out of our Karachi workshop.",
   },
   {
-    question: "Do you tune Honda ECUs like the P28, Hondata S300, or Hondavert?",
+    question: "Do you tune Honda ECUs like the P28, Hondata S300, KPro, FlashPro or Ktuner?",
     answer:
-      "Yes. Alongside stock ECU reflashing via HP Tuners, we work with Honda-specific platforms including the P28 (chipped), Hondata S300, Hondavert, HTS and Neptune RTP — covering D-series, B-series and K-series Civic and Integra builds.",
+      "Yes. Alongside stock ECU reflashing via HP Tuners, we work with Honda-specific platforms including Hondata FlashPro, KPro and S300, Ktuner, the P28 (chipped), Hondavert, HTS and Neptune RTP — covering D-series, B-series, H-series, F-series, K-series and R-series Civic, Integra, S2000 and Prelude builds.",
+  },
+  {
+    question: "Do you tune Skyline, GT-R, Silvia, S2000, Celica, Chaser and RX-7?",
+    answer:
+      "Yes. We tune Nissan Skyline and GT-R (RB20, RB25, RB26), Silvia and 200SX (SR20DET, CA18DET), Honda S2000, Toyota Celica GT-Four (3S-GTE) and Chaser (1JZ-GTE), and Mazda RX-7 (13B-REW) — on stock ECU where possible (Nistune, Hondata) or standalone (Link, Haltech, MaxxECU, AEM, EcuMaster).",
   },
   {
     question: "Which standalone ECUs do you support?",

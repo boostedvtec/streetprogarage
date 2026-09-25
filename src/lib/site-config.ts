@@ -52,7 +52,16 @@ export const supportedEcus: EcuCategory[] = [
   },
   {
     category: "Honda-Specific Platforms (Piggyback & Chipped ECU)",
-    ecus: ["Honda P28 (chipped)", "Hondata S300", "Hondata KPro", "Hondavert", "HTS", "Neptune RTP"],
+    ecus: [
+      "Honda P28 (chipped)",
+      "Hondata S300",
+      "Hondata KPro",
+      "Hondata FlashPro",
+      "Ktuner",
+      "Hondavert",
+      "HTS",
+      "Neptune RTP",
+    ],
     note: "Covers Civic and Integra D-series, B-series, H-series, F-series, K-series and R-series builds.",
   },
   {
@@ -117,16 +126,46 @@ export const tunedVehiclePlatforms: VehiclePlatform[] = [
     slug: "subaru-wrx-sti",
   },
   {
-    make: "Nissan",
+    make: "Nissan — Pulsar",
     models: "Pulsar GTiR — stock ECU on Nistune, or Link ECU standalone",
     engines: ["SR20DET"],
     slug: "nissan-pulsar",
   },
   {
-    make: "Mazda",
+    make: "Nissan — Skyline & GT-R",
+    models: "Skyline R32/R33/R34 & GT-R — Nistune or standalone (Haltech, Link, MaxxECU)",
+    engines: ["RB20DET", "RB25DET", "RB26DETT"],
+    slug: "nissan-skyline-gtr",
+  },
+  {
+    make: "Nissan — Silvia & 200SX",
+    models: "Silvia S13/S14/S15 & 200SX — Nistune or standalone, SR20 swaps",
+    engines: ["SR20DET", "CA18DET"],
+    slug: "nissan-silvia-200sx",
+  },
+  {
+    make: "Honda — S2000",
+    models: "S2000 AP1 & AP2 — Hondata FlashPro, or supercharged/turbo on standalone",
+    engines: ["F20C", "F22C"],
+    slug: "honda-s2000",
+  },
+  {
+    make: "Toyota — Celica & Chaser",
+    models: "Celica GT-Four & Chaser — standalone on Link, Haltech, MaxxECU, AEM or EcuMaster",
+    engines: ["3S-GTE", "1JZ-GTE"],
+    slug: "toyota-celica-chaser",
+  },
+  {
+    make: "Mazda — Miata/MX-5",
     models: "Miata/MX-5 — naturally aspirated, turbo & supercharged",
     engines: [],
     slug: "mazda-miata-mx5",
+  },
+  {
+    make: "Mazda — RX-7",
+    models: "RX-7 FD — standalone on Link, Haltech, MaxxECU or AEM Infinity",
+    engines: ["13B-REW"],
+    slug: "mazda-rx7",
   },
 ];
 

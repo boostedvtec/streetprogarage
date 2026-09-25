@@ -238,4 +238,159 @@ export const platformPages: PlatformPage[] = [
       },
     ],
   },
+  {
+    slug: "nissan-skyline-gtr",
+    name: "Nissan Skyline & GT-R",
+    metaTitle: "Nissan Skyline GT-R RB25 RB26 ECU Tuning — Remote & Dyno | Street PRO Garage",
+    metaDescription:
+      "ECU tuning for Nissan Skyline and GT-R — RB20, RB25DET and RB26DETT — on Nistune, Haltech, Link, MaxxECU or AEM Infinity. Remote e-tuning or rolling road dyno tuning. Get a quote.",
+    h1: "Nissan Skyline & GT-R Tuning — RB20, RB25 & RB26",
+    intro:
+      "RB-powered Skylines and GT-Rs tuned properly — stock ECU on Nistune for lightly modified cars, or a full standalone conversion for big-turbo builds. Custom-written maps, not a generic file.",
+    models: "Skyline (R32, R33, R34) & GT-R — RB20DET, RB25DET, RB26DETT",
+    engines: ["RB20DET", "RB25DET", "RB26DETT"],
+    ecuOptions: ["Nistune (stock ECU reflash)", "Haltech", "Link ECU", "MaxxECU", "AEM Infinity"],
+    buildNotes: [
+      "Nistune installation and stock ECU reflash tuning",
+      "Standalone conversions for big-turbo and built RB engines",
+      "Flex fuel, launch control and boost-by-gear mapping",
+      "Diagnostics for a stalled RB build or wiring done elsewhere",
+    ],
+    faqs: [
+      {
+        question: "Do you tune Skyline and GT-R RB engines?",
+        answer:
+          "Yes — RB20DET, RB25DET and RB26DETT builds on Nistune, Haltech, Link, MaxxECU or AEM Infinity, tuned remotely or on our rolling road dyno.",
+      },
+      {
+        question: "Can you tune my Skyline remotely?",
+        answer:
+          "Yes. Remote e-tuning works anywhere in the world with a laptop and the right interface cable — live over a remote session or from datalogs you record.",
+      },
+    ],
+  },
+  {
+    slug: "nissan-silvia-200sx",
+    name: "Nissan Silvia & 200SX",
+    metaTitle: "Nissan Silvia S13 S14 S15 200SX SR20DET Tuning | Street PRO Garage",
+    metaDescription:
+      "ECU tuning for Nissan Silvia S13, S14, S15 and 200SX — SR20DET and CA18DET — on Nistune, Link, Haltech or MaxxECU. Remote and dyno tuning, plus SR20 swaps. Get a quote.",
+    h1: "Nissan Silvia & 200SX Tuning — SR20DET & CA18DET",
+    intro:
+      "Silvia and 200SX tuning for stock-ECU Nistune builds through to full standalone conversions on SR20DET and CA18DET engines, including SR20 swaps into other chassis.",
+    models: "Silvia S13, S14, S15 & 200SX — SR20DET and CA18DET",
+    engines: ["SR20DET", "CA18DET"],
+    ecuOptions: ["Nistune (stock ECU reflash)", "Link ECU", "Haltech", "MaxxECU"],
+    buildNotes: [
+      "Nistune installation and stock ECU reflash tuning",
+      "Standalone ECU conversion and wiring for big-turbo SR20DET",
+      "SR20 swap wiring, ECU installation and tuning",
+      "Diagnostics for a half-finished or stalled swap",
+    ],
+    faqs: [
+      {
+        question: "Do you tune Silvia and 200SX SR20DET engines?",
+        answer:
+          "Yes — SR20DET and CA18DET builds on Nistune for stock-ECU cars, or Link, Haltech and MaxxECU standalone for built engines.",
+      },
+      {
+        question: "Do you do SR20 swaps?",
+        answer:
+          "Yes — swap wiring, standalone ECU installation and tuning, so the whole build is finished properly. Swap and build work is done at our Karachi workshop.",
+      },
+    ],
+  },
+  {
+    slug: "honda-s2000",
+    name: "Honda S2000",
+    metaTitle: "Honda S2000 ECU Tuning — Hondata FlashPro, Turbo & NA | Street PRO Garage",
+    metaDescription:
+      "Honda S2000 tuning on Hondata FlashPro or standalone (MaxxECU, Haltech) — naturally aspirated, supercharged and turbo F20C/F22C builds. Remote and dyno tuning. Get a quote.",
+    h1: "Honda S2000 Tuning — F20C & F22C",
+    intro:
+      "S2000 tuning for naturally aspirated cars on Hondata FlashPro through to supercharged and turbo builds on a standalone ECU, tuned remotely or on our rolling road dyno.",
+    models: "Honda S2000 (AP1 & AP2) — naturally aspirated, supercharged & turbo",
+    engines: ["F20C", "F22C"],
+    ecuOptions: ["Hondata FlashPro", "MaxxECU", "Haltech"],
+    buildNotes: [
+      "Hondata FlashPro tuning for NA and bolt-on cars",
+      "Supercharger and turbo S2000 tuning on standalone",
+      "Flex fuel and E85 tuning",
+      "Rolling road dyno tuning with logged before/after pulls",
+    ],
+    faqs: [
+      {
+        question: "Do you tune the Honda S2000?",
+        answer:
+          "Yes — AP1 and AP2 cars on Hondata FlashPro, plus supercharged and turbo builds on MaxxECU or Haltech standalone.",
+      },
+      {
+        question: "Do you take Hondata FlashPro and Ktuner jobs?",
+        answer:
+          "Yes — Hondata FlashPro, KPro and S300 as well as Ktuner platforms, tuned remotely from datalogs or live, or on our rolling road dyno.",
+      },
+    ],
+  },
+  {
+    slug: "toyota-celica-chaser",
+    name: "Toyota Celica & Chaser",
+    metaTitle: "Toyota Celica GT-Four 3S-GTE & Chaser 1JZ Tuning | Street PRO Garage",
+    metaDescription:
+      "ECU tuning for Toyota Celica GT-Four (3S-GTE) and Chaser (1JZ-GTE) on Link, Haltech, MaxxECU, AEM or EcuMaster. Remote and dyno tuning, wiring and swaps. Get a quote.",
+    h1: "Toyota Celica GT-Four & Chaser Tuning — 3S-GTE & 1JZ-GTE",
+    intro:
+      "Celica GT-Four and Chaser tuning on standalone ECUs, from stock-turbo daily builds to big-turbo setups, with the wiring and installation handled properly.",
+    models: "Celica GT-Four (ST205) & Chaser (JZX90, JZX100)",
+    engines: ["3S-GTE", "1JZ-GTE"],
+    ecuOptions: ["Link ECU", "Haltech", "MaxxECU", "AEM Infinity", "EcuMaster (incl. DET3+)"],
+    buildNotes: [
+      "Standalone ECU installation and wiring",
+      "Big-turbo tuning with boost control and flex fuel",
+      "Rolling road dyno tuning with full datalogging",
+      "Diagnostics for a stalled swap or a car that won't run right",
+    ],
+    faqs: [
+      {
+        question: "Do you tune the Celica GT-Four and Chaser?",
+        answer:
+          "Yes — 3S-GTE Celicas and 1JZ-GTE Chasers on Link, Haltech, MaxxECU, AEM Infinity or EcuMaster standalone.",
+      },
+      {
+        question: "I'm stuck mid-build or my project is incomplete — can you help?",
+        answer:
+          "Yes — this is one of the most common jobs we take on. Send us the build list and we'll diagnose where it stands and what's needed to get it running and tuned properly.",
+      },
+    ],
+  },
+  {
+    slug: "mazda-rx7",
+    name: "Mazda RX-7",
+    metaTitle: "Mazda RX-7 FD 13B-REW ECU Tuning — Standalone | Street PRO Garage",
+    metaDescription:
+      "ECU tuning for Mazda RX-7 (FD 13B-REW) on Link, Haltech, MaxxECU or AEM Infinity standalone — remote e-tuning or rolling road dyno tuning. Get a quote.",
+    h1: "Mazda RX-7 Tuning — FD 13B-REW",
+    intro:
+      "RX-7 tuning on a standalone ECU with the wiring and installation done properly, then tuned remotely or on the dyno for a reliable, driveable rotary.",
+    models: "Mazda RX-7 (FD3S) — 13B-REW",
+    engines: ["13B-REW"],
+    ecuOptions: ["Link ECU", "Haltech", "MaxxECU", "AEM Infinity"],
+    buildNotes: [
+      "Standalone ECU installation and wiring",
+      "Sequential turbo and boost control mapping",
+      "Flex fuel tuning",
+      "Diagnostics for a stalled or half-finished rotary build",
+    ],
+    faqs: [
+      {
+        question: "Do you tune the Mazda RX-7?",
+        answer:
+          "Yes — FD RX-7 13B-REW builds on Link, Haltech, MaxxECU or AEM Infinity standalone, remotely or on our rolling road dyno.",
+      },
+      {
+        question: "How do I get a quote?",
+        answer:
+          "Submit your build list through our Build List & Quote form — tell us your vehicle, engine, mods, ECU and goals, and we'll confirm your quote after reviewing the full build.",
+      },
+    ],
+  },
 ];
