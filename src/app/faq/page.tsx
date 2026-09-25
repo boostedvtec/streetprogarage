@@ -5,9 +5,9 @@ import { LinkButton } from "@/components/ui/button";
 import { faqItems } from "@/lib/faq";
 
 export const metadata: Metadata = {
-  title: "FAQ | Street PRO Garage",
+  title: "ECU Tuning FAQ — Remote Tuning, Dyno Tuning, Supported JDM Cars | Street PRO Garage",
   description:
-    "Answers to common questions about ECU tuning platforms, rolling road dyno pricing, supported vehicles, revisions and more at Street PRO Garage.",
+    "How remote ECU tuning works, what dyno tuning costs, which JDM cars and ECUs we support (Honda, Subaru, Toyota, Nissan, Evo, MX-5), revisions, flex fuel and stuck-project help.",
 };
 
 const faqJsonLd = {
