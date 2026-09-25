@@ -66,6 +66,26 @@ export const faqItems: FaqItem[] = [
       "Our rolling road dyno and workshop are based in Manchester, United Kingdom, with a second workshop in Karachi, Pakistan handling dyno tuning and engine swaps. Remote ECU tuning is available worldwide regardless of location.",
   },
   {
+    question: "Can you tune my car remotely if I'm not near Manchester or Karachi?",
+    answer:
+      "Yes. Remote ECU tuning works anywhere in the world with a laptop, the right ECU interface cable and a stable connection. We tune live over a remote session or from datalogs you record, and send back revised maps until it's right — used by customers on Honda, Subaru, Toyota, Nissan, Mitsubishi and Mazda builds.",
+  },
+  {
+    question: "How much does ECU tuning or a dyno tune cost?",
+    answer:
+      "Every tune is custom-written, so the price depends on your ECU platform, engine and how much work the build needs. Submit your build list for a ballpark price — UK customers get an instant range — and we confirm the exact quote after reviewing your full setup. Dyno time is billed separately from the tune.",
+  },
+  {
+    question: "Do you supply and install standalone ECUs like MaxxECU, Link, Haltech or AEM?",
+    answer:
+      "Yes. We can supply, wire and install standalone ECUs — MaxxECU, Link, Haltech, AEM Infinity, EcuMaster, Speeduino and Megasquirt — then tune them, so the install and the tune are done by the same people. Custom harnesses and gauge fitting are available too.",
+  },
+  {
+    question: "Do you do JDM engine swaps as well as tuning?",
+    answer:
+      "Yes — from mini D-series swaps to K-swaps, B-series, 2JZ, 2ZZ and SR20 builds. Engine swap and build work is done at our Karachi workshop, and we handle the wiring, ECU installation and tuning so the whole build is finished properly.",
+  },
+  {
     question: "How do I get a quote?",
     answer:
       "Submit your build list through our Build List & Quote form — tell us your vehicle, engine, mods, ECU and goals. UK customers get an instant ballpark price range; every tune is custom-written, so the exact quote is confirmed after we review your full build.",

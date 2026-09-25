@@ -24,7 +24,7 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "honda-obd1",
     name: "Honda OBD1 (D/B/H/F-Series)",
-    metaTitle: "Honda OBD1 D/B/H/F-Series ECU Tuning | Street PRO Garage",
+    metaTitle: "Honda D16 B16 B18 H22 ECU Tuning — Remote & Dyno | Street PRO Garage",
     metaDescription:
       "ECU tuning for Honda OBD1 D16, B16, B18, B20, H22, H23 and F20B/F22/F23 swaps — P28 (chipped), Hondata S300, Hondavert, HTS. Remote, road-logged or rolling road dyno tuning.",
     h1: "Honda OBD1 Tuning — D, B, H & F-Series",
@@ -55,7 +55,7 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "honda-k-series",
     name: "Honda K & R-Series (K20/K24/R18)",
-    metaTitle: "Honda K20, K24 & R18 ECU Tuning | Street PRO Garage",
+    metaTitle: "Honda K20 K24 R18 Tuning — Hondata KPro & Turbo | Street PRO Garage",
     metaDescription:
       "ECU tuning for Honda K20, K24 and R18 builds — Civic, EP3 Type R and K-swaps — on Hondata KPro, MaxxECU or Haltech standalone. Remote, road-logged or rolling road dyno tuning.",
     h1: "Honda K & R-Series Tuning — K20, K24 & R18",
@@ -86,7 +86,7 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "subaru-wrx-sti",
     name: "Subaru WRX/STI",
-    metaTitle: "Subaru WRX & STI ECU Tuning | Street PRO Garage",
+    metaTitle: "Subaru WRX & STI Remap & ECU Tuning — Remote & Dyno | Street PRO Garage",
     metaDescription:
       "ECU tuning for Subaru Impreza WRX & STI — UK 2000 model, 2001–05 with race ROM upgrade, and 2006-onward. Stock ECU reflash via HP Tuners plus standalone options.",
     h1: "Subaru WRX & STI Tuning",
@@ -117,7 +117,7 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "mitsubishi-evo",
     name: "Mitsubishi Lancer Evo",
-    metaTitle: "Mitsubishi Lancer Evo ECU Tuning | Street PRO Garage",
+    metaTitle: "Mitsubishi Evo ECU Tuning — Evo 1-9 Remote & Dyno | Street PRO Garage",
     metaDescription:
       "ECU tuning for Mitsubishi Lancer Evo I–III, IV–VI and VIII–IX (4G63T) — stock ECU, AEM Infinity, MegaSquirt or MaxxECU standalone. Remote or rolling road dyno tuning.",
     h1: "Mitsubishi Lancer Evo Tuning",
@@ -148,7 +148,7 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "toyota-supra-mr2",
     name: "Toyota Supra & MR2",
-    metaTitle: "Toyota Supra & MR2 ECU Tuning — 2JZGTE, 3SGTE | Street PRO Garage",
+    metaTitle: "Toyota 2JZ, MR2 3SGTE & 2ZZ Tuning — Standalone ECU | Street PRO Garage",
     metaDescription:
       "ECU tuning for Toyota Supra 2JZGTE, MR2 Turbo 3SGTE, and 2ZZ-GE builds on AEM Infinity or EcuMaster standalone. Remote, road-logged or rolling road dyno tuning.",
     h1: "Toyota Supra & MR2 Tuning",
@@ -179,7 +179,7 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "mazda-miata-mx5",
     name: "Mazda Miata / MX-5",
-    metaTitle: "Mazda Miata / MX-5 ECU Tuning | Street PRO Garage",
+    metaTitle: "Mazda MX-5 Miata Turbo & NA ECU Tuning | Street PRO Garage",
     metaDescription:
       "ECU tuning for Mazda Miata/MX-5 — naturally aspirated, turbo and supercharged builds — on standalone ECUs. Remote, road-logged or rolling road dyno tuning.",
     h1: "Mazda Miata / MX-5 Tuning",
@@ -210,7 +210,7 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "nissan-pulsar",
     name: "Nissan Pulsar GTiR",
-    metaTitle: "Nissan Pulsar GTiR ECU Tuning (SR20DET) | Street PRO Garage",
+    metaTitle: "Nissan SR20DET Pulsar GTiR Tuning — Nistune & Link | Street PRO Garage",
     metaDescription:
       "ECU tuning for Nissan Pulsar GTiR SR20DET builds — stock ECU on Nistune, or Link ECU standalone. Remote, road-logged or rolling road dyno tuning.",
     h1: "Nissan Pulsar GTiR Tuning",
