@@ -20,6 +20,9 @@
 - Subaru: Impreza WRX & STI — UK 2000 model, 2001–05 (with race ROM upgrade), and 2006-onward models.
 - Nissan: Pulsar GTiR (SR20DET) — stock ECU on Nistune, or Link ECU standalone.
 - Mazda: Miata/MX-5, naturally aspirated, turbo and supercharged.
+- Hondata FlashPro, KPro, S300 and Ktuner platforms supported (Civic, Integra, RSX, S2000).
+- Nissan Skyline & GT-R (RB20/RB25/RB26), Silvia & 200SX (SR20DET/CA18DET) — Nistune or standalone.
+- Honda S2000 (F20C/F22C), Toyota Celica GT-Four (3S-GTE) & Chaser (1JZ-GTE), Mazda RX-7 (13B-REW).
 - Plus other JDM engine swaps and platforms on request — if it's got an ECU we can talk to, we can very likely tune it.
 - Fuel types supported: Pump Gas Premium, E85, and Flex Fuel (blend of both).
 
