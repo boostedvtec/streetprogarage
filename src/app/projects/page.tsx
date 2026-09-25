@@ -6,9 +6,9 @@ import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/lib/projects";
 
 export const metadata: Metadata = {
-  title: "Projects | Street PRO Garage",
+  title: "JDM Tuning Projects & Dyno Results — Honda, Toyota, Subaru | Street PRO Garage",
   description:
-    "Completed builds from Street PRO Garage — build list, dyno or road-tune results, and photos/video for every job.",
+    "Real JDM builds we've tuned: K24 turbo Civic 402 WHP, R18 turbo 233 WHP, 2ZZ-GE swap, B18 turbo rescue and more — build lists, dyno graphs, road-tune results and video.",
 };
 
 export default function ProjectsPage() {
