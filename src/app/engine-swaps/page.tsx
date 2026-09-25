@@ -11,9 +11,9 @@ import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-  title: "Engine Swaps, Build & Customization | Street PRO Garage Pakistan",
+  title: "JDM Engine Swaps & Builds Karachi — K-Swap, B18, 2JZ, SR20 | Street PRO Garage",
   description:
-    "Complete engine swap, build and customization services at Street PRO Garage's Karachi, Pakistan workshop — donor engine fitment, custom mounts, wiring integration and full builds.",
+    "JDM engine swaps and custom builds at our Karachi workshop: Honda K/B/D/H-series, Toyota 2JZ & 2ZZ, Nissan SR20, Subaru and more — donor engine fitment, custom mounts, wiring, ECU install and dyno tuning.",
 };
 
 const buildServices = [
