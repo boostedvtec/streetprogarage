@@ -19,9 +19,9 @@ import { LinkButton } from "@/components/ui/button";
 import { dynoRental } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "Dyno Rental | Street PRO Garage",
+  title: "Dyno Hire & Rolling Road Power Runs — Manchester | Street PRO Garage",
   description:
-    "2WD rolling road dyno with an eddy current brake — power runs, live ECU tuning, diagnostics, load-hold testing and more. Rent it on its own, per run or per hour.",
+    "Hire our 2WD rolling road dyno (eddy current brake) in Manchester: power & torque runs, dyno graph printouts, live ECU tuning, diagnostics and before/after testing. Book by the run or hour.",
 };
 
 const included = [
