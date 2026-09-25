@@ -11,43 +11,41 @@ import {
   ChartLineUp,
   PlugsConnected,
   Engine,
+  Car,
+  Circuitry,
+  MagnifyingGlass,
 } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
-import { buildPhotos, dynoResults } from "@/lib/builds";
+import { BrandLogo } from "@/components/brand-logo";
+import { buildPhotos } from "@/lib/builds";
+import { projects } from "@/lib/projects";
+import { tunedVehiclePlatforms, ecuBrandLogos } from "@/lib/site-config";
 import { useRegion } from "@/components/region/region-context";
 import { dynoServiceLabel, type RegionData } from "@/lib/region";
 
-function getHeroFeatures(region: RegionData["value"], services: RegionData["services"]) {
-  return [
-    { icon: Gauge, label: "ECU Tuning" },
-    { icon: ChartLineUp, label: dynoServiceLabel(region) },
-    services.parts
-      ? { icon: Wrench, label: "Parts & Fitting" }
-      : { icon: Engine, label: "Engine Swaps" },
-  ];
-}
+const heroBrands = ["Honda", "Toyota", "Subaru", "Nissan", "Mitsubishi", "Mazda"];
 
 function getServices(regionData: RegionData) {
   const items = [
     {
       icon: Gauge,
       title: "ECU Tuning",
-      description: `Custom-built tunes from scratch — remote, road-logged, or live on our ${regionData.city} dyno. No cookie-cutter stage kits, ever.`,
+      description: `Custom-written tunes for your exact engine, parts and fuel — remote, road-logged, or live on our ${regionData.city} dyno. No cookie-cutter stage kits, ever.`,
       href: "/tuning",
       cta: "Explore Tuning",
     },
     {
       icon: PlugsConnected,
-      title: "Wiring",
+      title: "Standalone ECU & Wiring",
       description:
-        "Standalone and piggyback ECU wiring, gauge installation, and Honda P28 ECU socketing service.",
+        "MaxxECU, Link, Haltech, AEM, EcuMaster, Hondata and more — supplied, wired and installed properly, plus gauges and Honda P28 ECU socketing.",
       href: "/custom-wiring",
       cta: "View Wiring Services",
     },
   ];
   if (regionData.services.parts) {
-    items.splice(1, 0, {
+    items.push({
       icon: Wrench,
       title: "Parts, Fitting & Diagnostics",
       description:
@@ -57,15 +55,23 @@ function getServices(regionData: RegionData) {
     });
   }
   if (regionData.services.engineSwaps) {
-    items.splice(1, 0, {
+    items.push({
       icon: Engine,
-      title: "Engine Swaps & Builds",
+      title: "JDM Engine Swaps & Builds",
       description:
         "Full engine swaps and custom builds — fitment, wiring, fuelling and cooling done properly, then tuned on the dyno.",
       href: "/engine-swaps",
       cta: "View Engine Swaps",
     });
   }
+  items.push({
+    icon: MagnifyingGlass,
+    title: "Stuck Projects Rescued",
+    description:
+      "Half-finished swap, a build another shop couldn't get running, or a car that just won't behave? We diagnose it and pick it up from where it stands.",
+    href: "/custom-wiring",
+    cta: "Get It Unstuck",
+  });
   return items;
 }
 
@@ -95,14 +101,15 @@ function getProcessSteps(city: string) {
 
 export default function Home() {
   const { data, region } = useRegion();
-  const heroFeatures = getHeroFeatures(region, data.services);
   const services = getServices(data);
   const processSteps = getProcessSteps(data.city);
+  const featuredProjects = projects.slice(0, 3);
   const trustPoints = [
     "Every tune written from scratch — no generic stage maps",
-    "Stock ECU (HP Tuners) and standalone ECU platforms supported",
+    "Specialists in Japanese performance cars — Honda, Toyota, Subaru, Nissan, Mitsubishi, Mazda",
+    "Stock ECU (HP Tuners, Hondata, Nistune) and standalone ECU platforms supported",
     `${data.country}-based workshop, global remote reach`,
-    "Pre-tune safety checks available before every session",
+    "Real dyno graphs and road-tune results on every project page",
   ];
 
   return (
@@ -115,37 +122,40 @@ export default function Home() {
             <div>
               <Eyebrow>{data.city}, {data.country} &middot; Remote Worldwide</Eyebrow>
               <h1 className="font-display mt-6 text-5xl leading-[0.95] sm:text-6xl lg:text-6xl">
-                Custom built.
+                JDM ECU tuning.
                 <br />
-                <span className="text-accent">Precision tuned.</span>
+                <span className="text-accent">Done properly.</span>
               </h1>
               <p className="mt-6 max-w-md text-lg leading-relaxed text-foreground-muted">
-                Every tune written from scratch — remote ECU tuning delivered
-                globally, dyno sessions in {data.city}, and{" "}
-                {data.services.parts
-                  ? "performance parts sales, fitting & diagnostics."
-                  : "custom wiring, ECU installation & engine build services."}
+                We tune, wire and build Japanese performance cars — custom
+                ECU tunes written from scratch, standalone ECU installs and
+                engine swaps. Remote tuning worldwide, dyno sessions in{" "}
+                {data.city}.
               </p>
-              <div className="mt-10 flex flex-wrap gap-4">
+
+              <ul className="mt-6 flex flex-wrap gap-2" aria-label="Brands we tune">
+                {heroBrands.map((brand) => (
+                  <li
+                    key={brand}
+                    className="rounded-full border border-border-strong bg-surface px-3.5 py-1.5 text-sm font-semibold text-foreground"
+                  >
+                    {brand}
+                  </li>
+                ))}
+                <li className="rounded-full border border-dashed border-border-strong px-3.5 py-1.5 text-sm font-medium text-foreground-muted">
+                  + other JDM
+                </li>
+              </ul>
+
+              <div className="mt-8 flex flex-wrap gap-4">
                 <LinkButton href="/quote" size="lg">
                   Get a Quote
                   <ArrowRight size={20} weight="bold" aria-hidden />
                 </LinkButton>
-                <LinkButton href="/tuning?type=rolling-road" size="lg" variant="secondary">
-                  Book {dynoServiceLabel(region)}
+                <LinkButton href="#platforms" size="lg" variant="secondary">
+                  Find Your Car
                 </LinkButton>
               </div>
-              <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t border-border pt-6">
-                {heroFeatures.map(({ icon: Icon, label }) => (
-                  <li
-                    key={label}
-                    className="flex items-center gap-2 text-sm font-medium text-foreground-muted"
-                  >
-                    <Icon size={18} className="text-accent" aria-hidden />
-                    {label}
-                  </li>
-                ))}
-              </ul>
             </div>
 
             {/* Photo mosaic — real builds */}
@@ -181,6 +191,120 @@ export default function Home() {
         </Container>
       </div>
 
+      {/* What we do — at a glance */}
+      <div className="border-b border-border bg-graphite text-graphite-foreground">
+        <Container className="py-6">
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { icon: Gauge, label: "Custom ECU tuning", sub: "Remote, road & dyno" },
+              { icon: Circuitry, label: "Standalone ECU installs", sub: "MaxxECU, Link, Haltech, AEM…" },
+              { icon: Engine, label: "JDM engine swaps", sub: "K, B, D, H, 2JZ, SR20, 4G63…" },
+              { icon: MagnifyingGlass, label: "Diagnostics & rescues", sub: "Stuck or half-finished builds" },
+            ].map(({ icon: Icon, label, sub }) => (
+              <li key={label} className="flex items-center gap-3">
+                <Icon size={26} weight="bold" className="shrink-0 text-accent" aria-hidden />
+                <span>
+                  <span className="block text-sm font-semibold">{label}</span>
+                  <span className="block text-xs text-white/60">{sub}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </div>
+
+      {/* Platforms we tune */}
+      <Section id="platforms">
+        <Container>
+          <div className="max-w-2xl">
+            <Eyebrow>Cars We Work On</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl">
+              Honda, Toyota, Subaru, Nissan &amp; more
+            </h2>
+            <p className="mt-4 text-foreground-muted leading-relaxed">
+              Japanese performance cars are what we do. Pick your platform to
+              see the engines, ECUs and builds we handle.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {tunedVehiclePlatforms.map((platform) => {
+              const cardClassName =
+                "group flex flex-col rounded-xl border border-border bg-surface p-8 transition-colors hover:border-accent";
+              const content = (
+                <>
+                  <div className="flex items-center gap-3">
+                    <Car size={26} className="text-accent" aria-hidden />
+                    <h3 className="font-display text-2xl">{platform.make}</h3>
+                  </div>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-foreground-muted">
+                    {platform.models}
+                  </p>
+                  {platform.engines.length > 0 && (
+                    <ul className="mt-5 flex flex-wrap gap-2">
+                      {platform.engines.map((engine) => (
+                        <li
+                          key={engine}
+                          className="rounded-full border border-border-strong bg-surface-2 px-3 py-1 text-xs font-medium text-foreground-muted"
+                        >
+                          {engine}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {platform.slug && (
+                    <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-accent transition-all group-hover:gap-2.5">
+                      View {platform.make} tuning
+                      <ArrowRight size={16} weight="bold" aria-hidden />
+                    </span>
+                  )}
+                </>
+              );
+
+              return platform.slug ? (
+                <Link key={platform.make} href={`/tuning/${platform.slug}`} className={cardClassName}>
+                  {content}
+                </Link>
+              ) : (
+                <div key={platform.make} className={cardClassName}>
+                  {content}
+                </div>
+              );
+            })}
+          </div>
+
+          <p className="mt-8 text-sm text-foreground-muted">
+            Don&rsquo;t see your car? Most JDM swaps and engine platforms are
+            fair game — if it has an ECU we can talk to, we can tune it.{" "}
+            <Link href="/quote" className="font-semibold text-accent underline">
+              Send us your build list
+            </Link>
+            .
+          </p>
+        </Container>
+      </Section>
+
+      {/* ECUs */}
+      <Section className="border-y border-border bg-surface/50">
+        <Container>
+          <div className="max-w-2xl">
+            <Eyebrow>ECUs &amp; Software</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl">
+              Every major ECU platform
+            </h2>
+            <p className="mt-4 text-foreground-muted leading-relaxed">
+              Stock ECU reflash or full standalone — we work with the brands
+              below, supply and install them, and tune them to your build.
+            </p>
+          </div>
+          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+            {ecuBrandLogos.map((logo) => (
+              <BrandLogo key={logo.name} {...logo} />
+            ))}
+          </div>
+        </Container>
+      </Section>
+
       {/* Services */}
       <Section>
         <Container>
@@ -191,7 +315,7 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {services.map(({ icon: Icon, title, description, href, cta }) => (
               <div
                 key={title}
@@ -217,8 +341,50 @@ export default function Home() {
         </Container>
       </Section>
 
+      {/* Recent builds */}
+      {featuredProjects.length > 0 && (
+        <Section className="border-y border-border bg-surface/50">
+          <Container>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div className="max-w-2xl">
+                <Eyebrow>Proof, Not Promises</Eyebrow>
+                <h2 className="font-display mt-4 text-4xl sm:text-5xl">
+                  Recent builds we&rsquo;ve tuned
+                </h2>
+              </div>
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent"
+              >
+                See all projects
+                <ArrowRight size={16} weight="bold" aria-hidden />
+              </Link>
+            </div>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              {featuredProjects.map((project) => (
+                <Link
+                  key={project.slug}
+                  href="/projects"
+                  className="group flex flex-col rounded-xl border border-border bg-surface p-8 transition-colors hover:border-accent"
+                >
+                  <ChartLineUp size={26} className="text-accent" aria-hidden />
+                  <h3 className="font-display mt-4 text-2xl">{project.title}</h3>
+                  <p className="mt-1 text-sm font-medium text-foreground-muted">{project.vehicle}</p>
+                  <p className="mt-4 font-display text-3xl text-accent">{project.dyno.power}</p>
+                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent transition-all group-hover:gap-2.5">
+                    View build
+                    <ArrowRight size={16} weight="bold" aria-hidden />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </Container>
+        </Section>
+      )}
+
       {/* Process */}
-      <Section className="border-y border-border bg-surface/50">
+      <Section>
         <Container>
           <div className="max-w-2xl">
             <Eyebrow>The Process</Eyebrow>
@@ -244,7 +410,7 @@ export default function Home() {
       </Section>
 
       {/* Trust points */}
-      <Section>
+      <Section className="border-t border-border bg-surface/50">
         <Container className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <div>
             <Eyebrow>Why Street PRO Garage</Eyebrow>
@@ -272,64 +438,27 @@ export default function Home() {
         </Container>
       </Section>
 
-      {/* Dyno gallery preview */}
-      <Section className="border-y border-border bg-surface/50">
-        <Container>
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div className="max-w-2xl">
-              <Eyebrow>Results</Eyebrow>
-              <h2 className="font-display mt-4 text-4xl sm:text-5xl">
-                Before &amp; after dyno results
-              </h2>
-            </div>
-            <Link
-              href="/quote"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent"
-            >
-              Get your own tune
-              <ArrowRight size={16} weight="bold" aria-hidden />
-            </Link>
-          </div>
-
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {dynoResults.slice(0, 3).map((result) => (
-              <Link
-                key={result.src}
-                href="/quote"
-                className="group relative aspect-[4/3] overflow-hidden rounded-xl border border-border bg-surface"
-              >
-                <Image
-                  src={result.src}
-                  alt={result.alt}
-                  fill
-                  sizes="(min-width: 1024px) 33vw, 50vw"
-                  className="object-cover transition-transform group-hover:scale-105"
-                />
-                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-graphite/80 to-transparent px-4 py-3 text-xs font-medium text-white">
-                  {result.label}
-                </span>
-              </Link>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
       {/* CTA banner */}
       <Section className="border-t border-border">
         <Container>
           <div className="flex flex-col items-start gap-6 rounded-2xl border border-accent/30 bg-accent-soft p-10 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h2 className="font-display text-3xl sm:text-4xl">
-                Ready to build your custom tune?
+                Ready to tune your JDM build?
               </h2>
               <p className="mt-2 text-foreground-muted">
                 Submit your build list and get a ballpark quote today.
               </p>
             </div>
-            <LinkButton href="/quote" size="lg" className="shrink-0">
-              <ShoppingCart size={20} weight="bold" aria-hidden />
-              Start Your Build
-            </LinkButton>
+            <div className="flex shrink-0 flex-wrap gap-3">
+              <LinkButton href="/quote" size="lg">
+                <ShoppingCart size={20} weight="bold" aria-hidden />
+                Start Your Build
+              </LinkButton>
+              <LinkButton href="/tuning?type=rolling-road" size="lg" variant="secondary">
+                Book {dynoServiceLabel(region)}
+              </LinkButton>
+            </div>
           </div>
         </Container>
       </Section>
