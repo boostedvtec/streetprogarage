@@ -14,7 +14,66 @@ type CheckoutPayload = {
   };
   lines: { slug: string; quantity: number }[];
   deliveryOptionId?: string;
+  paymentMethod?: "card" | "bank";
 };
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.streetprogarage.com";
+
+const toPence = (pounds: number) => Math.round(pounds * 100);
+
+/** Creates a Stripe Checkout Session via the REST API (no SDK dependency). */
+async function createStripeSession(args: {
+  secretKey: string;
+  reference: string;
+  customer: CheckoutPayload["customer"];
+  items: { name: string; quantity: number; lineTotal: number }[];
+  vat: number;
+  delivery: number;
+  total: number;
+}): Promise<string | null> {
+  const params = new URLSearchParams();
+  params.set("mode", "payment");
+  params.set("customer_email", args.customer.email);
+  params.set("client_reference_id", args.reference);
+  params.set("success_url", `${SITE_URL}/checkout/success?ref=${args.reference}`);
+  params.set("cancel_url", `${SITE_URL}/checkout`);
+  params.set("metadata[reference]", args.reference);
+  params.set("metadata[name]", args.customer.name);
+  params.set("metadata[phone]", args.customer.phone ?? "");
+  params.set("metadata[address]", `${args.customer.address}, ${args.customer.postcode}`.slice(0, 480));
+  params.set("payment_intent_data[description]", `Street PRO Garage order ${args.reference}`);
+  params.set("payment_intent_data[metadata][reference]", args.reference);
+
+  const lines: { name: string; unitPence: number; quantity: number }[] = args.items.map((i) => ({
+    name: i.name,
+    unitPence: toPence(i.lineTotal / i.quantity),
+    quantity: i.quantity,
+  }));
+  if (args.vat > 0) lines.push({ name: "VAT", unitPence: toPence(args.vat), quantity: 1 });
+  if (args.delivery > 0) lines.push({ name: "Delivery", unitPence: toPence(args.delivery), quantity: 1 });
+
+  lines.forEach((line, idx) => {
+    params.set(`line_items[${idx}][quantity]`, String(line.quantity));
+    params.set(`line_items[${idx}][price_data][currency]`, "gbp");
+    params.set(`line_items[${idx}][price_data][unit_amount]`, String(line.unitPence));
+    params.set(`line_items[${idx}][price_data][product_data][name]`, line.name);
+  });
+
+  const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${args.secretKey}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: params,
+  });
+  if (!res.ok) {
+    console.error("[Checkout order] Stripe session failed", res.status, await res.text());
+    return null;
+  }
+  const session = (await res.json()) as { url?: string };
+  return session.url ?? null;
+}
 
 function orderReference() {
   const stamp = Date.now().toString(36).toUpperCase().slice(-5);
@@ -58,6 +117,34 @@ export async function POST(request: Request) {
   const delivery = getDeliveryOption(body.deliveryOptionId ?? "")?.price ?? 0;
   const total = subtotal + vat + delivery;
   const reference = orderReference();
+
+  const stripeKey = process.env.STRIPE_SECRET_KEY;
+  if (body.paymentMethod === "card") {
+    if (!stripeKey) {
+      return NextResponse.json(
+        { error: "Card payments aren't available right now — please choose bank transfer." },
+        { status: 503 }
+      );
+    }
+    console.log("[Checkout order]", reference, JSON.stringify({ customer: body.customer, items, total, method: "card" }));
+    const url = await createStripeSession({
+      secretKey: stripeKey,
+      reference,
+      customer: body.customer,
+      items,
+      vat,
+      delivery,
+      total,
+    });
+    if (!url) {
+      return NextResponse.json(
+        { error: "Couldn't start card payment — please try again or choose bank transfer." },
+        { status: 502 }
+      );
+    }
+    // The owner is emailed by the Stripe webhook once payment actually succeeds.
+    return NextResponse.json({ status: "redirect", reference, url });
+  }
 
   const accountName = process.env.BANK_ACCOUNT_NAME;
   const sortCode = process.env.BANK_SORT_CODE;
