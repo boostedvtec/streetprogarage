@@ -11,10 +11,15 @@ import { deliveryOptions, defaultDeliveryOptionId, getDeliveryOption } from "@/l
 export default function CheckoutPage() {
   const { detailedLines, subtotal, vatTotal, grandTotal, lines, clear } = useCart();
   const router = useRouter();
-  const [paymentMethod, setPaymentMethod] = useState<"stripe" | "paypal">("stripe");
   const [deliveryOptionId, setDeliveryOptionId] = useState(defaultDeliveryOptionId);
   const [status, setStatus] = useState<"idle" | "submitting" | "message">("idle");
   const [message, setMessage] = useState("");
+  const [reference, setReference] = useState("");
+  const [bank, setBank] = useState<{
+    accountName: string;
+    sortCode: string;
+    accountNumber: string;
+  } | null>(null);
 
   const deliveryCost = getDeliveryOption(deliveryOptionId)?.price ?? 0;
   const payTotal = grandTotal + deliveryCost;
@@ -36,12 +41,13 @@ export default function CheckoutPage() {
           postcode: formData.get("postcode"),
         },
         lines,
-        paymentMethod,
         deliveryOptionId,
       }),
     });
     const data = await res.json();
-    setMessage(data.message ?? "Something went wrong — please try again.");
+    setMessage(data.message ?? data.error ?? "Something went wrong — please try again.");
+    setReference(data.reference ?? "");
+    setBank(data.bank ?? null);
     setStatus("message");
   }
 
@@ -152,42 +158,38 @@ export default function CheckoutPage() {
             </div>
 
             <div className="rounded-xl border border-border bg-surface p-6">
-              <h2 className="font-display text-xl">Payment Method</h2>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                {(["stripe", "paypal"] as const).map((method) => (
-                  <label
-                    key={method}
-                    className={`flex cursor-pointer items-center gap-3 rounded-md border p-4 text-sm font-medium ${
-                      paymentMethod === method
-                        ? "border-accent bg-accent-soft"
-                        : "border-border-strong"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      value={method}
-                      checked={paymentMethod === method}
-                      onChange={() => setPaymentMethod(method)}
-                      className="accent-[color:var(--color-accent)]"
-                    />
-                    <CreditCard size={20} aria-hidden />
-                    {method === "stripe" ? "Card (Stripe)" : "PayPal"}
-                  </label>
-                ))}
+              <div className="flex items-center gap-2">
+                <CreditCard size={20} className="text-accent" aria-hidden />
+                <h2 className="font-display text-xl">Payment — Bank Transfer</h2>
               </div>
-              <div className="mt-4 flex items-start gap-2 rounded-lg border border-border-strong bg-surface-2 p-4 text-xs text-foreground-subtle">
+              <div className="mt-4 flex items-start gap-2 rounded-lg border border-border-strong bg-surface-2 p-4 text-sm text-foreground-muted">
                 <Info size={16} className="mt-0.5 shrink-0" aria-hidden />
                 <span>
-                  Payment processing is not yet connected on this site. Add live
-                  Stripe and PayPal API keys to enable real transactions.
+                  Place your order and we&rsquo;ll show you our bank details and a
+                  payment reference. Pay by online or mobile banking (Faster
+                  Payments is normally instant) and we dispatch as soon as the
+                  payment clears.
                 </span>
               </div>
             </div>
 
             {status === "message" ? (
               <div className="rounded-xl border border-accent/30 bg-accent-soft p-6 text-sm text-foreground">
-                {message}
+                <p>{message}</p>
+                {bank && (
+                  <dl className="mt-4 grid gap-2 rounded-lg border border-border-strong bg-surface p-4 sm:grid-cols-[auto_1fr] sm:gap-x-6">
+                    <dt className="text-foreground-subtle">Account name</dt>
+                    <dd className="font-semibold">{bank.accountName}</dd>
+                    <dt className="text-foreground-subtle">Sort code</dt>
+                    <dd className="font-semibold">{bank.sortCode}</dd>
+                    <dt className="text-foreground-subtle">Account number</dt>
+                    <dd className="font-semibold">{bank.accountNumber}</dd>
+                    <dt className="text-foreground-subtle">Payment reference</dt>
+                    <dd className="font-semibold">{reference}</dd>
+                    <dt className="text-foreground-subtle">Amount</dt>
+                    <dd className="font-semibold">&pound;{payTotal.toFixed(2)}</dd>
+                  </dl>
+                )}
                 <Button
                   type="button"
                   variant="secondary"
@@ -202,7 +204,7 @@ export default function CheckoutPage() {
               </div>
             ) : (
               <Button type="submit" size="lg" disabled={status === "submitting"}>
-                {status === "submitting" ? "Processing..." : `Pay £${payTotal.toFixed(2)}`}
+                {status === "submitting" ? "Placing order..." : `Place Order — £${payTotal.toFixed(2)}`}
               </Button>
             )}
           </form>
