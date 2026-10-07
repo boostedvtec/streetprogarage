@@ -21,6 +21,7 @@ import {
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton, Button } from "@/components/ui/button";
 import { BrandLogo } from "@/components/brand-logo";
+import { paymentLinks } from "@/lib/payment-links";
 import { Modal } from "@/components/ui/modal";
 import {
   supportedEcus,
@@ -607,6 +608,30 @@ function TuningPageContent() {
             Add-on pricing is a ballpark estimate and confirmed exactly based on
             your specific vehicle and ECU platform. {variablePriceNote}
           </p>
+        </Container>
+      </Section>
+
+      <Section className="border-t border-border">
+        <Container>
+          <div className="flex flex-col items-start gap-6 rounded-2xl border border-border bg-surface p-10 sm:flex-row sm:items-center sm:justify-between">
+            <div className="max-w-2xl">
+              <Eyebrow>Already Quoted?</Eyebrow>
+              <h2 className="font-display mt-4 text-3xl sm:text-4xl">
+                Pay for your tune or book with a deposit
+              </h2>
+              <p className="mt-3 text-foreground-muted leading-relaxed">
+                Got your quote from us? Pay securely by card, Apple Pay or Google
+                Pay — enter the amount from your quote. Then email{" "}
+                <a href="mailto:info@streetprogarage.com" className="text-accent underline">
+                  info@streetprogarage.com
+                </a>{" "}
+                with your vehicle and ECU details.
+              </p>
+            </div>
+            <LinkButton href={paymentLinks.tuning} size="lg">
+              Pay for Tuning
+            </LinkButton>
+          </div>
         </Container>
       </Section>
 
