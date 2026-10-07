@@ -12,8 +12,10 @@ export default function CheckoutPage() {
   const { detailedLines, subtotal, vatTotal, grandTotal, lines, clear } = useCart();
   const router = useRouter();
   const [deliveryOptionId, setDeliveryOptionId] = useState(defaultDeliveryOptionId);
+  const [paymentMethod, setPaymentMethod] = useState<"card" | "bank">("card");
   const [status, setStatus] = useState<"idle" | "submitting" | "message">("idle");
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [reference, setReference] = useState("");
   const [bank, setBank] = useState<{
     accountName: string;
@@ -42,9 +44,20 @@ export default function CheckoutPage() {
         },
         lines,
         deliveryOptionId,
+        paymentMethod,
       }),
     });
     const data = await res.json();
+    if (data.status === "redirect" && data.url) {
+      window.location.href = data.url;
+      return;
+    }
+    if (!res.ok) {
+      setError(data.error ?? "Something went wrong — please try again.");
+      setStatus("idle");
+      return;
+    }
+    setError("");
     setMessage(data.message ?? data.error ?? "Something went wrong — please try again.");
     setReference(data.reference ?? "");
     setBank(data.bank ?? null);
@@ -160,17 +173,45 @@ export default function CheckoutPage() {
             <div className="rounded-xl border border-border bg-surface p-6">
               <div className="flex items-center gap-2">
                 <CreditCard size={20} className="text-accent" aria-hidden />
-                <h2 className="font-display text-xl">Payment — Bank Transfer</h2>
+                <h2 className="font-display text-xl">Payment</h2>
               </div>
-              <div className="mt-4 flex items-start gap-2 rounded-lg border border-border-strong bg-surface-2 p-4 text-sm text-foreground-muted">
-                <Info size={16} className="mt-0.5 shrink-0" aria-hidden />
-                <span>
-                  Place your order and we&rsquo;ll show you our bank details and a
-                  payment reference. Pay by online or mobile banking (Faster
-                  Payments is normally instant) and we dispatch as soon as the
-                  payment clears.
-                </span>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                {(
+                  [
+                    { id: "card", title: "Pay by card", note: "Visa, Mastercard, Amex, Apple Pay, Google Pay — secure checkout by Stripe. Works worldwide." },
+                    { id: "bank", title: "Bank transfer", note: "UK Faster Payments — no fees. We dispatch once the payment clears." },
+                  ] as const
+                ).map((m) => (
+                  <label
+                    key={m.id}
+                    className={`flex cursor-pointer flex-col gap-1 rounded-lg border p-4 text-sm ${
+                      paymentMethod === m.id ? "border-accent bg-accent-soft" : "border-border-strong bg-surface-2"
+                    }`}
+                  >
+                    <span className="flex items-center gap-2 font-semibold">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value={m.id}
+                        checked={paymentMethod === m.id}
+                        onChange={() => setPaymentMethod(m.id)}
+                      />
+                      {m.title}
+                    </span>
+                    <span className="text-foreground-muted">{m.note}</span>
+                  </label>
+                ))}
               </div>
+              {paymentMethod === "bank" && (
+                <div className="mt-4 flex items-start gap-2 rounded-lg border border-border-strong bg-surface-2 p-4 text-sm text-foreground-muted">
+                  <Info size={16} className="mt-0.5 shrink-0" aria-hidden />
+                  <span>
+                    Place your order and we&rsquo;ll show you our bank details and a
+                    payment reference. Pay by online or mobile banking and we
+                    dispatch as soon as the payment clears.
+                  </span>
+                </div>
+              )}
             </div>
 
             {status === "message" ? (
@@ -203,9 +244,20 @@ export default function CheckoutPage() {
                 </Button>
               </div>
             ) : (
+              <>
+              {error && (
+                <p role="alert" className="rounded-lg border border-red-500/40 bg-red-500/10 p-3 text-sm text-red-600">
+                  {error}
+                </p>
+              )}
               <Button type="submit" size="lg" disabled={status === "submitting"}>
-                {status === "submitting" ? "Placing order..." : `Place Order — £${payTotal.toFixed(2)}`}
+                {status === "submitting"
+                  ? "Please wait..."
+                  : paymentMethod === "card"
+                    ? `Pay by Card — £${payTotal.toFixed(2)}`
+                    : `Place Order — £${payTotal.toFixed(2)}`}
               </Button>
+              </>
             )}
           </form>
 
