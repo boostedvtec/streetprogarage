@@ -51,7 +51,8 @@
 
 ## Tuning Prices (UK, estimated — confirmed after reviewing your build list)
 
-- Naturally aspirated: £300. Nitrous: £450. Turbo or supercharged, stock internals: £500. Built engine turbo/supercharged: £675.
+- Stock internals: NA £300, nitrous £450, turbo £500, supercharged £500.
+- Built/forged engine: NA £450, nitrous £550, turbo £675, supercharged £675.
 - Same price for remote, road and rolling road dyno tuning. Stock ECU platforms pay these prices; aftermarket ECU adds £150–£250 depending on the ECU and features.
 
 ## Policies Worth Knowing
