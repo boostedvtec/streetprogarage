@@ -27,7 +27,8 @@ import {
   supportedEcus,
   tuningAddOns,
   naTunePackages,
-  forcedInductionUplifts,
+  tunePrices,
+  aftermarketEcuSurcharge,
   ecuBrandLogos,
   preDynoTests,
   rollingRoad,
@@ -163,9 +164,9 @@ function TuningPageContent() {
                   <PriceTag price={naTunePackages.remoteTune.price} />
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
-                  {naTunePackages.remoteTune.description} Confirmed flat rate
-                  for naturally aspirated builds — forced induction builds add
-                  the power adder uplift below.
+                  {naTunePackages.remoteTune.description} Flat rate for
+                  naturally aspirated builds — turbo, supercharged and nitrous
+                  builds have their own single price, see the price list below.
                 </p>
               </div>
             </div>
@@ -198,9 +199,9 @@ function TuningPageContent() {
                   <PriceTag price={naTunePackages.roadTune.price} />
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
-                  {naTunePackages.roadTune.description} Confirmed flat rate for
-                  naturally aspirated builds — forced induction and standalone
-                  ECU builds are quoted individually.
+                  {naTunePackages.roadTune.description} Flat rate for
+                  naturally aspirated builds — turbo, supercharged, nitrous and
+                  aftermarket ECU builds are priced in the list below.
                 </p>
               </div>
             </div>
@@ -363,36 +364,52 @@ function TuningPageContent() {
         </>
       )}
 
-      {/* Shared: Forced induction pricing */}
+      {/* Shared: Tune pricing by build */}
       <Section className="border-t border-border">
         <Container>
           <div className="max-w-2xl">
-            <Eyebrow>Power Adder Builds</Eyebrow>
+            <Eyebrow>Tune Pricing</Eyebrow>
             <h2 className="font-display mt-4 text-4xl sm:text-5xl">
-              Turbo, Supercharged &amp; Nitrous Pricing
+              Simple Pricing — One Price for Your Build
             </h2>
             <p className="mt-4 text-foreground-muted leading-relaxed">
-              Added on top of the <PriceTag price={naTunePackages.remoteTune.price} /> basic tune
-              price above — applies the same way across remote, road and{" "}
-              {region === "pk" ? "dyno" : "rolling road dyno"} tuning.
+              Pick your build type and that&rsquo;s the price — no extras stacked on
+              top. The same price applies across remote, road and{" "}
+              {region === "pk" ? "dyno" : "rolling road dyno"} tuning. Estimated
+              prices, confirmed once we review your build list.
             </p>
           </div>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            {forcedInductionUplifts.map((uplift) => (
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {tunePrices.map((tune) => (
               <div
-                key={uplift.key}
+                key={tune.key}
                 className="rounded-xl border border-border bg-surface p-8"
               >
-                <h3 className="font-display text-xl">{uplift.label}</h3>
+                <h3 className="font-display text-xl">{tune.label}</h3>
                 <p className="font-display mt-2 text-3xl text-accent">
-                  +<PriceTag price={uplift.amount} />
+                  <PriceTag price={tune.price} />
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
-                  {uplift.description}
+                  {tune.description}
                 </p>
               </div>
             ))}
+            <div className="rounded-xl border border-accent/30 bg-accent-soft p-8">
+              <h3 className="font-display text-xl">{aftermarketEcuSurcharge.label}</h3>
+              <p className="font-display mt-2 text-3xl text-accent">
+                {region === "pk"
+                  ? "Ask for pricing"
+                  : `+£${aftermarketEcuSurcharge.min}–£${aftermarketEcuSurcharge.max}`}
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
+                {aftermarketEcuSurcharge.description}
+              </p>
+            </div>
           </div>
+          <p className="mt-6 text-sm text-foreground-subtle">
+            Stock ECU platforms (Hondata, HP Tuners, Nistune, P28 etc.) pay the
+            prices above. Dyno time is billed separately.
+          </p>
         </Container>
       </Section>
 
