@@ -359,57 +359,47 @@ export const naTunePackages: {
   },
 };
 
-export type TunePriceKey =
-  | "na"
-  | "nitrous"
-  | "stock-turbo"
-  | "stock-supercharged"
-  | "built-boosted";
+export type TuneAspiration = "N/A" | "Nitrous" | "Turbo" | "Supercharged";
 
 export type TunePrice = {
-  key: TunePriceKey;
+  aspiration: TuneAspiration;
   label: string;
-  /** All-in estimated tune price — one number, no add-on uplifts. */
-  price: RegionPrice;
-  description: string;
+  /** Estimated all-in tune price with stock internals. */
+  stock: RegionPrice;
+  /** Estimated all-in tune price with built / forged internals. */
+  built: RegionPrice;
 };
 
 /**
- * Single all-in estimated tune price by build type — the same across remote,
- * road and rolling road dyno tuning (dyno time is billed separately). Stock
- * ECU platforms pay exactly these prices; aftermarket ECUs add
- * `aftermarketEcuSurcharge` on top.
+ * Single all-in estimated tune price by aspiration and internals — the same
+ * across remote, road and rolling road dyno tuning (dyno time is billed
+ * separately). Stock ECU platforms pay exactly these prices; aftermarket
+ * ECUs add `aftermarketEcuSurcharge` on top.
  */
-export const tunePrices: TunePrice[] = [
+export const tunePriceMatrix: TunePrice[] = [
   {
-    key: "na",
-    label: "Naturally Aspirated (NA)",
-    price: { uk: 300, pk: null },
-    description: "Naturally aspirated engine — no turbo, supercharger or nitrous.",
+    aspiration: "N/A",
+    label: "NA",
+    stock: { uk: 300, pk: null },
+    built: { uk: 450, pk: null },
   },
   {
-    key: "nitrous",
+    aspiration: "Nitrous",
     label: "Nitrous",
-    price: { uk: 450, pk: null },
-    description: "Nitrous oxide kit on a naturally aspirated or boosted engine.",
+    stock: { uk: 450, pk: null },
+    built: { uk: 550, pk: null },
   },
   {
-    key: "stock-turbo",
-    label: "Turbo — Stock Internals",
-    price: { uk: 500, pk: null },
-    description: "Factory-internal engine running a turbocharger.",
+    aspiration: "Turbo",
+    label: "Turbo",
+    stock: { uk: 500, pk: null },
+    built: { uk: 675, pk: null },
   },
   {
-    key: "stock-supercharged",
-    label: "Supercharged — Stock Internals",
-    price: { uk: 500, pk: null },
-    description: "Factory-internal engine running a supercharger.",
-  },
-  {
-    key: "built-boosted",
-    label: "Built Engine — Turbo / Supercharged",
-    price: { uk: 675, pk: null },
-    description: "Forged / aftermarket internals running a turbo or supercharger.",
+    aspiration: "Supercharged",
+    label: "Supercharged",
+    stock: { uk: 500, pk: null },
+    built: { uk: 675, pk: null },
   },
 ];
 
@@ -426,3 +416,17 @@ export const aftermarketEcuSurcharge = {
 };
 
 export const GEARBOX_OPTIONS = ["Manual", "Automatic"] as const;
+
+/** @deprecated TEMP-COMPAT remove in next commit. */
+export const tunePrices: {
+  key: "na" | "nitrous" | "stock-turbo" | "stock-supercharged" | "built-boosted";
+  label: string;
+  price: RegionPrice;
+  description: string;
+}[] = [
+  { key: "na", label: "NA", price: { uk: 300, pk: null }, description: "" },
+  { key: "nitrous", label: "Nitrous", price: { uk: 450, pk: null }, description: "" },
+  { key: "stock-turbo", label: "Turbo — Stock Internals", price: { uk: 500, pk: null }, description: "" },
+  { key: "stock-supercharged", label: "Supercharged — Stock Internals", price: { uk: 500, pk: null }, description: "" },
+  { key: "built-boosted", label: "Built Engine — Turbo / Supercharged", price: { uk: 675, pk: null }, description: "" },
+];
