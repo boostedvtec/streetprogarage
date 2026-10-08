@@ -2,12 +2,10 @@ import {
   tuningAddOns,
   preDynoTests,
   rollingRoad,
-  tunePrices,
+  tunePriceMatrix,
   aftermarketEcuSurcharge,
   flexFuelSurcharge,
   FLEX_FUEL_LABEL,
-  type TunePrice,
-  type TunePriceKey,
 } from "./site-config";
 import { resolveRegionPrice, formatResolvedAmount, dynoServiceLabel, type Region, type RegionPrice } from "./region";
 
@@ -147,13 +145,15 @@ export function estimateQuote(input: QuoteInputs) {
   return { low, high, breakdown };
 }
 
-/** Maps the form's aspiration + internals answers to a tune price entry. */
-export function getTunePrice(aspiration: string, internals: EngineInternals): TunePrice {
-  const byKey = (key: TunePriceKey) => tunePrices.find((p) => p.key === key) as TunePrice;
-  if (aspiration === "Nitrous") return byKey("nitrous");
-  if (aspiration === "Turbo" || aspiration === "Supercharged") {
-    if (internals === "built") return byKey("built-boosted");
-    return byKey(aspiration === "Turbo" ? "stock-turbo" : "stock-supercharged");
-  }
-  return byKey("na");
+/** Maps the form's aspiration + internals answers to an estimated tune price. */
+export function getTunePrice(
+  aspiration: string,
+  internals: EngineInternals
+): { label: string; price: RegionPrice } {
+  const entry = tunePriceMatrix.find((p) => p.aspiration === aspiration) ?? tunePriceMatrix[0];
+  const internalsLabel = internals === "built" ? "Built / Forged Internals" : "Stock Internals";
+  return {
+    label: `${entry.label}, ${internalsLabel}`,
+    price: internals === "built" ? entry.built : entry.stock,
+  };
 }

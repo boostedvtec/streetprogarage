@@ -78,7 +78,7 @@ export const faqItems: FaqItem[] = [
   {
     question: "How much does ECU tuning or a dyno tune cost?",
     answer:
-      "Every tune is custom-written and priced by build. UK estimated prices: naturally aspirated £300, nitrous £450, turbo or supercharged with stock internals £500, built-engine turbo or supercharged £675. Stock ECU platforms pay those prices; an aftermarket ECU adds £150–£250 depending on the ECU and features. Dyno time is billed separately. Submit your build list for an instant estimate and we confirm the exact quote after reviewing your full setup.",
+      "Every tune is custom-written and priced by build. UK estimated prices with stock internals: NA £300, nitrous £450, turbo £500, supercharged £500. With built/forged internals: NA £450, nitrous £550, turbo £675, supercharged £675. Stock ECU platforms pay those prices; an aftermarket ECU adds £150–£250 depending on the ECU and features. Dyno time is billed separately. Submit your build list for an instant estimate and we confirm the exact quote after reviewing your full setup.",
   },
   {
     question: "Do you supply and install standalone ECUs like MaxxECU, Link, Haltech or AEM?",
