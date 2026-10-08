@@ -146,7 +146,6 @@ export default function QuotePage() {
   const serviceTypeOptions = getServiceTypeOptions(region, data.city);
   const stockPrice = getTunePrice(form.aspiration[0] ?? "", "stock").price;
   const builtPrice = getTunePrice(form.aspiration[0] ?? "", "built").price;
-
   const isForcedInduction = form.aspiration.some((a) =>
     (FORCED_INDUCTION_ASPIRATIONS as readonly string[]).includes(a)
   );
@@ -299,13 +298,11 @@ export default function QuotePage() {
                   onChange={(v) => set("aspiration", [v])}
                 />
               </FieldWrap>
-              {form.aspiration.some((a) =>
-                (FORCED_INDUCTION_ASPIRATIONS as readonly string[]).includes(a)
-              ) && (
+              {form.aspiration.length > 0 && (
                 <FieldWrap
                   label="Engine Internals"
                   required
-                  hint={`Stock internals ${formatRegionPrice(stockPrice, region)}, built / forged engine ${formatRegionPrice(builtPrice, region)} — the full tune price, no extras added on top`}
+                  hint={`Estimated price: ${formatRegionPrice(stockPrice, region)} for stock internals, ${formatRegionPrice(builtPrice, region)} for built / forged engine`}
                 >
                   <RadioGroup
                     name="engineInternals"
@@ -538,15 +535,13 @@ export default function QuotePage() {
                     }
                   />
                   <SummaryRow label="Aspiration" value={form.aspiration[0] || "—"} />
-                  {isForcedInduction && (
-                    <SummaryRow
-                      label="Engine Internals"
-                      value={
-                        ENGINE_INTERNALS_OPTIONS.find((o) => o.value === form.engineInternals)
-                          ?.label ?? "—"
-                      }
-                    />
-                  )}
+                  <SummaryRow
+                    label="Engine Internals"
+                    value={
+                      ENGINE_INTERNALS_OPTIONS.find((o) => o.value === form.engineInternals)
+                        ?.label ?? "—"
+                    }
+                  />
                   <SummaryRow
                     label="Gearbox"
                     value={
