@@ -359,28 +359,81 @@ export const naTunePackages: {
   },
 };
 
-export type ForcedInductionUplift = {
-  key: "stock" | "built";
+export type TunePriceKey =
+  | "na"
+  | "nitrous"
+  | "stock-turbo"
+  | "stock-supercharged"
+  | "built-boosted";
+
+export type TunePrice = {
+  key: TunePriceKey;
   label: string;
-  amount: RegionPrice;
+  /** All-in estimated tune price — one number, no add-on uplifts. */
+  price: RegionPrice;
   description: string;
 };
 
 /**
- * Added on top of the basic NA tune price for any build running a power
- * adder — applies across remote, road and rolling road dyno tuning alike.
+ * Single all-in estimated tune price by build type — the same across remote,
+ * road and rolling road dyno tuning (dyno time is billed separately). Stock
+ * ECU platforms pay exactly these prices; aftermarket ECUs add
+ * `aftermarketEcuSurcharge` on top.
  */
-export const forcedInductionUplifts: ForcedInductionUplift[] = [
+export const tunePrices: TunePrice[] = [
   {
-    key: "stock",
-    label: "Stock Internal — Turbo / Supercharged / Nitrous",
-    amount: { uk: 100, pk: null },
-    description: "Factory-internal engine running a power adder.",
+    key: "na",
+    label: "Naturally Aspirated (NA)",
+    price: { uk: 300, pk: null },
+    description: "Naturally aspirated engine — no turbo, supercharger or nitrous.",
   },
   {
-    key: "built",
-    label: "Built Internal — Turbo / Supercharged / Nitrous",
-    amount: { uk: 250, pk: null },
-    description: "Aftermarket/forged internals running a power adder.",
+    key: "nitrous",
+    label: "Nitrous",
+    price: { uk: 450, pk: null },
+    description: "Nitrous oxide kit on a naturally aspirated or boosted engine.",
   },
+  {
+    key: "stock-turbo",
+    label: "Turbo — Stock Internals",
+    price: { uk: 500, pk: null },
+    description: "Factory-internal engine running a turbocharger.",
+  },
+  {
+    key: "stock-supercharged",
+    label: "Supercharged — Stock Internals",
+    price: { uk: 500, pk: null },
+    description: "Factory-internal engine running a supercharger.",
+  },
+  {
+    key: "built-boosted",
+    label: "Built Engine — Turbo / Supercharged",
+    price: { uk: 675, pk: null },
+    description: "Forged / aftermarket internals running a turbo or supercharger.",
+  },
+];
+
+/**
+ * Extra for aftermarket (standalone) ECUs — the range depends on the ECU
+ * and the features required with it. UK only for now.
+ */
+export const aftermarketEcuSurcharge = {
+  min: 150,
+  max: 250,
+  label: "Aftermarket ECU",
+  description:
+    "Standalone ECUs (MaxxECU, Link, Haltech, AEM, EcuMaster, etc.) add £150–£250 depending on the ECU and the features you need set up with it. Stock ECU platforms pay the price above with nothing extra.",
+};
+
+export const GEARBOX_OPTIONS = ["Manual", "Automatic"] as const;
+
+/** @deprecated TEMP-COMPAT remove in next commit. */
+export const forcedInductionUplifts: {
+  key: "stock" | "built";
+  label: string;
+  amount: RegionPrice;
+  description: string;
+}[] = [
+  { key: "stock", label: "Stock Internal", amount: { uk: 100, pk: null }, description: "" },
+  { key: "built", label: "Built Internal", amount: { uk: 250, pk: null }, description: "" },
 ];
