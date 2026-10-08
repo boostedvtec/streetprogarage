@@ -27,7 +27,7 @@ import {
   supportedEcus,
   tuningAddOns,
   naTunePackages,
-  tunePrices,
+  tunePriceMatrix,
   aftermarketEcuSurcharge,
   ecuBrandLogos,
   preDynoTests,
@@ -379,21 +379,32 @@ function TuningPageContent() {
               prices, confirmed once we review your build list.
             </p>
           </div>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {tunePrices.map((tune) => (
-              <div
-                key={tune.key}
-                className="rounded-xl border border-border bg-surface p-8"
-              >
-                <h3 className="font-display text-xl">{tune.label}</h3>
-                <p className="font-display mt-2 text-3xl text-accent">
-                  <PriceTag price={tune.price} />
+          <div className="mt-10 grid gap-6 lg:grid-cols-2">
+            {(
+              [
+                { key: "stock", title: "Stock Internals" },
+                { key: "built", title: "Built / Forged Engine" },
+              ] as const
+            ).map((group) => (
+              <div key={group.key} className="rounded-xl border border-border bg-surface p-8">
+                <h3 className="font-display text-2xl">{group.title}</h3>
+                <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-foreground-subtle">
+                  Estimated price
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
-                  {tune.description}
-                </p>
+                <ul className="mt-4 divide-y divide-border">
+                  {tunePriceMatrix.map((tune) => (
+                    <li key={tune.aspiration} className="flex items-center justify-between gap-4 py-3">
+                      <span className="text-foreground-muted">{tune.label}</span>
+                      <span className="font-display text-2xl text-accent">
+                        <PriceTag price={tune[group.key]} />
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
+          </div>
+          <div className="mt-6 grid gap-6">
             <div className="rounded-xl border border-accent/30 bg-accent-soft p-8">
               <h3 className="font-display text-xl">{aftermarketEcuSurcharge.label}</h3>
               <p className="font-display mt-2 text-3xl text-accent">
