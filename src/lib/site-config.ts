@@ -416,17 +416,3 @@ export const aftermarketEcuSurcharge = {
 };
 
 export const GEARBOX_OPTIONS = ["Manual", "Automatic"] as const;
-
-/** @deprecated TEMP-COMPAT remove in next commit. */
-export const tunePrices: {
-  key: "na" | "nitrous" | "stock-turbo" | "stock-supercharged" | "built-boosted";
-  label: string;
-  price: RegionPrice;
-  description: string;
-}[] = [
-  { key: "na", label: "NA", price: { uk: 300, pk: null }, description: "" },
-  { key: "nitrous", label: "Nitrous", price: { uk: 450, pk: null }, description: "" },
-  { key: "stock-turbo", label: "Turbo — Stock Internals", price: { uk: 500, pk: null }, description: "" },
-  { key: "stock-supercharged", label: "Supercharged — Stock Internals", price: { uk: 500, pk: null }, description: "" },
-  { key: "built-boosted", label: "Built Engine — Turbo / Supercharged", price: { uk: 675, pk: null }, description: "" },
-];
