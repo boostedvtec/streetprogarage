@@ -6,8 +6,8 @@ import { ArrowLeft, ArrowRight, CheckCircle } from "@phosphor-icons/react/dist/s
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { FieldWrap, TextInput, TextArea, CheckboxGroup, RadioGroup } from "@/components/form/fields";
-import { tuningAddOns, preDynoTests, rollingRoad, forcedInductionUplifts, variablePriceNote, dynoHoursGuidance, fuelTypeOptions } from "@/lib/site-config";
-import { estimateQuote, type EcuType, type ServiceType, type EngineInternals } from "@/lib/quote";
+import { tuningAddOns, preDynoTests, rollingRoad, aftermarketEcuSurcharge, variablePriceNote, dynoHoursGuidance, fuelTypeOptions, GEARBOX_OPTIONS } from "@/lib/site-config";
+import { estimateQuote, getTunePrice, type EcuType, type ServiceType, type EngineInternals } from "@/lib/quote";
 import { formatRegionPrice, formatResolvedAmount, resolveRegionPrice, dynoServiceLabel, type Region } from "@/lib/region";
 import { useRegion } from "@/components/region/region-context";
 
@@ -78,7 +78,8 @@ type FormState = {
   catchCan: string;
   wideband: string;
   oilSystem: string;
-  transmission: string;
+  gearbox: string;
+  gearboxCode: string;
   chassisSuspension: string;
   wheelsTires: string;
   vehicleApplication: string;
@@ -116,7 +117,8 @@ const initialState: FormState = {
   catchCan: "",
   wideband: "",
   oilSystem: "",
-  transmission: "",
+  gearbox: "",
+  gearboxCode: "",
   chassisSuspension: "",
   wheelsTires: "",
   vehicleApplication: "",
@@ -142,14 +144,8 @@ export default function QuotePage() {
     setForm((prev) => ({ ...prev, [key]: value }));
 
   const serviceTypeOptions = getServiceTypeOptions(region, data.city);
-  const stockUplift = forcedInductionUplifts.find((u) => u.key === "stock")?.amount ?? {
-    uk: null,
-    pk: null,
-  };
-  const builtUplift = forcedInductionUplifts.find((u) => u.key === "built")?.amount ?? {
-    uk: null,
-    pk: null,
-  };
+  const stockPrice = getTunePrice(form.aspiration[0] ?? "", "stock").price;
+  const builtPrice = getTunePrice(form.aspiration[0] ?? "", "built").price;
 
   const isForcedInduction = form.aspiration.some((a) =>
     (FORCED_INDUCTION_ASPIRATIONS as readonly string[]).includes(a)
@@ -204,7 +200,7 @@ export default function QuotePage() {
             ) : (
               <>
                 Thanks {form.name || "there"} — we&rsquo;ve received your build list and
-                ballpark estimate of <strong className="text-foreground">{formatResolvedAmount(quote.low, region)}&ndash;{formatResolvedAmount(quote.high, region)}</strong>.
+                estimated price of <strong className="text-foreground">{quote.low === quote.high ? formatResolvedAmount(quote.low, region) : `${formatResolvedAmount(quote.low, region)}–${formatResolvedAmount(quote.high, region)}`}</strong>.
                 We&rsquo;ll follow up by email at {form.email} with your exact quote.
               </>
             )}
@@ -309,7 +305,7 @@ export default function QuotePage() {
                 <FieldWrap
                   label="Engine Internals"
                   required
-                  hint={`Stock internal +${formatRegionPrice(stockUplift, region)}, built/forged internal +${formatRegionPrice(builtUplift, region)} — added on top of the basic tune price`}
+                  hint={`Stock internals ${formatRegionPrice(stockPrice, region)}, built / forged engine ${formatRegionPrice(builtPrice, region)} — the full tune price, no extras added on top`}
                 >
                   <RadioGroup
                     name="engineInternals"
@@ -371,7 +367,15 @@ export default function QuotePage() {
                   onChange={(v) => set("injectorStatus", v)}
                 />
               </FieldWrap>
-              <FieldWrap label="ECU Platform Type" required hint="Used to scope your ballpark estimate">
+              <FieldWrap
+                label="ECU Platform Type"
+                required
+                hint={
+                  region === "uk"
+                    ? `Stock ECU = the price shown, nothing extra. Aftermarket ECU adds £${aftermarketEcuSurcharge.min}–£${aftermarketEcuSurcharge.max} depending on the ECU and features.`
+                    : "Used to scope your estimate"
+                }
+              >
                 <RadioGroup
                   name="ecuType"
                   options={ECU_TYPE_OPTIONS.map((o) => o.label)}
@@ -409,8 +413,20 @@ export default function QuotePage() {
               <FieldWrap label="Oil System Upgrades" required>
                 <TextInput value={form.oilSystem} onChange={(v) => set("oilSystem", v)} required />
               </FieldWrap>
-              <FieldWrap label="Transmission Details" required>
-                <TextInput value={form.transmission} onChange={(v) => set("transmission", v)} required />
+              <FieldWrap label="Gearbox" required>
+                <RadioGroup
+                  name="gearbox"
+                  options={GEARBOX_OPTIONS}
+                  value={form.gearbox}
+                  onChange={(v) => set("gearbox", v)}
+                />
+              </FieldWrap>
+              <FieldWrap label="Gearbox Code" hint="Optional — enter the gearbox code if you know it (usually stamped on the casing or listed in your car's spec)">
+                <TextInput
+                  value={form.gearboxCode}
+                  onChange={(v) => set("gearboxCode", v)}
+                  placeholder="Gearbox code (if known)"
+                />
               </FieldWrap>
             </>
           )}
@@ -531,6 +547,14 @@ export default function QuotePage() {
                       }
                     />
                   )}
+                  <SummaryRow
+                    label="Gearbox"
+                    value={
+                      form.gearbox
+                        ? `${form.gearbox}${form.gearboxCode ? ` (${form.gearboxCode})` : ""}`
+                        : "—"
+                    }
+                  />
                   <SummaryRow label="Fuel Type" value={form.fuelType || "—"} />
                   <SummaryRow
                     label="ECU Platform"
@@ -572,13 +596,15 @@ export default function QuotePage() {
                   ) : (
                     <>
                       <p className="font-display text-2xl">
-                        Estimated Price Range: {formatResolvedAmount(quote.low, region)}&ndash;{formatResolvedAmount(quote.high, region)}
+                        {quote.low === quote.high
+                          ? `Estimated Price: ${formatResolvedAmount(quote.low, region)}`
+                          : `Estimated Price: ${formatResolvedAmount(quote.low, region)}–${formatResolvedAmount(quote.high, region)}`}
                       </p>
                       <ul className="mt-3 space-y-1 text-sm text-foreground-muted">
                         {quote.breakdown.map((b) => (
                           <li key={b.label} className="flex justify-between gap-4">
                             <span>{b.label}</span>
-                            <span>{formatResolvedAmount(b.amount, region)}</span>
+                            <span>{b.display ?? formatResolvedAmount(b.amount, region)}</span>
                           </li>
                         ))}
                       </ul>
