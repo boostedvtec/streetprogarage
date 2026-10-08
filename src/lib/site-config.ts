@@ -426,14 +426,3 @@ export const aftermarketEcuSurcharge = {
 };
 
 export const GEARBOX_OPTIONS = ["Manual", "Automatic"] as const;
-
-/** @deprecated TEMP-COMPAT remove in next commit. */
-export const forcedInductionUplifts: {
-  key: "stock" | "built";
-  label: string;
-  amount: RegionPrice;
-  description: string;
-}[] = [
-  { key: "stock", label: "Stock Internal", amount: { uk: 100, pk: null }, description: "" },
-  { key: "built", label: "Built Internal", amount: { uk: 250, pk: null }, description: "" },
-];
