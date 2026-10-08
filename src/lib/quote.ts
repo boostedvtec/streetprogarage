@@ -1,4 +1,14 @@
-import { tuningAddOns, preDynoTests, rollingRoad, naTunePackages, forcedInductionUplifts, flexFuelSurcharge, FLEX_FUEL_LABEL } from "./site-config";
+import {
+  tuningAddOns,
+  preDynoTests,
+  rollingRoad,
+  tunePrices,
+  aftermarketEcuSurcharge,
+  flexFuelSurcharge,
+  FLEX_FUEL_LABEL,
+  type TunePrice,
+  type TunePriceKey,
+} from "./site-config";
 import { resolveRegionPrice, formatResolvedAmount, dynoServiceLabel, type Region, type RegionPrice } from "./region";
 
 export type ServiceType = "remote" | "rolling-road" | "both";
@@ -30,7 +40,7 @@ const BASE_FEES: Record<EcuType, RegionPrice> = {
 };
 
 export function estimateQuote(input: QuoteInputs) {
-  const breakdown: { label: string; amount: number | null }[] = [];
+  const breakdown: { label: string; amount: number | null; display?: string }[] = [];
   const region = input.region;
 
   const isForcedInduction = input.aspiration.some((a) =>
@@ -38,32 +48,33 @@ export function estimateQuote(input: QuoteInputs) {
   );
   const hasAnsweredAspiration = input.aspiration.length > 0;
 
+  let ecuRangeExtra = 0;
+
   if (hasAnsweredAspiration) {
-    // Confirmed flat-rate tune fee, the same base across every method.
-    // Dyno time is NOT included — it's billed separately below whenever
-    // the service involves the dyno. Drop the "(NA)" suffix once a power
-    // adder uplift is being added below, since the base fee is no longer
-    // describing a naturally aspirated build.
-    const naSuffix = isForcedInduction ? "" : " (NA)";
-    const baseLabel =
+    // One all-in estimated tune price for the build, the same across every
+    // method. Dyno time is NOT included — it's billed separately below
+    // whenever the service involves the dyno.
+    const tune = getTunePrice(input.aspiration[0], input.engineInternals);
+    const methodLabel =
       input.serviceType === "remote"
-        ? `Remote Tune${naSuffix}`
+        ? "Remote Tune"
         : input.serviceType === "rolling-road"
-        ? `${dynoServiceLabel(region)}${naSuffix}`
-        : `Road Tune${naSuffix}`;
+        ? dynoServiceLabel(region)
+        : "Road Tune";
     breakdown.push({
-      label: baseLabel,
-      amount: resolveRegionPrice(naTunePackages.remoteTune.price, region),
+      label: `${methodLabel} — ${tune.label}`,
+      amount: resolveRegionPrice(tune.price, region),
     });
 
-    if (isForcedInduction) {
-      const uplift =
-        forcedInductionUplifts.find((u) => u.key === input.engineInternals) ??
-        forcedInductionUplifts[0];
+    // Aftermarket ECUs add a range depending on the ECU and features;
+    // stock ECU platforms pay the price above with nothing extra.
+    if (input.ecuType === "standalone" && region === "uk") {
       breakdown.push({
-        label: uplift.label,
-        amount: resolveRegionPrice(uplift.amount, region),
+        label: `${aftermarketEcuSurcharge.label} (depends on ECU & features)`,
+        amount: aftermarketEcuSurcharge.min,
+        display: `+£${aftermarketEcuSurcharge.min}–£${aftermarketEcuSurcharge.max}`,
       });
+      ecuRangeExtra = aftermarketEcuSurcharge.max - aftermarketEcuSurcharge.min;
     }
 
     if (input.serviceType !== "remote") {
@@ -127,7 +138,22 @@ export function estimateQuote(input: QuoteInputs) {
   }
 
   const low = breakdown.reduce((sum, b) => sum + (b.amount ?? 0), 0);
-  const high = Math.round((low * 1.35) / 5) * 5;
+  // Priced builds are a single figure, widened only by the aftermarket ECU
+  // range. The loose ballpark buffer applies just before aspiration is known.
+  const high = hasAnsweredAspiration
+    ? low + ecuRangeExtra
+    : Math.round((low * 1.35) / 5) * 5;
 
   return { low, high, breakdown };
+}
+
+/** Maps the form's aspiration + internals answers to a tune price entry. */
+export function getTunePrice(aspiration: string, internals: EngineInternals): TunePrice {
+  const byKey = (key: TunePriceKey) => tunePrices.find((p) => p.key === key) as TunePrice;
+  if (aspiration === "Nitrous") return byKey("nitrous");
+  if (aspiration === "Turbo" || aspiration === "Supercharged") {
+    if (internals === "built") return byKey("built-boosted");
+    return byKey(aspiration === "Turbo" ? "stock-turbo" : "stock-supercharged");
+  }
+  return byKey("na");
 }
