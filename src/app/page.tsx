@@ -26,6 +26,7 @@ import { dynoServiceLabel, type RegionData } from "@/lib/region";
 import { Hero } from "@/components/home/hero";
 import { FuelMap } from "@/components/home/fuel-map";
 import { DynoVideo } from "@/components/home/dyno-video";
+import { DynoGraph } from "@/components/home/dyno-graph";
 import { PriceGrid } from "@/components/home/price-grid";
 
 function getServices(regionData: RegionData) {
@@ -291,6 +292,23 @@ export default function Home() {
             </ol>
           </div>
           <DynoVideo />
+        </Container>
+      </Section>
+
+      {/* Dyno graph: generic file vs custom map (example data) */}
+      <Section id="dyno-graph">
+        <Container>
+          <div className="max-w-2xl">
+            <Eyebrow>Before And After</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl">What a proper tune does to the power curve</h2>
+            <p className="mt-4 text-foreground-muted leading-relaxed">
+              Same engine, same dyno. A generic file is rough, with flat spots and dips where fuel and timing are
+              guessed. A custom map is smooth and strong all the way to the limiter.
+            </p>
+          </div>
+          <div className="mt-10">
+            <DynoGraph />
+          </div>
         </Container>
       </Section>
 
