@@ -27,6 +27,7 @@ import { Hero } from "@/components/home/hero";
 import { FuelMap } from "@/components/home/fuel-map";
 import { DynoVideo } from "@/components/home/dyno-video";
 import { DynoGraph } from "@/components/home/dyno-graph";
+import { DynoLines } from "@/components/home/dyno-lines";
 import { PriceGrid } from "@/components/home/price-grid";
 
 function getServices(regionData: RegionData) {
@@ -266,8 +267,9 @@ export default function Home() {
       </Section>
 
       {/* Dyno: real footage */}
-      <Section id="dyno" className="border-y border-border bg-surface/50">
-        <Container className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
+      <Section id="dyno" className="relative overflow-hidden border-y border-border bg-surface/50">
+        <DynoLines flip />
+        <Container className="relative grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
           <div>
             <Eyebrow>{dynoServiceLabel(region)}</Eyebrow>
             <h2 className="font-display mt-4 text-4xl sm:text-5xl">Tuned live on a rolling road</h2>
@@ -491,8 +493,9 @@ export default function Home() {
       </Section>
 
       {/* CTA banner */}
-      <Section className="border-t border-border">
-        <Container>
+      <Section className="relative overflow-hidden border-t border-border">
+        <DynoLines />
+        <Container className="relative">
           <div className="flex flex-col items-start gap-6 rounded-2xl border border-accent/30 bg-accent-soft p-10 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h2 className="font-display text-3xl sm:text-4xl">
