@@ -11,6 +11,7 @@ import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { UkOnlySection } from "@/components/region/uk-only-section";
 import { HarnessBuilderForm } from "@/components/wiring/harness-builder-form";
+import { Wiring3D } from "@/components/wiring/wiring-3d";
 
 export const metadata: Metadata = {
   title: "Standalone ECU Installation & Custom Wiring Harness | Street PRO Garage",
@@ -51,6 +52,23 @@ export default function CustomWiringPage() {
           </p>
         </Container>
       </div>
+
+      {/* 3D harness illustration */}
+      <Section className="pb-0">
+        <Container>
+          <div className="max-w-2xl">
+            <Eyebrow>Built To Last</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl">A harness, circuit by circuit</h2>
+            <p className="mt-4 text-foreground-muted leading-relaxed">
+              Every circuit runs from the ECU to where it is needed, loomed, labelled and routed away from interference.
+              Drag the harness around, then pick a circuit to light it up.
+            </p>
+          </div>
+          <div className="mt-10">
+            <Wiring3D />
+          </div>
+        </Container>
+      </Section>
 
       {/* Standalone & piggyback wiring */}
       <Section>
