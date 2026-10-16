@@ -23,8 +23,10 @@ import { projects } from "@/lib/projects";
 import { tunedVehiclePlatforms, ecuBrandLogos } from "@/lib/site-config";
 import { useRegion } from "@/components/region/region-context";
 import { dynoServiceLabel, type RegionData } from "@/lib/region";
-
-const heroBrands = ["Honda", "Toyota", "Subaru", "Nissan", "Mitsubishi", "Mazda"];
+import { Hero } from "@/components/home/hero";
+import { FuelMap } from "@/components/home/fuel-map";
+import { DynoVideo } from "@/components/home/dyno-video";
+import { PriceGrid } from "@/components/home/price-grid";
 
 function getServices(regionData: RegionData) {
   const items = [
@@ -114,82 +116,8 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero */}
-      <div className="border-b border-border bg-surface/50">
-        <Container className="py-14 sm:py-20 lg:py-24">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:items-center lg:gap-14">
-            {/* Headline column */}
-            <div>
-              <Eyebrow>{data.city}, {data.country} &middot; Remote Worldwide</Eyebrow>
-              <h1 className="font-display mt-6 text-5xl leading-[0.95] sm:text-6xl lg:text-6xl">
-                JDM ECU tuning.
-                <br />
-                <span className="text-accent">Done properly.</span>
-              </h1>
-              <p className="mt-6 max-w-md text-lg leading-relaxed text-foreground-muted">
-                We tune, wire and build Japanese performance cars — custom
-                ECU tunes written from scratch, standalone ECU installs and
-                engine swaps. Remote tuning worldwide, dyno sessions in{" "}
-                {data.city}.
-              </p>
-
-              <ul className="mt-6 flex flex-wrap gap-2" aria-label="Brands we tune">
-                {heroBrands.map((brand) => (
-                  <li
-                    key={brand}
-                    className="rounded-full border border-border-strong bg-surface px-3.5 py-1.5 text-sm font-semibold text-foreground"
-                  >
-                    {brand}
-                  </li>
-                ))}
-                <li className="rounded-full border border-dashed border-border-strong px-3.5 py-1.5 text-sm font-medium text-foreground-muted">
-                  + other JDM
-                </li>
-              </ul>
-
-              <div className="mt-8 flex flex-wrap gap-4">
-                <LinkButton href="/quote" size="lg">
-                  Get a Quote
-                  <ArrowRight size={20} weight="bold" aria-hidden />
-                </LinkButton>
-                <LinkButton href="#platforms" size="lg" variant="secondary">
-                  Find Your Car
-                </LinkButton>
-              </div>
-            </div>
-
-            {/* Photo mosaic — real builds */}
-            <div className="grid gap-3">
-              <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-border">
-                <Image
-                  src={buildPhotos[0].src}
-                  alt={buildPhotos[0].alt}
-                  fill
-                  priority
-                  sizes="(min-width: 1024px) 60vw, 100vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="grid grid-cols-3 gap-3">
-                {buildPhotos.slice(1).map((photo) => (
-                  <div
-                    key={photo.src}
-                    className="relative aspect-square overflow-hidden rounded-xl border border-border"
-                  >
-                    <Image
-                      src={photo.src}
-                      alt={photo.alt}
-                      fill
-                      sizes="(min-width: 1024px) 20vw, 33vw"
-                      className="object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </Container>
-      </div>
+      {/* Hero: headline + live datalog */}
+      <Hero />
 
       {/* What we do — at a glance */}
       <div className="border-b border-border bg-graphite text-graphite-foreground">
@@ -305,6 +233,67 @@ export default function Home() {
         </Container>
       </Section>
 
+      {/* Fuel map: the table we edit, and the same map as a surface */}
+      <Section id="maps">
+        <Container>
+          <div className="max-w-2xl">
+            <Eyebrow>The Tune Itself</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl">Every map written from scratch</h2>
+            <p className="mt-4 text-foreground-muted leading-relaxed">
+              The same fuel map, two ways. On the left is the table we edit. On the right is the same numbers as a 3D
+              surface. Watch it fill one RPM point at a time, then follow the engine through it. Each cell is a
+              decision about your engine, parts and fuel.
+            </p>
+          </div>
+          <div className="mt-10">
+            <FuelMap />
+          </div>
+          <ul className="mt-12 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+            {[
+              "Fuel and ignition tables built around your injectors, fuel and boost",
+              "Boost control, cam timing and rev limits set for your goals",
+              "Launch control and anti-lag where your ECU supports them",
+              "Wideband and knock monitoring on every pull",
+            ].map((point) => (
+              <li key={point} className="flex items-start gap-3 border-t border-border-strong pt-4">
+                <CheckCircle size={22} weight="fill" className="mt-0.5 shrink-0 text-accent" aria-hidden />
+                <span className="text-foreground-muted">{point}</span>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </Section>
+
+      {/* Dyno: real footage */}
+      <Section id="dyno" className="border-y border-border bg-surface/50">
+        <Container className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
+          <div>
+            <Eyebrow>{dynoServiceLabel(region)}</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl">Tuned live on a rolling road</h2>
+            <p className="mt-4 text-foreground-muted leading-relaxed">
+              Our in-house 2WD dyno with an eddy current brake in {data.city} gives full datalogging and real-time map
+              changes.
+            </p>
+            <ol className="mt-8 grid gap-5">
+              {[
+                ["Remote pre-tune", "The car is set up and safe before it ever touches the rollers, which saves dyno time."],
+                ["Live on the dyno", "Wideband AFR, full datalogs and map changes in real time."],
+                ["Road check", "Final datalogs on the road to confirm cold start and drivability."],
+              ].map(([title, text], i) => (
+                <li key={title} className="grid grid-cols-[2.5rem_1fr] gap-3 border-t border-border-strong pt-4">
+                  <span className="font-display text-3xl text-accent">{i + 1}</span>
+                  <span>
+                    <span className="font-display block text-xl">{title}</span>
+                    <span className="text-sm text-foreground-muted">{text}</span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <DynoVideo />
+        </Container>
+      </Section>
+
       {/* Services */}
       <Section>
         <Container>
@@ -382,6 +371,51 @@ export default function Home() {
           </Container>
         </Section>
       )}
+
+      {/* From the workshop: the real build photos */}
+      <Section>
+        <Container>
+          <div className="max-w-2xl">
+            <Eyebrow>From The Workshop</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl">Real cars, real builds</h2>
+          </div>
+          <div className="mt-10 grid gap-3">
+            <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-border">
+              <Image
+                src={buildPhotos[0].src}
+                alt={buildPhotos[0].alt}
+                fill
+                sizes="(min-width: 1024px) 80vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              {buildPhotos.slice(1).map((photo) => (
+                <div key={photo.src} className="relative aspect-square overflow-hidden rounded-xl border border-border">
+                  <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1024px) 26vw, 33vw" className="object-cover" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Estimated prices */}
+      <Section id="prices" className="border-y border-border bg-surface/50">
+        <Container>
+          <div className="max-w-2xl">
+            <Eyebrow>Simple Pricing</Eyebrow>
+            <h2 className="font-display mt-4 text-4xl sm:text-5xl">Estimated prices</h2>
+            <p className="mt-4 text-foreground-muted leading-relaxed">
+              One price for your build, the same for remote, road and dyno tuning. Confirmed exactly once we review your
+              build list.
+            </p>
+          </div>
+          <div className="mt-10">
+            <PriceGrid />
+          </div>
+        </Container>
+      </Section>
 
       {/* Process */}
       <Section>
