@@ -7,6 +7,7 @@ import { Container, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { useRegion } from "@/components/region/region-context";
 import { Datalog } from "./datalog";
+import { DynoLines } from "./dyno-lines";
 
 const heroBrands = ["Honda", "Toyota", "Subaru", "Nissan", "Mitsubishi", "Mazda"];
 
@@ -16,8 +17,9 @@ export function Hero() {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="border-b border-border bg-surface/50">
-      <Container className="py-12 sm:py-16 lg:py-20">
+    <div className="relative overflow-hidden border-b border-border bg-surface/50">
+      <DynoLines />
+      <Container className="relative py-12 sm:py-16 lg:py-20">
         <div className={clsx("grid gap-10 lg:items-center lg:gap-12", expanded ? "lg:grid-cols-1" : "lg:grid-cols-2")}>
           <div className={clsx(expanded && "lg:max-w-3xl")}>
             <Eyebrow>
