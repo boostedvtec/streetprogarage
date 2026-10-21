@@ -63,8 +63,8 @@ const CC = ["#e03131", "#1c7ed6", "#2f9e44", "#9c36b5"];
 const ACCENT = "#cf5f1c";
 
 const PAL = {
-  bg: "#ffffff",
-  panel: "#fafbfc",
+  bg: "#f2f2ee",
+  panel: "#f7f7f4",
   line: "#cfd6dd",
   grid: "#e6eaee",
   txt: "#1f2328",
@@ -151,7 +151,9 @@ function laneDefs(narrow: boolean): Lane[] {
   return lanes;
 }
 
-export function Datalog({ expanded, onToggleExpand }: { expanded: boolean; onToggleExpand: () => void }) {
+export function Datalog() {
+  const [expanded, setExpanded] = useState(true);
+  const onToggleExpand = () => setExpanded((v) => !v);
   const cvRef = useRef<HTMLCanvasElement>(null);
   const [mode, setMode] = useState<Mode>("gen");
   const [knockBad, setKnockBad] = useState(false);
@@ -712,23 +714,23 @@ export function Datalog({ expanded, onToggleExpand }: { expanded: boolean; onTog
   }, []);
 
   return (
-    <div className={clsx("overflow-hidden rounded-xl border-2 border-foreground bg-white shadow-[8px_8px_0_var(--color-accent)]", plexMono.className)}>
+    <div className={clsx("overflow-hidden rounded-xl relative brackets border border-border-strong bg-surface", plexMono.className)}>
       <canvas
         ref={cvRef}
         role="img"
         aria-label="Animated engine datalog comparing a generic file with a Street PRO map. It plots boost against target, air-fuel ratio, ignition timing, knock for each cylinder, throttle, injector duty, temperatures and fuel pressure over a pull. Illustrative only."
-        className={clsx("block w-full cursor-crosshair touch-pan-y", expanded ? "aspect-[1.1] sm:aspect-[1.6]" : "aspect-[1.1] sm:aspect-[1.5]")}
+        className={clsx("block [filter:invert(1)_hue-rotate(180deg)] w-full cursor-crosshair touch-pan-y", expanded ? "aspect-[1.1] sm:aspect-[1.6]" : "aspect-[1.1] sm:aspect-[1.5]")}
       />
-      <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-3 border-t-2 border-foreground bg-white px-3 py-2.5">
-        <span className="rounded border-2 border-foreground px-2.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-foreground">
+      <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-3 border-t border-border-strong bg-surface px-3 py-2.5">
+        <span className="border border-border-strong px-2.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-foreground">
           Knock{" "}
-          <strong className={knockBad ? "text-[#c81e1e]" : "text-[#15803d]"}>{knockBad ? "Detected" : "Clean"}</strong>
+          <strong className={knockBad ? "text-[#ff6b6b]" : "text-[#3ccf7a]"}>{knockBad ? "Detected" : "Clean"}</strong>
         </span>
         <p className="min-w-[200px] flex-1 text-[13px] leading-snug text-foreground-muted">
           Same pull, two tunes. Illustrative simulation, not real car data. Hover the graph to scrub.
         </p>
         <div className="flex flex-wrap items-center gap-2">
-          <div role="group" aria-label="Tune comparison" className="inline-flex border-2 border-foreground">
+          <div role="group" aria-label="Tune comparison" className="inline-flex border border-border-strong">
             {(
               [
                 ["gen", "Generic file"],
@@ -742,7 +744,7 @@ export function Datalog({ expanded, onToggleExpand }: { expanded: boolean; onTog
                 onClick={() => setMode(m)}
                 className={clsx(
                   "min-h-11 cursor-pointer px-4 font-display text-base tracking-wider focus-visible:outline-3 focus-visible:outline-offset-[-5px] focus-visible:outline-accent",
-                  mode === m ? "bg-foreground text-white" : "bg-white text-foreground"
+                  mode === m ? "bg-accent text-accent-foreground" : "bg-transparent text-foreground-muted hover:text-foreground"
                 )}
               >
                 {label}
@@ -753,7 +755,7 @@ export function Datalog({ expanded, onToggleExpand }: { expanded: boolean; onTog
             type="button"
             aria-pressed={expanded}
             onClick={onToggleExpand}
-            className="min-h-11 cursor-pointer border-2 border-foreground px-3.5 font-display text-base tracking-wider text-foreground hover:bg-surface-2 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent aria-pressed:bg-foreground aria-pressed:text-white"
+            className="min-h-11 cursor-pointer border border-border-strong px-3.5 font-display text-base tracking-wider text-foreground hover:bg-surface-2 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent aria-pressed:bg-accent aria-pressed:text-accent-foreground"
           >
             {expanded ? "Shrink datalog" : "Expand datalog"}
           </button>
@@ -761,7 +763,7 @@ export function Datalog({ expanded, onToggleExpand }: { expanded: boolean; onTog
             type="button"
             aria-pressed={paused}
             onClick={toggleMotionPaused}
-            className="min-h-11 cursor-pointer border-2 border-foreground px-3.5 text-xs font-medium uppercase tracking-wider text-foreground hover:bg-surface-2 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent aria-pressed:bg-foreground aria-pressed:text-white"
+            className="min-h-11 cursor-pointer border border-border-strong px-3.5 text-xs font-medium uppercase tracking-wider text-foreground hover:bg-surface-2 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent aria-pressed:bg-accent aria-pressed:text-accent-foreground"
           >
             {paused ? "Play motion" : "Pause motion"}
           </button>

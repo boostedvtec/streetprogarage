@@ -260,7 +260,7 @@ export default function CustomWiringPage() {
       </UkOnlySection>
 
       {/* Stuck mid-build / diagnostics */}
-      <Section className="border-t border-border bg-surface/50">
+      <Section id="diagnostics" className="border-t border-border bg-surface/50">
         <Container>
           <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
             <div>

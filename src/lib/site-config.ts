@@ -27,8 +27,8 @@ export const siteConfig = {
 } as const;
 
 export const navLinks = [
-  { href: "/tuning", label: "Tuning", regions: ["uk", "pk"] },
-  { href: "/custom-wiring", label: "Wiring", regions: ["uk", "pk"] },
+  { href: "/tuning", label: "ECU Tuning", regions: ["uk", "pk"] },
+  { href: "/custom-wiring", label: "Wiring Builds", regions: ["uk", "pk"] },
   { href: "/dyno-rental", label: "Dyno Rental", regions: ["uk", "pk"] },
   { href: "/parts", label: "Parts", regions: ["uk"] },
   { href: "/engine-swaps", label: "Engine Swaps", regions: ["pk"] },

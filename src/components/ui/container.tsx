@@ -25,15 +25,22 @@ export function Section({
   id?: string;
 }) {
   return (
-    <section id={id} className={clsx("py-16 sm:py-20 lg:py-24", className)}>
+    <section id={id} className={clsx("py-16 sm:py-20 lg:py-28", className)}>
       {children}
     </section>
   );
 }
 
-export function Eyebrow({ children }: { children: ReactNode }) {
+/** Small technical label: an orange tick, then mono caps. */
+export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-border-strong bg-surface px-3 py-1 text-xs font-semibold uppercase tracking-widest text-accent">
+    <span
+      className={clsx(
+        "font-mono-tech inline-flex items-center gap-3 text-xs font-medium uppercase tracking-[0.2em] text-accent",
+        className
+      )}
+    >
+      <span aria-hidden className="h-px w-8 bg-accent" />
       {children}
     </span>
   );

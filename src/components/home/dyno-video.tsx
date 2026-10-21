@@ -46,7 +46,7 @@ export function DynoVideo() {
   }, []);
 
   return (
-    <div className="relative overflow-hidden border-2 border-foreground bg-foreground shadow-[8px_8px_0_var(--color-accent)]">
+    <div className="relative overflow-hidden relative brackets border border-border-strong bg-surface">
       <video
         ref={ref}
         className="block aspect-[848/478] w-full object-cover"
@@ -58,7 +58,7 @@ export function DynoVideo() {
         preload="metadata"
         aria-label="Real footage from our dyno: a Honda K24 turbo power run shown on the dyno software. No sound."
       />
-      <span className="absolute left-3 top-3 bg-foreground px-2 py-1 text-xs font-medium uppercase tracking-wider text-white">
+      <span className="absolute left-3 top-3 bg-accent px-2 py-1 text-xs font-medium uppercase tracking-wider text-accent-foreground">
         Honda K24 turbo / on our dyno
       </span>
       <button
@@ -69,7 +69,7 @@ export function DynoVideo() {
           if (v.paused) v.play().catch(() => {});
           else v.pause();
         }}
-        className="absolute bottom-3 right-3 min-h-11 min-w-19 cursor-pointer border-2 border-foreground bg-white px-3.5 text-xs font-medium uppercase tracking-wider focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        className="absolute bottom-3 right-3 min-h-11 min-w-19 cursor-pointer border border-border-strong bg-background/80 px-3.5 text-xs font-medium uppercase tracking-wider text-foreground backdrop-blur focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-accent"
       >
         {playing ? "Pause" : "Play"}
       </button>

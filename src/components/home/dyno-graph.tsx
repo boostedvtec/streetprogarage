@@ -117,7 +117,7 @@ export function DynoGraph() {
       lastKey = key;
       c.setTransform(fit.dpr, 0, 0, fit.dpr, 0, 0);
       c.clearRect(0, 0, W, H);
-      c.fillStyle = "#fff";
+      c.fillStyle = "#f2f2ee";
       c.fillRect(0, 0, W, H);
       const L = W < 520 ? 44 : 58;
       const R = W < 520 ? 44 : 58;
@@ -254,12 +254,12 @@ export function DynoGraph() {
   const tgain = Math.round(PEAKS.proT.v - PEAKS.genT.v);
 
   return (
-    <div className={clsx("overflow-hidden border-2 border-foreground bg-white shadow-[8px_8px_0_var(--color-accent)]", plexMono.className)}>
+    <div className={clsx("overflow-hidden relative brackets border border-border-strong bg-surface", plexMono.className)}>
       <canvas
         ref={cvRef}
         role="img"
         aria-label={`Dyno graph of power and torque against RPM. A rough, lower generic file in blue peaks near ${Math.round(PEAKS.genP.v)} whp. A smooth custom map in orange peaks near ${Math.round(PEAKS.proP.v)} whp. Example data only.`}
-        className="block aspect-[1.15] w-full sm:aspect-[1.9]"
+        className="block [filter:invert(1)_hue-rotate(180deg)] aspect-[1.15] w-full sm:aspect-[1.9]"
       />
       <div className="flex flex-wrap gap-x-6 gap-y-1 border-t border-border-strong bg-surface-2 px-3 py-2.5 text-sm tabular-nums">
         <span>
@@ -270,14 +270,14 @@ export function DynoGraph() {
         </span>
         <span className="text-foreground-muted">Example data</span>
       </div>
-      <div className="flex flex-wrap items-center gap-3 border-t-2 border-foreground bg-white px-3 py-2.5">
+      <div className="flex flex-wrap items-center gap-3 border-t border-border-strong bg-surface px-3 py-2.5">
         <button
           type="button"
           onClick={() => {
             startRef.current = performance.now();
             doneRef.current = false;
           }}
-          className="min-h-11 cursor-pointer border-2 border-foreground px-4 font-display text-base tracking-wider hover:bg-surface-2 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent"
+          className="min-h-11 cursor-pointer border border-border-strong px-4 font-display text-base tracking-wider hover:bg-surface-2 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent"
         >
           Replay
         </button>
@@ -286,8 +286,8 @@ export function DynoGraph() {
           aria-pressed={showTq}
           onClick={() => setShowTq((v) => !v)}
           className={clsx(
-            "min-h-11 cursor-pointer border-2 border-foreground px-4 font-display text-base tracking-wider focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent",
-            showTq ? "bg-foreground text-white" : "bg-white text-foreground"
+            "min-h-11 cursor-pointer border border-border-strong px-4 font-display text-base tracking-wider focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent",
+            showTq ? "bg-accent text-accent-foreground" : "bg-transparent text-foreground-muted hover:text-foreground"
           )}
         >
           Torque

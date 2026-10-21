@@ -447,17 +447,17 @@ export function FuelMap() {
     };
   }, []);
 
-  const tag = "absolute left-3 top-3 bg-foreground px-2 py-1 text-xs font-medium uppercase tracking-wider text-white";
-  const chip = "border-2 border-foreground bg-white px-2 py-1 text-xs font-medium uppercase tracking-wider tabular-nums";
+  const tag = "absolute left-3 top-3 bg-accent px-2 py-1 text-xs font-medium uppercase tracking-wider text-accent-foreground";
+  const chip = "border border-border-strong bg-surface px-2 py-1 text-xs font-medium uppercase tracking-wider tabular-nums";
 
   return (
     <div className={clsx("grid gap-8 lg:grid-cols-2", plexMono.className)}>
-      <div className="relative overflow-hidden border-2 border-foreground bg-white shadow-[8px_8px_0_var(--color-foreground)]">
+      <div className="relative overflow-hidden relative brackets border border-border-strong bg-surface">
         <canvas
           ref={tblRef}
           role="img"
           aria-label="Animated fuel map table. It starts at zero, fills with values one RPM column at a time, then traces an RPM and load path across the finished map."
-          className="block aspect-[0.95] w-full sm:aspect-[1.18]"
+          className="block [filter:invert(1)_hue-rotate(180deg)] aspect-[0.95] w-full sm:aspect-[1.18]"
         />
         <span className={tag}>Fuel map / VE table / illustration</span>
         <span className={clsx(chip, "absolute right-3 top-3")}>
@@ -475,13 +475,13 @@ export function FuelMap() {
           </span>
         </div>
       </div>
-      <div className="relative overflow-hidden border-2 border-foreground bg-white shadow-[8px_8px_0_var(--color-accent)]">
+      <div className="relative overflow-hidden relative brackets border border-border-strong bg-surface">
         <canvas
           ref={surfRef}
           tabIndex={0}
           role="img"
           aria-label="The same fuel map as a 3D surface. It rises as the table fills, then shows the RPM and load trace. Drag, or use the arrow keys, to rotate it."
-          className="block aspect-[1.1] w-full cursor-grab touch-pan-y bg-white focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent active:cursor-grabbing"
+          className="block [filter:invert(1)_hue-rotate(180deg)] aspect-[1.1] w-full cursor-grab touch-pan-y bg-[#f2f2ee] focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent active:cursor-grabbing"
         />
         <span className={tag}>Same map / 3D surface</span>
         <span className="absolute right-3 top-3 text-xs text-foreground-muted" aria-hidden>

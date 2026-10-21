@@ -45,7 +45,7 @@ export function PriceGrid() {
 
   if (region === "pk") {
     return (
-      <div className="rounded-xl border border-border bg-surface p-8">
+      <div className="border border-border bg-surface p-8">
         <p className="text-foreground-muted leading-relaxed">
           Every tune in Pakistan is quoted directly once we have reviewed your build list, so you pay for exactly what your car needs.
         </p>
@@ -61,7 +61,7 @@ export function PriceGrid() {
 
   return (
     <div>
-      <div role="group" aria-label="Engine internals" className="inline-flex border-2 border-foreground">
+      <div role="group" aria-label="Engine internals" className="inline-flex border border-border-strong">
         {(
           [
             ["stock", "Stock internals"],
@@ -75,7 +75,7 @@ export function PriceGrid() {
             onClick={() => setInternals(key)}
             className={clsx(
               "min-h-11 cursor-pointer px-5 font-display text-base tracking-wider focus-visible:outline-3 focus-visible:outline-offset-[-5px] focus-visible:outline-accent",
-              internals === key ? "bg-foreground text-white" : "bg-white text-foreground"
+              internals === key ? "bg-accent text-accent-foreground" : "bg-transparent text-foreground-muted hover:text-foreground"
             )}
           >
             {label}
@@ -88,8 +88,8 @@ export function PriceGrid() {
           const price = tune[internals];
           const amount = resolveRegionPrice(price, region);
           return (
-            <div key={tune.aspiration} className="rounded-xl border border-border bg-surface p-6 transition-colors hover:border-accent">
-              <p className="text-xs font-semibold uppercase tracking-widest text-foreground-muted">{tune.label}</p>
+            <div key={tune.aspiration} className="brushed relative border border-border bg-surface p-6 transition-colors hover:border-accent">
+              <p className="font-mono-tech text-xs font-medium uppercase tracking-[0.18em] text-foreground-muted">{tune.label}</p>
               <p className="font-display mt-2 text-5xl tabular-nums text-accent">
                 {amount === null ? formatRegionPrice(price, region) : <Price amount={amount} still={still} />}
               </p>
@@ -101,7 +101,7 @@ export function PriceGrid() {
         })}
       </div>
 
-      <p className="mt-5 rounded-lg border border-dashed border-border-strong p-4 text-sm leading-relaxed text-foreground-muted">
+      <p className="mt-5 border border-dashed border-border-strong p-4 text-sm leading-relaxed text-foreground-muted">
         <strong className="text-foreground">Stock ECU</strong> platforms pay the price shown. An{" "}
         <strong className="text-foreground">aftermarket ECU</strong> adds £{aftermarketEcuSurcharge.min} to £
         {aftermarketEcuSurcharge.max} depending on the ECU and the features you need set up. Estimated prices, one price for your build across remote, road and dyno tuning. Dyno time is billed separately.
@@ -114,7 +114,7 @@ export function PriceGrid() {
         </LinkButton>
         <Link
           href="https://wa.me/447438483559"
-          className="inline-flex min-h-11 items-center rounded-md border border-border-strong px-5 text-sm font-semibold hover:border-accent"
+          className="inline-flex min-h-11 items-center rounded-[3px] border border-border-strong px-5 text-[13px] font-semibold uppercase tracking-[0.08em] hover:border-accent hover:text-accent"
         >
           Ask on WhatsApp
         </Link>

@@ -6,9 +6,9 @@ export function BrandLogo({ name, src, onDark, crop }: EcuBrandLogo) {
   return (
     <div
       className={clsx(
-        "flex h-20 items-center justify-center rounded-lg border p-4",
+        "flex h-20 items-center justify-center rounded-[3px] border p-4",
         onDark
-          ? "border-foreground bg-foreground"
+          ? "border-border-strong bg-[#1b1b1f]"
           : "border-border bg-white"
       )}
       title={name}

@@ -97,7 +97,7 @@ export function Wiring3D() {
       const H = fit.h;
       c.setTransform(fit.dpr, 0, 0, fit.dpr, 0, 0);
       c.clearRect(0, 0, W, H);
-      c.fillStyle = "#ffffff";
+      c.fillStyle = "#f2f2ee";
       c.fillRect(0, 0, W, H);
       const t = stillRef.current ? 0 : now / 1000;
       const yaw = yawRef.current + (stillRef.current ? 0 : Math.sin(t * 0.35) * 0.22);
@@ -415,13 +415,13 @@ export function Wiring3D() {
   const current = sel === null ? null : CIRCUITS[sel];
 
   return (
-    <div className={clsx("overflow-hidden border-2 border-foreground bg-white shadow-[8px_8px_0_var(--color-accent)]", plexMono.className)}>
+    <div className={clsx("overflow-hidden relative brackets border border-border-strong bg-surface", plexMono.className)}>
       <canvas
         ref={cvRef}
         tabIndex={0}
         role="img"
         aria-label="Interactive 3D illustration of a wiring harness running from an ECU to nine engine circuits, with signal pulses travelling along the wires. Drag, or use the arrow keys, to rotate. Select a circuit below for details."
-        className="block aspect-[1.1] w-full cursor-grab touch-pan-y focus-visible:outline-3 focus-visible:outline-offset-[-4px] focus-visible:outline-accent active:cursor-grabbing sm:aspect-[1.9]"
+        className="block [filter:invert(1)_hue-rotate(180deg)] aspect-[1.1] w-full cursor-grab touch-pan-y focus-visible:outline-3 focus-visible:outline-offset-[-4px] focus-visible:outline-accent active:cursor-grabbing sm:aspect-[1.9]"
       />
       <div className="border-t border-border-strong bg-surface-2 px-4 py-3" aria-live="polite">
         <p className="min-h-[3rem] text-sm leading-relaxed text-foreground">
@@ -434,7 +434,7 @@ export function Wiring3D() {
           )}
         </p>
       </div>
-      <div className="flex flex-wrap items-center gap-2 border-t-2 border-foreground bg-white px-3 py-3">
+      <div className="flex flex-wrap items-center gap-2 border-t border-border-strong bg-surface px-3 py-3">
         {CIRCUITS.map((ci, i) => (
           <button
             key={ci.name}
@@ -442,8 +442,8 @@ export function Wiring3D() {
             aria-pressed={sel === i}
             onClick={() => setSel((p) => (p === i ? null : i))}
             className={clsx(
-              "min-h-11 cursor-pointer border-2 border-foreground px-3 text-xs font-medium uppercase tracking-wider focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-accent",
-              sel === i ? "bg-foreground text-white" : "bg-white text-foreground hover:bg-surface-2"
+              "min-h-11 cursor-pointer border border-border-strong px-3 text-xs font-medium uppercase tracking-wider focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-accent",
+              sel === i ? "bg-accent text-accent-foreground" : "bg-transparent text-foreground-muted hover:text-foreground"
             )}
           >
             {ci.short}
@@ -453,7 +453,7 @@ export function Wiring3D() {
           type="button"
           aria-pressed={paused}
           onClick={toggleMotionPaused}
-          className="ml-auto min-h-11 cursor-pointer border-2 border-foreground bg-white px-3 text-xs font-medium uppercase tracking-wider text-foreground hover:bg-surface-2 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-accent aria-pressed:bg-foreground aria-pressed:text-white"
+          className="ml-auto min-h-11 cursor-pointer border border-border-strong bg-surface px-3 text-xs font-medium uppercase tracking-wider text-foreground hover:bg-surface-2 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-accent aria-pressed:bg-accent aria-pressed:text-accent-foreground"
         >
           {paused ? "Play motion" : "Pause motion"}
         </button>

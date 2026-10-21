@@ -6,6 +6,8 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { CartProvider } from "@/components/cart/cart-context";
 import { RegionProvider } from "@/components/region/region-context";
+import { PaymentStrip } from "@/components/layout/payment-strip";
+import { plexMono } from "@/components/home/mono-font";
 import { TidioWidget } from "@/components/chat/tidio-widget";
 import { siteUrl, siteConfig } from "@/lib/site-config";
 import { REGION_STORAGE_KEY, type Region } from "@/lib/region";
@@ -194,7 +196,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bebasNeue.variable} ${inter.variable} h-full antialiased`}
+      className={`${bebasNeue.variable} ${inter.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground font-body">
         <script
@@ -203,8 +205,9 @@ export default async function RootLayout({
         />
         <RegionProvider initialRegion={initialRegion}>
           <CartProvider>
+            <PaymentStrip />
             <SiteHeader />
-            <main className="flex-1">{children}</main>
+            <main id="main" className="flex-1">{children}</main>
             <SiteFooter />
             <TidioWidget />
           </CartProvider>

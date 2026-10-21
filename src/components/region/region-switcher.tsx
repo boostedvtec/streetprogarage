@@ -31,11 +31,11 @@ export function RegionSwitcher({ className }: { className?: string }) {
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="flex cursor-pointer items-center gap-1.5 rounded-md px-2 py-2 text-sm font-medium text-foreground-muted transition-colors hover:bg-surface hover:text-foreground"
+        className="flex cursor-pointer items-center gap-1.5 rounded-[3px] px-2 py-2 text-sm font-medium text-foreground-muted transition-colors hover:bg-surface-2 hover:text-foreground"
       >
         <Globe size={18} aria-hidden />
         <span aria-hidden>{current.flag}</span>
-        <span className="hidden sm:inline">{current.label}</span>
+        <span className="hidden sm:inline xl:hidden 2xl:inline">{current.label}</span>
         <CaretDown size={14} aria-hidden />
       </button>
 
