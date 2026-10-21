@@ -13,7 +13,11 @@ const HOLD1 = 0.5;
 const TRACE = 5.2;
 const HOLD2 = 1.6;
 const DRAIN = 0.6;
-const ACCENT_D = "#b05118";
+const ACCENT_D = "#ff6a1f";
+const PAGE = "#0d0d11";
+const HEAD = "#2b2b31";
+const INK = "#e9e9ed";
+const MUTED = "#a9a8b0";
 const HEAT_MAX = 84;
 
 function ve(u: number, v: number) {
@@ -22,13 +26,29 @@ function ve(u: number, v: number) {
   return Math.round(clamp(22 + 50 * Math.pow(v, 0.85) * (0.62 + 0.38 * Math.sin(Math.PI * (0.12 + u * 0.82))) + 16 * hump - 9 * dip, 14, 108));
 }
 
+/** MoTeC M1 Tune style table spectrum: blue (low) through cyan, green, yellow to red (high). */
+const SPECTRUM: [number, number, number, number][] = [
+  [0, 36, 64, 214],
+  [0.25, 34, 170, 226],
+  [0.5, 64, 200, 96],
+  [0.75, 244, 216, 56],
+  [1, 232, 58, 40],
+];
+
 function heat(f: number): [number, number, number] {
   f = clamp(f, 0, 1);
-  const a = [244, 246, 248];
-  const b = [255, 205, 168];
-  const d = [207, 95, 28];
-  const [p, q, k] = f < 0.5 ? [a, b, f / 0.5] : [b, d, (f - 0.5) / 0.5];
-  return [Math.round(p[0] + (q[0] - p[0]) * k), Math.round(p[1] + (q[1] - p[1]) * k), Math.round(p[2] + (q[2] - p[2]) * k)];
+  let k = 1;
+  while (k < SPECTRUM.length - 1 && f > SPECTRUM[k][0]) k++;
+  const a = SPECTRUM[k - 1];
+  const b = SPECTRUM[k];
+  const t = (f - a[0]) / (b[0] - a[0]);
+  return [Math.round(a[1] + (b[1] - a[1]) * t), Math.round(a[2] + (b[2] - a[2]) * t), Math.round(a[3] + (b[3] - a[3]) * t)];
+}
+
+/** Black text on light cells, white on the deep blue and red ends. */
+function inkOn(col: [number, number, number]) {
+  const lum = 0.299 * col[0] + 0.587 * col[1] + 0.114 * col[2];
+  return lum < 120 ? "#ffffff" : "#0b0b0d";
 }
 
 function ease(x: number) {
@@ -119,6 +139,8 @@ export function FuelMap() {
       const h = tb!.clientHeight;
       c.setTransform(dpr, 0, 0, dpr, 0, 0);
       c.clearRect(0, 0, w, h);
+      c.fillStyle = PAGE;
+      c.fillRect(0, 0, w, h);
       const padL = 50;
       const padT = 62;
       const padB = 50;
@@ -134,13 +156,19 @@ export function FuelMap() {
       c.font = font(600, clamp(fs, 9, 12));
       c.textAlign = "center";
       for (let i = 0; i < cols; i++) {
-        c.fillStyle = filling && i === curCol ? ACCENT_D : "#0f1318";
+        c.fillStyle = HEAD;
+        c.fillRect(padL + cw * i + 1, padT - 26, cw - 2, 23);
+        c.fillStyle = filling && i === curCol ? ACCENT_D : INK;
         c.fillText(String(rpms[i]), padL + cw * (i + 0.5), padT - 14);
       }
+      for (let j = 0; j < ROWS; j++) {
+        c.fillStyle = HEAD;
+        c.fillRect(6, padT + ch * j + 1, padL - 10, ch - 2);
+      }
       c.textAlign = "right";
-      c.fillStyle = "#0f1318";
+      c.fillStyle = INK;
       for (let j = 0; j < ROWS; j++) c.fillText(String(loads[j]), padL - 8, padT + ch * (j + 0.5));
-      c.fillStyle = "#4b5560";
+      c.fillStyle = MUTED;
       c.font = font(500, 11);
       c.textAlign = "left";
       c.fillText("RPM >", padL, padT - 38);
@@ -159,10 +187,10 @@ export function FuelMap() {
           const y = padT + ch * j;
           c.fillStyle = `rgb(${col[0]},${col[1]},${col[2]})`;
           c.fillRect(x, y, cw, ch);
-          c.strokeStyle = "#e3e7ec";
+          c.strokeStyle = PAGE;
           c.lineWidth = 1;
           c.strokeRect(x + 0.5, y + 0.5, cw - 1, ch - 1);
-          c.fillStyle = (target / HEAT_MAX) * p > 0.72 ? "#ffffff" : "#0f1318";
+          c.fillStyle = inkOn(col);
           c.fillText(String(Math.round(target * p)), x + cw / 2, y + ch / 2 + 1);
         }
       }
@@ -195,22 +223,25 @@ export function FuelMap() {
         const cj = clamp(Math.round(l), 0, ROWS - 1);
         const c0 = clamp(Math.floor(r), 0, cols - 2);
         const r0 = clamp(Math.floor(l), 0, ROWS - 2);
-        c.strokeStyle = "rgba(15,19,24,.55)";
+        c.strokeStyle = "rgba(0,0,0,.5)";
         c.lineWidth = 2;
         c.strokeRect(padL + cw * c0 + 1, padT + ch * r0 + 1, cw * 2 - 2, ch * 2 - 2);
-        c.strokeStyle = "#0f1318";
+        c.strokeStyle = "#000000";
         c.lineWidth = 3;
         c.strokeRect(padL + cw * ci + 1.5, padT + ch * cj + 1.5, cw - 3, ch - 3);
-        c.strokeStyle = "rgba(15,19,24,.9)";
-        c.lineWidth = 2;
-        c.beginPath();
-        trail.forEach((pt, k) => {
-          if (k) c.lineTo(pt[0], pt[1]);
-          else c.moveTo(pt[0], pt[1]);
-        });
-        c.stroke();
+        c.lineJoin = "round";
+        for (const [col, wd] of [["#000000", 4.5], ["#ffffff", 2]] as const) {
+          c.strokeStyle = col;
+          c.lineWidth = wd;
+          c.beginPath();
+          trail.forEach((pt, k) => {
+            if (k) c.lineTo(pt[0], pt[1]);
+            else c.moveTo(pt[0], pt[1]);
+          });
+          c.stroke();
+        }
         c.fillStyle = "#fff";
-        c.strokeStyle = "#0f1318";
+        c.strokeStyle = "#000000";
         c.lineWidth = 3;
         c.beginPath();
         c.arc(px, py, 6, 0, 6.2832);
@@ -275,7 +306,7 @@ export function FuelMap() {
         const p = P((u - 0.5) * 2, (hv / 108) * 0.95 - 0.1, (v - 0.5) * 2);
         return { x: ox + p.x * sc, y: oy - p.y * sc, d: p.d, h: hv };
       };
-      sx.strokeStyle = "rgba(15,19,24,.16)";
+      sx.strokeStyle = "rgba(255,255,255,.14)";
       sx.lineWidth = dpr;
       sx.beginPath();
       for (let i = 0; i <= N; i += 5) {
@@ -317,7 +348,7 @@ export function FuelMap() {
         sx.fillStyle = `rgb(${Math.min(255, Math.round(col[0] * shade))},${Math.min(255, Math.round(col[1] * shade))},${Math.min(255, Math.round(col[2] * shade))})`;
         sx.fill();
         sx.lineWidth = 0.6 * dpr;
-        sx.strokeStyle = "rgba(15,19,24,.5)";
+        sx.strokeStyle = "rgba(0,0,0,.5)";
         sx.stroke();
       }
       if (curCol >= 0) {
@@ -332,23 +363,25 @@ export function FuelMap() {
         sx.stroke();
       }
       if (trac && trailRL.length > 1) {
-        sx.strokeStyle = "#0f1318";
-        sx.lineWidth = 2.6 * dpr;
         sx.lineJoin = "round";
-        sx.beginPath();
-        trailRL.forEach((pt, i) => {
-          const tu = pt[0] / (cols - 1);
-          const tv = pt[1] / (ROWS - 1);
-          const q = pr(tu, tv, sample(tu, tv) + 4);
-          if (i) sx.lineTo(q.x, q.y);
-          else sx.moveTo(q.x, q.y);
-        });
-        sx.stroke();
+        for (const [col, wd] of [["#000000", 5], ["#ffffff", 2.2]] as const) {
+          sx.strokeStyle = col;
+          sx.lineWidth = wd * dpr;
+          sx.beginPath();
+          trailRL.forEach((pt, i) => {
+            const tu = pt[0] / (cols - 1);
+            const tv = pt[1] / (ROWS - 1);
+            const q = pr(tu, tv, sample(tu, tv) + 4);
+            if (i) sx.lineTo(q.x, q.y);
+            else sx.moveTo(q.x, q.y);
+          });
+          sx.stroke();
+        }
         const cu = trac.r / (cols - 1);
         const cv2 = trac.l / (ROWS - 1);
         const cp = pr(cu, cv2, sample(cu, cv2) + 4);
         sx.fillStyle = "#fff";
-        sx.strokeStyle = "#0f1318";
+        sx.strokeStyle = "#000000";
         sx.lineWidth = 3 * dpr;
         sx.beginPath();
         sx.arc(cp.x, cp.y, 7 * dpr, 0, 6.2832);
@@ -356,7 +389,7 @@ export function FuelMap() {
         sx.stroke();
       }
       sx.font = `500 ${11 * dpr}px ${FM}`;
-      sx.fillStyle = "#4b5560";
+      sx.fillStyle = MUTED;
       sx.textAlign = "center";
       const l1 = P(0, -0.1, -1.28);
       const l2 = P(1.28, -0.1, 0);
@@ -457,7 +490,7 @@ export function FuelMap() {
           ref={tblRef}
           role="img"
           aria-label="Animated fuel map table. It starts at zero, fills with values one RPM column at a time, then traces an RPM and load path across the finished map."
-          className="block [filter:invert(1)_hue-rotate(180deg)] aspect-[0.95] w-full sm:aspect-[1.18]"
+          className="block aspect-[0.95] w-full bg-[#0d0d11] sm:aspect-[1.18]"
         />
         <span className={tag}>Fuel map / VE table / illustration</span>
         <span className={clsx(chip, "absolute right-3 top-3")}>
@@ -481,7 +514,7 @@ export function FuelMap() {
           tabIndex={0}
           role="img"
           aria-label="The same fuel map as a 3D surface. It rises as the table fills, then shows the RPM and load trace. Drag, or use the arrow keys, to rotate it."
-          className="block [filter:invert(1)_hue-rotate(180deg)] aspect-[1.1] w-full cursor-grab touch-pan-y bg-[#f2f2ee] focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent active:cursor-grabbing"
+          className="block aspect-[1.1] w-full cursor-grab touch-pan-y bg-[#0d0d11] focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent active:cursor-grabbing"
         />
         <span className={tag}>Same map / 3D surface</span>
         <span className="absolute right-3 top-3 text-xs text-foreground-muted" aria-hidden>
