@@ -181,9 +181,7 @@ export default function Home() {
         <Container>
           <Reveal>
             <SectionHead eyebrow="Engineering" title="Every map written from scratch">
-              The same fuel map, two ways. On the left is the table we edit. On the right is the same numbers as a 3D
-              surface. Watch it fill one RPM point at a time, then follow the engine through it. Each cell is a
-              decision about your engine, parts and fuel.
+              Switch between the fuel (VE) table and the VVT cam-angle table. On the left is the table we edit. On the right is the same numbers as a 3D surface. Watch it fill one RPM point at a time, then follow the engine through it. Each cell is a decision about your engine, parts and fuel.
             </SectionHead>
           </Reveal>
           <Reveal className="mt-10">

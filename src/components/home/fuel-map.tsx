@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { clamp, fitCanvas, makeProjector, watchVisible } from "./canvas-utils";
 import { plexMono } from "./mono-font";
@@ -19,7 +19,13 @@ const PAGE = "#0d0d11";
 const HEAD = "#2b2b31";
 const INK = "#e9e9ed";
 const MUTED = "#a9a8b0";
-const HEAT_MAX = 84;
+type TableMode = "ve" | "vvt";
+
+/** Per-table scale: top of the colour range, 3D height range and unit. */
+const TABLES: Record<TableMode, { label: string; long: string; heatMax: number; hMax: number; unit: string }> = {
+  ve: { label: "VE", long: "VE table", heatMax: 84, hMax: 108, unit: "" },
+  vvt: { label: "VVT", long: "VVT cam angle", heatMax: 44, hMax: 50, unit: "°" },
+};
 
 function ve(u: number, v: number) {
   const hump = Math.exp(-(((u - 0.55) * (u - 0.55)) / 0.05 + ((v - 0.72) * (v - 0.72)) / 0.08));
@@ -35,6 +41,14 @@ const SPECTRUM: [number, number, number, number][] = [
   [0.75, 244, 216, 56],
   [1, 232, 58, 40],
 ];
+
+/** Example VVT advance (degrees): little at idle, most at part load mid-range, pulled back at high load and revs. */
+function vvt(u: number, v: number) {
+  const rpmShape = Math.pow(Math.sin(Math.PI * clamp((u - 0.04) / 0.92, 0, 1)), 0.75);
+  const loadShape = 1 - 0.78 * Math.pow(v, 1.9);
+  const edge = 4 * Math.exp(-Math.pow((u - 0.78) / 0.12, 2)) * v;
+  return Math.round(clamp(46 * rpmShape * loadShape + edge, 0, 50));
+}
 
 function heat(f: number): [number, number, number] {
   f = clamp(f, 0, 1);
@@ -67,6 +81,13 @@ export function FuelMap() {
   const still = useStill();
   const stillRef = useRef(false);
   const resetRef = useRef<() => void>(() => {});
+  const [mode, setMode] = useState<TableMode>("ve");
+  const modeRef = useRef<TableMode>("ve");
+
+  useEffect(() => {
+    modeRef.current = mode;
+    resetRef.current();
+  }, [mode]);
 
   useEffect(() => {
     stillRef.current = still;
@@ -121,7 +142,7 @@ export function FuelMap() {
         vals[i] = [];
         dvm[i] = [];
         for (let j = 0; j < ROWS; j++) {
-          vals[i][j] = ve(i / (cols - 1), j / (ROWS - 1));
+          vals[i][j] = (modeRef.current === "vvt" ? vvt : ve)(i / (cols - 1), j / (ROWS - 1));
           dvm[i][j] = 0;
         }
       }
@@ -184,7 +205,7 @@ export function FuelMap() {
           const p = ease((time - (i * COL_DT + j * ROW_DT)) / CELL_T) * (1 - drain);
           const target = vals[i][j];
           dvm[i][j] = target * p;
-          const col = heat((target / HEAT_MAX) * p);
+          const col = heat((target / TABLES[modeRef.current].heatMax) * p);
           const x = padL + cw * i;
           const y = padT + ch * j;
           c.fillStyle = `rgb(${col[0]},${col[1]},${col[2]})`;
@@ -260,7 +281,7 @@ export function FuelMap() {
         const loadV = loads[lj] + (loads[lj + 1] - loads[lj]) * (l - lj);
         setText(rpmRef.current, String(Math.round(rpmV / 10) * 10));
         setText(loadRef.current, String(Math.round(loadV)));
-        setText(veRef.current, String(vals[ci][cj]));
+        setText(veRef.current, String(vals[ci][cj]) + TABLES[modeRef.current].unit);
         setText(stateRef.current, "Tracing");
       } else if (filling) {
         setText(stateRef.current, "Filling");
@@ -306,7 +327,7 @@ export function FuelMap() {
       const ox = W * 0.5;
       const oy = H * 0.58;
       const pr = (u: number, v: number, hv: number) => {
-        const p = P((u - 0.5) * 2, (hv / 108) * 0.95 - 0.1, (v - 0.5) * 2);
+        const p = P((u - 0.5) * 2, (hv / TABLES[modeRef.current].hMax) * 0.95 - 0.1, (v - 0.5) * 2);
         return { x: ox + p.x * sc, y: oy - p.y * sc, d: p.d, h: hv };
       };
       sx.strokeStyle = "rgba(255,255,255,.14)";
@@ -340,7 +361,7 @@ export function FuelMap() {
       }
       faces.sort((p1, p2) => p2.d - p1.d);
       for (const f of faces) {
-        const col = heat(f.h / HEAT_MAX);
+        const col = heat(f.h / TABLES[modeRef.current].heatMax);
         const shade = 0.9 + clamp(f.sl, -0.18, 0.16);
         sx.beginPath();
         sx.moveTo(f.A.x, f.A.y);
@@ -374,7 +395,7 @@ export function FuelMap() {
           trailRL.forEach((pt, i) => {
             const tu = pt[0] / (cols - 1);
             const tv = pt[1] / (ROWS - 1);
-            const q = pr(tu, tv, sample(tu, tv) + 4);
+            const q = pr(tu, tv, sample(tu, tv) + TABLES[modeRef.current].hMax * 0.037);
             if (i) sx.lineTo(q.x, q.y);
             else sx.moveTo(q.x, q.y);
           });
@@ -382,7 +403,7 @@ export function FuelMap() {
         }
         const cu = trac.r / (cols - 1);
         const cv2 = trac.l / (ROWS - 1);
-        const cp = pr(cu, cv2, sample(cu, cv2) + 4);
+        const cp = pr(cu, cv2, sample(cu, cv2) + TABLES[modeRef.current].hMax * 0.037);
         sx.fillStyle = "#fff";
         sx.strokeStyle = "#000000";
         sx.lineWidth = 3 * dpr;
@@ -486,16 +507,35 @@ export function FuelMap() {
   const tag = "absolute left-3 top-3 bg-accent px-2 py-1 text-xs font-medium uppercase tracking-wider text-accent-foreground";
   const chip = "border border-border-strong bg-surface px-2 py-1 text-xs font-medium uppercase tracking-wider tabular-nums";
 
+  const info = TABLES[mode];
+
   return (
-    <div className={clsx("grid gap-8 lg:grid-cols-2", plexMono.className)}>
+    <div className={plexMono.className}>
+      <div role="group" aria-label="Table" className="mb-4 inline-flex border border-border-strong">
+        {(Object.keys(TABLES) as TableMode[]).map((key) => (
+          <button
+            key={key}
+            type="button"
+            aria-pressed={mode === key}
+            onClick={() => setMode(key)}
+            className={clsx(
+              "min-h-11 cursor-pointer px-5 text-xs font-medium uppercase tracking-[0.14em] focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-accent",
+              mode === key ? "bg-accent text-accent-foreground" : "bg-transparent text-foreground-muted hover:text-foreground"
+            )}
+          >
+            {TABLES[key].long}
+          </button>
+        ))}
+      </div>
+    <div className="grid gap-8 lg:grid-cols-2">
       <div className="relative overflow-hidden relative brackets border border-border-strong bg-surface">
         <canvas
           ref={tblRef}
           role="img"
-          aria-label="Animated fuel map table. It starts at zero, fills with values one RPM column at a time, then traces an RPM and load path across the finished map."
+          aria-label={`Animated ${info.long} fuel map table. It starts at zero, fills with values one RPM column at a time, then traces an RPM and load path across the finished map. Illustration only.`}
           className="block aspect-[0.95] w-full bg-[#0d0d11] sm:aspect-[1.18]"
         />
-        <span className={tag}>Fuel map / VE table / illustration</span>
+        <span className={tag}>Fuel map / {info.long} / illustration</span>
         <span className={clsx(chip, "absolute right-3 top-3")}>
           State <strong ref={stateRef} className="text-accent-hover">Zeroed</strong>
         </span>
@@ -507,7 +547,7 @@ export function FuelMap() {
             Load <strong ref={loadRef} className="text-accent-hover">-</strong> kPa
           </span>
           <span className={chip}>
-            VE <strong ref={veRef} className="text-accent-hover">-</strong>
+            {info.label} <strong ref={veRef} className="text-accent-hover">-</strong>
           </span>
         </div>
       </div>
@@ -516,7 +556,7 @@ export function FuelMap() {
           ref={surfRef}
           tabIndex={0}
           role="img"
-          aria-label="The same fuel map as a 3D surface. It rises as the table fills, then shows the RPM and load trace. Drag, or use the arrow keys, to rotate it."
+          aria-label={`The same ${info.long} map as a 3D surface. It rises as the table fills, then shows the RPM and load trace. Drag, or use the arrow keys, to rotate it.`}
           className="block aspect-[1.1] w-full cursor-grab touch-pan-y bg-[#0d0d11] focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent active:cursor-grabbing"
         />
         <span className={tag}>Same map / 3D surface</span>
@@ -524,6 +564,7 @@ export function FuelMap() {
           drag or use arrow keys
         </span>
       </div>
+    </div>
     </div>
   );
 }
