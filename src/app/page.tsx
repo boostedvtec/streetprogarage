@@ -20,6 +20,7 @@ import { FuelMap } from "@/components/home/fuel-map";
 import { DynoVideo } from "@/components/home/dyno-video";
 import { DynoGraph } from "@/components/home/dyno-graph";
 import { DynoLines } from "@/components/home/dyno-lines";
+import { ReviewsSection } from "@/components/social/reviews-section";
 import { PriceGrid } from "@/components/home/price-grid";
 
 function getServices(data: RegionData, dynoLabel: string): ServicePanel[] {
@@ -453,6 +454,8 @@ export default function Home() {
           </div>
         </Container>
       </Section>
+
+      <ReviewsSection />
 
       {/* Conversion */}
       <section className="relative isolate overflow-hidden border-t border-border py-24 sm:py-32">

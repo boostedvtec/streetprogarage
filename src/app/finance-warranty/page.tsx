@@ -4,6 +4,7 @@ import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/finance-warranty" },
   title: "Finance & Warranty | Street PRO Garage",
   description:
     "Finance options and warranty terms for tuning and parts at Street PRO Garage.",

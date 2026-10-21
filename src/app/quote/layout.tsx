@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/quote" },
   title: "Build List & Quote | Street PRO Garage",
   description:
     "Submit your build list to get a ballpark quote for remote ECU tuning or rolling road tuning at Street PRO Garage.",

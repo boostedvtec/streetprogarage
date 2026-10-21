@@ -3,8 +3,10 @@ import { CaretDown } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { faqItems } from "@/lib/faq";
+import { PageHero } from "@/components/ui/page-hero";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/faq" },
   title: "ECU Tuning FAQ — Remote Tuning, Dyno Tuning, Supported JDM Cars | Street PRO Garage",
   description:
     "How remote ECU tuning works, what dyno tuning costs, which JDM cars and ECUs we support (Honda, Subaru, Toyota, Nissan, Evo, MX-5), revisions, flex fuel and stuck-project help.",
@@ -30,8 +32,7 @@ export default function FaqPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
-      <div className="border-b border-border bg-surface/50">
-        <Container className="py-16 sm:py-20">
+      <PageHero image="/images/builds/b18-turbo.jpg" position="50% 50%">
           <Eyebrow>FAQ</Eyebrow>
           <h1 className="font-display mt-4 text-5xl sm:text-6xl">
             Frequently Asked Questions
@@ -40,8 +41,7 @@ export default function FaqPage() {
             Answers to the questions we hear most about tuning, platforms,
             pricing and process — pointed to specific pages for full details.
           </p>
-        </Container>
-      </div>
+        </PageHero>
 
       <Section>
         <Container className="max-w-3xl">

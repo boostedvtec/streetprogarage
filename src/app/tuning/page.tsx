@@ -39,6 +39,7 @@ import {
 import { useRegion } from "@/components/region/region-context";
 import { PriceTag } from "@/components/region/price-tag";
 import { resolveRegionPrice, dynoServiceLabel, type Region } from "@/lib/region";
+import { PageHero } from "@/components/ui/page-hero";
 
 type TuningType = "remote" | "road" | "rolling-road";
 
@@ -50,6 +51,34 @@ function getTabs(region: Region): { value: TuningType; label: string; icon: type
   ];
 }
 
+/** Remote and road tuning journey, shown in the guide modal and in the page section. */
+const remoteSteps = [
+            {
+              title: "Submit your build list",
+              body: "Give us the full picture — engine, mods, ECU, fuel and your goals for the tune.",
+            },
+            {
+              title: "We confirm your method",
+              body: "Live remote session or road-logged tuning, based on your ECU platform and setup.",
+            },
+            {
+              title: "Get set up",
+              body: "You'll need a laptop that can run the tuning software, the correct ECU/USB interface cable, a stable connection, and — for live sessions — a safe, legal place to drive.",
+            },
+            {
+              title: "Datalog it",
+              body: "Follow our pre-tune checklist so we capture the right data on every run.",
+            },
+            {
+              title: "Revise until it's right",
+              body: "We review your logs and send updated maps, repeating as many revisions as the build needs. If you notice a cold-start issue or want a revision after your final tune, let us know within 14 days — after that, revisions are chargeable.",
+            },
+            {
+              title: "Accept the declaration",
+              body: "Tuning is based on the information you provide — read and accept our declaration & liability terms before we start.",
+            },
+          ];
+
 function TuningPageContent() {
   const { data, region } = useRegion();
   const tabs = getTabs(region);
@@ -59,11 +88,9 @@ function TuningPageContent() {
     initial === "road" || initial === "rolling-road" ? initial : "remote";
 
   const [active, setActive] = useState<TuningType>(initialTab);
-  // Guide opens on the very first time "remote" is the active tab — whether
-  // that's the default on load, or a later click — so seed both from the
-  // same initial value instead of reacting to it in an effect.
-  const [guideOpen, setGuideOpen] = useState(initialTab === "remote");
-  const [hasSeenRemoteGuide, setHasSeenRemoteGuide] = useState(initialTab === "remote");
+  const [guideOpen, setGuideOpen] = useState(false);
+  // The journey is now shown on the page itself, so the guide only opens on request.
+  const [hasSeenRemoteGuide, setHasSeenRemoteGuide] = useState(true);
 
   function selectTab(value: TuningType) {
     setActive(value);
@@ -75,8 +102,7 @@ function TuningPageContent() {
 
   return (
     <>
-      <div className="border-b border-border bg-surface/50">
-        <Container className="py-16 sm:py-20">
+      <PageHero image="/images/builds/honda-ef-k24-awd-turbo.jpg" position="50% 35%">
           <Eyebrow>{data.city}, {data.country} &middot; Remote Worldwide</Eyebrow>
           <h1 className="font-display mt-4 text-5xl sm:text-6xl">
             Tuning Services
@@ -94,8 +120,7 @@ function TuningPageContent() {
               View Pre-Tune Checklist
             </LinkButton>
           </div>
-        </Container>
-      </div>
+        </PageHero>
 
       {/* Selector */}
       <Section className="pb-0">
@@ -639,6 +664,60 @@ function TuningPageContent() {
         </Container>
       </Section>
 
+      <Section id="how-it-works" className="border-t border-border">
+        <Container>
+          <div className="max-w-3xl">
+            <Eyebrow>The remote journey</Eyebrow>
+            <h2 className="font-display mt-5 text-5xl leading-[0.92] sm:text-6xl">New to remote tuning? Here is how it works</h2>
+            <p className="mt-5 text-base leading-relaxed text-foreground-muted sm:text-lg">
+              You never need to visit us. You send your build details, log your own car with a laptop, and we write and refine the map from your data.
+            </p>
+          </div>
+
+          <ol className="mt-12 grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+            {remoteSteps.map((step, i) => (
+              <li key={step.title} className="bg-background p-6 sm:p-8">
+                <span className="font-mono-tech text-xs tracking-[0.2em] text-accent">{String(i + 1).padStart(2, "0")}</span>
+                <h3 className="font-display mt-3 text-2xl">{step.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-foreground-muted">{step.body}</p>
+              </li>
+            ))}
+          </ol>
+
+          <div className="mt-8 grid gap-4 lg:grid-cols-3">
+            <div className="border border-border bg-surface p-6">
+              <h3 className="font-display text-2xl">What you need</h3>
+              <ul className="mt-3 grid gap-2 text-sm text-foreground-muted">
+                <li>A laptop that can run the tuning software</li>
+                <li>The correct ECU/USB interface cable</li>
+                <li>A stable internet connection</li>
+                <li>For live sessions, a safe and legal place to drive</li>
+              </ul>
+              <Link href="/pre-tune-checklist" className="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-accent hover:text-accent-hover">
+                Pre-tune checklist
+              </Link>
+            </div>
+            <div className="border border-border bg-surface p-6">
+              <h3 className="font-display text-2xl">After you pay</h3>
+              <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
+                Paid with the link below? Email{" "}
+                <a href="mailto:info@streetprogarage.com" className="text-accent underline">info@streetprogarage.com</a>{" "}
+                with your vehicle and ECU details so we can set up your session.
+              </p>
+            </div>
+            <div className="border border-border bg-surface p-6">
+              <h3 className="font-display text-2xl">See what is in a calibration</h3>
+              <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
+                Explore an example fuel and VVT map, as a table and as a 3D surface. Illustrative data, not a customer map.
+              </p>
+              <Link href="/#maps" className="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-accent hover:text-accent-hover">
+                View the map
+              </Link>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
       <Section className="border-t border-border">
         <Container>
           <div className="flex flex-col items-start gap-6 rounded-2xl border border-border bg-surface p-10 sm:flex-row sm:items-center sm:justify-between">
@@ -690,32 +769,7 @@ function TuningPageContent() {
           Here&rsquo;s how remote and road tuning works from start to finish.
         </p>
         <ol className="mt-5 flex flex-col gap-4">
-          {[
-            {
-              title: "Submit your build list",
-              body: "Give us the full picture — engine, mods, ECU, fuel and your goals for the tune.",
-            },
-            {
-              title: "We confirm your method",
-              body: "Live remote session or road-logged tuning, based on your ECU platform and setup.",
-            },
-            {
-              title: "Get set up",
-              body: "You'll need a laptop that can run the tuning software, the correct ECU/USB interface cable, a stable connection, and — for live sessions — a safe, legal place to drive.",
-            },
-            {
-              title: "Datalog it",
-              body: "Follow our pre-tune checklist so we capture the right data on every run.",
-            },
-            {
-              title: "Revise until it's right",
-              body: "We review your logs and send updated maps, repeating as many revisions as the build needs. If you notice a cold-start issue or want a revision after your final tune, let us know within 14 days — after that, revisions are chargeable.",
-            },
-            {
-              title: "Accept the declaration",
-              body: "Tuning is based on the information you provide — read and accept our declaration & liability terms before we start.",
-            },
-          ].map((step, i) => (
+          {remoteSteps.map((step, i) => (
             <li key={step.title} className="flex gap-4">
               <span className="font-display flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent-soft text-sm text-accent">
                 {i + 1}

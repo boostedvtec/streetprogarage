@@ -1,56 +1,68 @@
 import type { Metadata } from "next";
-import { Wrench } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
-import { ProjectCard } from "@/components/project-card";
+import { PageHero } from "@/components/ui/page-hero";
+import { ProjectsExplorer } from "@/components/projects/projects-explorer";
 import { projects } from "@/lib/projects";
 
 export const metadata: Metadata = {
-  title: "JDM Tuning Projects & Dyno Results — Honda, Toyota, Subaru | Street PRO Garage",
+  title: "JDM Tuning Projects & Dyno Results — Honda, Toyota | Street PRO Garage",
   description:
     "Real JDM builds we've tuned: K24 turbo Civic 402 WHP, R18 turbo 233 WHP, 2ZZ-GE swap, B18 turbo rescue and more — build lists, dyno graphs, road-tune results and video.",
+  alternates: { canonical: "/projects" },
 };
 
 export default function ProjectsPage() {
+  const dynoProven = projects.filter((p) => p.method === "Dyno").length;
+  const withGraph = projects.filter((p) => p.dyno.image).length;
+
   return (
     <>
-      <div className="border-b border-border bg-surface/50">
-        <Container className="py-16 sm:py-20">
-          <Eyebrow>Projects</Eyebrow>
-          <h1 className="font-display mt-4 text-5xl sm:text-6xl">Builds We&rsquo;ve Tuned</h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground-muted">
-            Every project here follows the same format — the build list, the
-            result, and a photo or video from the job. Some are dyno-proven
-            with a logged graph, others are road-tuned — both get the same
-            care. We add new ones as builds are finished.
-          </p>
-        </Container>
-      </div>
+      <PageHero image="/images/builds/civic-k24-turbo.jpeg" position="40% 55%">
+        <Eyebrow>Projects</Eyebrow>
+        <h1 className="font-display mt-5">Builds we&rsquo;ve tuned</h1>
+        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground-muted">
+          Every project is a case study: the job, the work performed, and the result. Some are dyno-proven with a
+          logged graph, others are road-tuned. Both get the same care. New builds are added as they are finished.
+        </p>
+        <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4">
+          {[
+            [String(projects.length), "Builds shown"],
+            [String(dynoProven), "Dyno-proven"],
+            [String(withGraph), "With real dyno graphs"],
+          ].map(([n, l]) => (
+            <div key={l}>
+              <dd className="font-display text-5xl text-accent">{n}</dd>
+              <dt className="font-mono-tech text-[11px] uppercase tracking-[0.18em] text-foreground-subtle">{l}</dt>
+            </div>
+          ))}
+        </dl>
+      </PageHero>
 
-      <Section>
+      <Section className="pt-10 sm:pt-12 lg:pt-14">
         <Container>
-          {projects.length === 0 ? (
-            <div className="mx-auto flex max-w-lg flex-col items-center rounded-xl border border-dashed border-border-strong bg-surface p-10 text-center">
-              <Wrench size={28} className="text-accent" aria-hidden />
-              <h2 className="font-display mt-4 text-2xl">New Builds Landing Soon</h2>
-              <p className="mt-2 text-sm text-foreground-muted">
-                We&rsquo;re adding completed projects here as they come off the
-                dyno. In the meantime, submit your build list and yours could
-                be one of the first featured.
-              </p>
-              <LinkButton href="/quote" size="lg" className="mt-6">
-                Get a Quote
-              </LinkButton>
-            </div>
-          ) : (
-            <div className="grid gap-8 lg:grid-cols-2">
-              {projects.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
-              ))}
-            </div>
-          )}
+          <ProjectsExplorer />
         </Container>
       </Section>
+
+      <section className="border-t border-border bg-surface/40 py-16 sm:py-20">
+        <Container className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+          <div>
+            <h2 className="font-display text-4xl sm:text-5xl">Your build could be next</h2>
+            <p className="mt-3 max-w-xl text-foreground-muted">
+              Send us your build list and get a ballpark quote. Stuck on a half-finished project? We take those on too.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <LinkButton href="/quote" size="lg">
+              Get a quote
+            </LinkButton>
+            <LinkButton href="/custom-wiring#diagnostics" size="lg" variant="secondary">
+              Rescue a stuck build
+            </LinkButton>
+          </div>
+        </Container>
+      </section>
     </>
   );
 }

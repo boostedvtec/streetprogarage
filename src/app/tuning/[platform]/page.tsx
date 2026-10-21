@@ -12,6 +12,7 @@ import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { platformPages } from "@/lib/platform-pages";
 import { siteUrl } from "@/lib/site-config";
+import { PageHero } from "@/components/ui/page-hero";
 
 export function generateStaticParams() {
   return platformPages.map((platform) => ({ platform: platform.slug }));
@@ -76,8 +77,7 @@ export default async function PlatformTuningPage(
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
-      <div className="border-b border-border bg-surface/50">
-        <Container className="py-16 sm:py-20">
+      <PageHero image="/images/builds/d16-turbo.jpg" position="50% 60%">
           <Eyebrow>Platform Tuning</Eyebrow>
           <h1 className="font-display mt-4 text-5xl sm:text-6xl">{platform.h1}</h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground-muted">
@@ -91,8 +91,7 @@ export default async function PlatformTuningPage(
               All Tuning Methods
             </LinkButton>
           </div>
-        </Container>
-      </div>
+        </PageHero>
 
       {/* Engines & ECU options */}
       <Section>

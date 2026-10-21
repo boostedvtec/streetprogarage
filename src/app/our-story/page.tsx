@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
+import { PageHero } from "@/components/ui/page-hero";
+import { WorkshopGallery } from "@/components/social/workshop-gallery";
+import { ReviewsSection } from "@/components/social/reviews-section";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/our-story" },
   title: "Story | Street PRO Garage",
   description:
     "How Street PRO Garage's ECU calibration service came to be — engineered performance, not guesswork.",
@@ -11,15 +15,13 @@ export const metadata: Metadata = {
 export default function OurStoryPage() {
   return (
     <>
-      <div className="border-b border-border bg-surface/50">
-        <Container className="py-16 sm:py-20">
+      <PageHero image="/images/builds/civic-k24-turbo.jpeg" position="40% 55%">
           <Eyebrow>Story</Eyebrow>
           <h1 className="font-display mt-4 text-5xl sm:text-6xl">Our Story</h1>
           <p className="font-display mt-6 max-w-2xl text-2xl leading-tight text-accent sm:text-3xl">
             Performance isn&rsquo;t created by chance&mdash;it&rsquo;s engineered.
           </p>
-        </Container>
-      </div>
+        </PageHero>
 
       <Section>
         <Container className="max-w-3xl">
@@ -97,6 +99,9 @@ export default function OurStoryPage() {
           </div>
         </Container>
       </Section>
+
+      <WorkshopGallery className="border-t border-border bg-surface/40" />
+      <ReviewsSection />
     </>
   );
 }

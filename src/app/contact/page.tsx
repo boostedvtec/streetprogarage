@@ -8,6 +8,7 @@ import { FieldWrap, TextInput, TextArea, RadioGroup } from "@/components/form/fi
 import { siteConfig } from "@/lib/site-config";
 import { useRegion } from "@/components/region/region-context";
 import { dynoServiceLabel, type Region } from "@/lib/region";
+import { PageHero } from "@/components/ui/page-hero";
 
 function getTopics(region: Region, services: { parts: boolean; engineSwaps: boolean }): string[] {
   const topics = ["General Enquiry", "Remote Tuning", dynoServiceLabel(region)];
@@ -47,16 +48,14 @@ export default function ContactPage() {
 
   return (
     <>
-      <div className="border-b border-border bg-surface/50">
-        <Container className="py-16 sm:py-20">
+      <PageHero image="/images/builds/civic-k24-turbo.jpeg" position="70% 50%">
           <Eyebrow>Get In Touch</Eyebrow>
           <h1 className="font-display mt-4 text-5xl sm:text-6xl">Contact</h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground-muted">
             Questions about tuning, parts, or booking a dyno session?
             Reach out and we&rsquo;ll get back to you.
           </p>
-        </Container>
-      </div>
+        </PageHero>
 
       <Section>
         <Container className="grid gap-10 lg:grid-cols-[1fr_2fr]">

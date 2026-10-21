@@ -5,6 +5,7 @@ import { LinkButton } from "@/components/ui/button";
 import { deliveryOptions, type DeliveryOption } from "@/lib/delivery";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/delivery-information" },
   title: "Delivery Information | Street PRO Garage",
   description:
     "Delivery options and shipping rates for parts orders from Street PRO Garage.",

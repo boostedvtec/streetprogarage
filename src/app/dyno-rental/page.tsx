@@ -17,8 +17,11 @@ import {
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { dynoRental } from "@/lib/site-config";
+import { PageHero } from "@/components/ui/page-hero";
+import { DynoVideo } from "@/components/home/dyno-video";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/dyno-rental" },
   title: "Dyno Hire & Rolling Road Power Runs — Manchester | Street PRO Garage",
   description:
     "Hire our 2WD rolling road dyno (eddy current brake) in Manchester: power & torque runs, dyno graph printouts, live ECU tuning, diagnostics and before/after testing. Book by the run or hour.",
@@ -85,8 +88,7 @@ const capabilities = [
 export default function DynoRentalPage() {
   return (
     <>
-      <div className="border-b border-border bg-surface/50">
-        <Container className="py-16 sm:py-20">
+      <PageHero image="/images/builds/k24-turbo-before-after-dyno.jpg" position="50% 50%">
           <Eyebrow>Workshop Add-On</Eyebrow>
           <h1 className="font-display mt-4 text-5xl sm:text-6xl">
             Dyno Rental
@@ -105,8 +107,37 @@ export default function DynoRentalPage() {
               Looking for a Tune Instead?
             </LinkButton>
           </div>
+        </PageHero>
+
+      <Section className="pb-0">
+        <Container className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
+          <div>
+            <Eyebrow>Tuning session or rental?</Eyebrow>
+            <h2 className="font-display mt-5 text-4xl leading-[0.95] sm:text-5xl">Pick the right service</h2>
+            <div className="mt-6 grid gap-px border border-border bg-border sm:grid-cols-2">
+              <div className="bg-background p-5">
+                <h3 className="font-display text-2xl text-accent">Tuning session</h3>
+                <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
+                  We write and refine a custom tune for your build, live on the rolling road.
+                </p>
+                <a href="/tuning?type=rolling-road" className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-accent hover:text-accent-hover">
+                  See dyno tuning
+                </a>
+              </div>
+              <div className="bg-background p-5">
+                <h3 className="font-display text-2xl text-accent">Dyno rental</h3>
+                <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
+                  Dyno time only, per run or per hour. No tuning included. For when you already have a tune or just want logged pulls.
+                </p>
+                <a href="/contact" className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-accent hover:text-accent-hover">
+                  Enquire about rental
+                </a>
+              </div>
+            </div>
+          </div>
+          <DynoVideo />
         </Container>
-      </div>
+      </Section>
 
       <Section>
         <Container>

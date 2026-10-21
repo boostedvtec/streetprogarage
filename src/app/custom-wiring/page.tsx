@@ -12,8 +12,11 @@ import { LinkButton } from "@/components/ui/button";
 import { UkOnlySection } from "@/components/region/uk-only-section";
 import { HarnessBuilderForm } from "@/components/wiring/harness-builder-form";
 import { Wiring3D } from "@/components/wiring/wiring-3d";
+import { PageHero } from "@/components/ui/page-hero";
+import Image from "next/image";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/custom-wiring" },
   title: "Standalone ECU Installation & Custom Wiring Harness | Street PRO Garage",
   description:
     "Standalone ECU installation and custom wiring harnesses for MaxxECU, Link, Haltech, AEM, EcuMaster and Megasquirt. Gauge fitting, Honda P28 ECU socketing, and diagnostics for stuck or half-finished JDM builds. Get a quote.",
@@ -40,8 +43,7 @@ const gaugeServices = [
 export default function CustomWiringPage() {
   return (
     <>
-      <div className="border-b border-border bg-surface/50">
-        <Container className="py-16 sm:py-20">
+      <PageHero image="/images/builds/2jzgte-single-turbo.jpg" position="50% 40%">
           <Eyebrow>Wiring &amp; Installation</Eyebrow>
           <h1 className="font-display mt-4 text-5xl sm:text-6xl">
             Wiring
@@ -50,8 +52,38 @@ export default function CustomWiringPage() {
             From standalone ECU harnesses to gauge installs and Honda ECU
             socketing — the wiring work behind every tune, done properly.
           </p>
+        </PageHero>
+
+      {/* Real installs */}
+      <Section className="pb-0">
+        <Container>
+          <div className="max-w-2xl">
+            <Eyebrow>Real installs</Eyebrow>
+            <h2 className="font-display mt-5 text-4xl leading-[0.95] sm:text-5xl">Wiring is its own discipline</h2>
+          </div>
+          <ul className="mt-8 grid gap-3 sm:grid-cols-3">
+            {[
+              { src: "/images/builds/2jzgte-single-turbo.jpg", alt: "Toyota 2JZ-GTE single turbo engine bay with custom wiring harness", cap: "2JZ-GTE single turbo engine bay", pos: "50% 40%" },
+              { src: "/images/builds/honda-ef-k24-awd-turbo.jpg", alt: "Standalone ECU wiring and gauges inside a Honda EF K24 AWD turbo Civic", cap: "Standalone ECU wiring and gauges, EF K24 AWD turbo", pos: "50% 30%" },
+              { src: "/images/builds/mini-d14-swap.jpg", alt: "Classic Mini with a Honda D14 engine swap and P28 ECU installed", cap: "D14 swap with P28 ECU installed, Mini", pos: "50% 60%" },
+            ].map((p) => (
+              <li key={p.src} className="group relative aspect-[4/3] overflow-hidden border border-border">
+                <Image
+                  src={p.src}
+                  alt={p.alt}
+                  fill
+                  sizes="(min-width: 640px) 33vw, 100vw"
+                  className="object-cover brightness-[0.8] saturate-[0.85] transition-all duration-500 group-hover:scale-[1.04] group-hover:brightness-100 group-hover:saturate-100"
+                  style={{ objectPosition: p.pos }}
+                />
+                <span className="font-mono-tech absolute inset-x-0 bottom-0 bg-gradient-to-t from-background/95 to-transparent p-3 text-[11px] uppercase tracking-[0.12em]">
+                  {p.cap}
+                </span>
+              </li>
+            ))}
+          </ul>
         </Container>
-      </div>
+      </Section>
 
       {/* 3D harness illustration */}
       <Section className="pb-0">
@@ -296,6 +328,41 @@ export default function CustomWiringPage() {
                 </li>
               ))}
             </ul>
+          </div>
+
+          <div className="mt-12 grid gap-8 border border-border bg-background p-6 sm:p-8 lg:grid-cols-5">
+            <div className="lg:col-span-3">
+              <h3 className="font-display text-3xl">What to send us</h3>
+              <p className="mt-2 text-sm text-foreground-muted">The more we know up front, the faster we can tell you where the build stands.</p>
+              <ul className="mt-5 grid gap-2 text-sm text-foreground sm:grid-cols-2">
+                {[
+                  "Symptoms: what it does, and when",
+                  "Vehicle, engine and gearbox",
+                  "ECU type and software version",
+                  "Modifications and what was done before",
+                  "Fault codes, if you have them",
+                  "Datalogs, photos or video of the install",
+                ].map((x) => (
+                  <li key={x} className="flex items-start gap-2.5">
+                    <span className="mt-2 h-1 w-3 shrink-0 bg-accent" aria-hidden />
+                    {x}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex flex-col justify-between gap-5 lg:col-span-2">
+              <p className="text-sm leading-relaxed text-foreground-muted">
+                We assess first. We will not promise a fix or an outcome until we have seen the details and know what we are dealing with.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <LinkButton href="/contact" size="lg">
+                  Send us the symptoms
+                </LinkButton>
+                <LinkButton href="/quote" size="lg" variant="secondary">
+                  Get a quote
+                </LinkButton>
+              </div>
+            </div>
           </div>
         </Container>
       </Section>

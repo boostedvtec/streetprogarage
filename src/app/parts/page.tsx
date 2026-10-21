@@ -5,6 +5,7 @@ import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { categories } from "@/lib/products";
 import { useRegion } from "@/components/region/region-context";
+import { PageHero } from "@/components/ui/page-hero";
 
 export default function PartsPage() {
   const { data } = useRegion();
@@ -36,8 +37,7 @@ export default function PartsPage() {
 
   return (
     <>
-      <div className="border-b border-border bg-surface/50">
-        <Container className="py-16 sm:py-20">
+      <PageHero image="/images/builds/d16-turbo.jpg" position="50% 60%">
           <Eyebrow>Shop</Eyebrow>
           <h1 className="font-display mt-4 text-5xl sm:text-6xl">
             Performance Parts
@@ -55,8 +55,7 @@ export default function PartsPage() {
               Ask About a Part
             </LinkButton>
           </div>
-        </Container>
-      </div>
+        </PageHero>
 
       <Section>
         <Container>

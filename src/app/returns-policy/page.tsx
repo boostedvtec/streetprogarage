@@ -4,6 +4,7 @@ import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/returns-policy" },
   title: "Returns Policy | Street PRO Garage",
   description:
     "Returns, refunds and deposit terms for parts orders from Street PRO Garage.",

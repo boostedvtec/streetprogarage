@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/parts" },
   title: "Performance Parts | Street PRO Garage",
   description:
     "Shop performance parts with professional fitting and diagnostics — turbos, fuelling, engine management, cooling, exhaust and drivetrain.",

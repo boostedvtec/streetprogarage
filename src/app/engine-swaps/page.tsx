@@ -9,8 +9,10 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
+import { PageHero } from "@/components/ui/page-hero";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/engine-swaps" },
   title: "JDM Engine Swaps & Builds Karachi — K-Swap, B18, 2JZ, SR20 | Street PRO Garage",
   description:
     "JDM engine swaps and custom builds at our Karachi workshop: Honda K/B/D/H-series, Toyota 2JZ & 2ZZ, Nissan SR20, Subaru and more — donor engine fitment, custom mounts, wiring, ECU install and dyno tuning.",
@@ -28,8 +30,7 @@ const buildServices = [
 export default function EngineSwapsPage() {
   return (
     <>
-      <div className="border-b border-border bg-surface/50">
-        <Container className="py-16 sm:py-20">
+      <PageHero image="/images/builds/mini-d14-swap.jpg" position="50% 55%">
           <Eyebrow>Karachi, Pakistan Workshop</Eyebrow>
           <h1 className="font-display mt-4 text-5xl sm:text-6xl">
             Engine Swaps, Build &amp; Customization
@@ -48,8 +49,7 @@ export default function EngineSwapsPage() {
               Discuss Your Build
             </LinkButton>
           </div>
-        </Container>
-      </div>
+        </PageHero>
 
       <Section>
         <Container>

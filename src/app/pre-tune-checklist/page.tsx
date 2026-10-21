@@ -7,6 +7,7 @@ import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { preDynoTests } from "@/lib/site-config";
 import { PriceTag } from "@/components/region/price-tag";
+import { PageHero } from "@/components/ui/page-hero";
 
 const CHECKLIST_ITEMS = [
   "Fresh engine oil & filter change",
@@ -31,8 +32,7 @@ export default function PreTuneChecklistPage() {
 
   return (
     <>
-      <div className="border-b border-border bg-surface/50">
-        <Container className="py-16 sm:py-20">
+      <PageHero image="/images/builds/honda-ef-k24-awd-turbo.jpg" position="50% 30%">
           <Eyebrow>Before You Book</Eyebrow>
           <h1 className="font-display mt-4 text-5xl sm:text-6xl">
             Pre-Tune Checklist
@@ -43,8 +43,7 @@ export default function PreTuneChecklistPage() {
             worth sorting first, or flagging to us when you submit your build
             list.
           </p>
-        </Container>
-      </div>
+        </PageHero>
 
       <Section>
         <Container className="max-w-3xl">

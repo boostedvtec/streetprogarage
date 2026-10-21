@@ -2,8 +2,18 @@ export type ProjectMedia =
   | { type: "image"; src: string; alt: string }
   | { type: "video"; src: string; poster?: string };
 
+export type ProjectService = "tuning" | "wiring" | "diagnostics" | "swap";
+export type ProjectMethod = "Dyno" | "Road" | "Live / track";
+
 export type Project = {
   slug: string;
+  /** Filter / tag data. Only state what the project text already says. */
+  make: "Honda" | "Toyota";
+  engine: string;
+  /** ECU platform, only where the project names one. */
+  ecu?: string;
+  method: ProjectMethod;
+  services: ProjectService[];
   title: string;
   vehicle: string;
   region: "uk" | "pk";
@@ -47,6 +57,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "k24-turbo-civic",
+    make: "Honda", engine: "K24", method: "Dyno", services: ["tuning", "swap"],
     title: "K24 Turbo Civic",
     vehicle: "Honda Civic (K24 swap)",
     region: "pk",
@@ -72,6 +83,7 @@ export const projects: Project[] = [
   },
   {
     slug: "d16-turbo-maxspeeding",
+    make: "Honda", engine: "D16", method: "Road", services: ["tuning"],
     title: "D16 Turbo — Maxspeeding Kit",
     vehicle: "Honda Civic EG (D16, auto-to-manual conversion)",
     region: "uk",
@@ -99,6 +111,7 @@ export const projects: Project[] = [
   },
   {
     slug: "corolla-2zzge-swap",
+    make: "Toyota", engine: "2ZZ-GE", ecu: "EcuMaster DET3+", method: "Dyno", services: ["tuning", "wiring", "swap"],
     title: "Corolla 2ZZ-GE Swap",
     vehicle: "Toyota Corolla (2ZZ-GE swap)",
     region: "pk",
@@ -119,6 +132,7 @@ export const projects: Project[] = [
   },
   {
     slug: "mini-d14-swap",
+    make: "Honda", engine: "D14", ecu: "Honda P28 (OBD1)", method: "Road", services: ["diagnostics", "wiring", "tuning", "swap"],
     title: "Mini D14 Swap — Timing Fix & Tune",
     vehicle: "Classic Mini (Honda D14 swap)",
     region: "uk",
@@ -141,6 +155,7 @@ export const projects: Project[] = [
   },
   {
     slug: "toyota-aristo-2jzge-turbo",
+    make: "Toyota", engine: "2JZGE", ecu: "EcuMaster DET3+", method: "Road", services: ["tuning", "wiring"],
     title: "Aristo 2JZGE Single Turbo",
     vehicle: "Toyota Aristo, Automatic (2JZGE single turbo)",
     region: "pk",
@@ -163,6 +178,7 @@ export const projects: Project[] = [
   },
   {
     slug: "civic-ek-b18-turbo-rescue",
+    make: "Honda", engine: "B18", ecu: "AEM standalone", method: "Road", services: ["diagnostics", "wiring", "tuning"],
     title: "Civic EK B18 Turbo — 3-Year Rescue",
     vehicle: "Honda Civic EK (B18 Turbo)",
     region: "pk",
@@ -185,6 +201,7 @@ export const projects: Project[] = [
   },
   {
     slug: "civic-fd-r18-turbo",
+    make: "Honda", engine: "R18", method: "Dyno", services: ["tuning"],
     title: "Civic FD R18 Turbo",
     vehicle: "Honda Civic FD (R18 Turbo)",
     region: "pk",
@@ -199,6 +216,7 @@ export const projects: Project[] = [
   },
   {
     slug: "honda-ef-k24-awd-turbo",
+    make: "Honda", engine: "K24", method: "Live / track", services: ["tuning", "swap"],
     title: "EF K24 AWD Turbo",
     vehicle: "Honda Civic EF (K24 swap, AWD conversion, turbo)",
     region: "pk",

@@ -6,6 +6,7 @@ import { preDynoTests } from "@/lib/site-config";
 import { PriceTag } from "@/components/region/price-tag";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/declaration" },
   title: "Declaration & Liability | Street PRO Garage",
   description:
     "Declaration and liability terms for tuning services at Street PRO Garage.",
