@@ -7,7 +7,7 @@ import { Container, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { useRegion } from "@/components/region/region-context";
 import { DynoLines } from "./dyno-lines";
-import { HeroTelemetry } from "./hero-telemetry";
+import { HeroDash } from "./hero-dash";
 import { toggleMotionPaused, useMotionPaused, useStill } from "./motion";
 
 const heroBrands = ["Honda", "Toyota", "Subaru", "Nissan", "Mitsubishi", "Mazda"];
@@ -101,7 +101,7 @@ export function Hero() {
 
       <Container className="relative flex min-h-[calc(100svh-11rem)] flex-col justify-center py-12 sm:py-16 lg:min-h-[40rem]">
         <div className="grid items-center gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-8">
+          <div className="lg:col-span-7">
             <Eyebrow className="max-w-full flex-wrap !tracking-[0.14em] sm:!tracking-[0.2em]">
               Automotive performance &bull; ECU calibration &bull; Engineering
             </Eyebrow>
@@ -137,12 +137,12 @@ export function Hero() {
             </p>
           </div>
 
-          {/* Layer 3: calibration readout, strongest drift */}
+          {/* Layer 3: race dash, strongest drift */}
           <div
-            className="hidden lg:col-span-4 lg:block"
+            className="hidden lg:col-span-5 lg:block"
             style={{ transform: "translate3d(calc(var(--px) * 12px), calc(var(--py) * 8px), 0)" }}
           >
-            <HeroTelemetry />
+            <HeroDash />
           </div>
         </div>
       </Container>
