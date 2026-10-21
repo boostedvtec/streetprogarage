@@ -6,7 +6,8 @@ import { clamp, fitCanvas, makeProjector, watchVisible } from "./canvas-utils";
 import { plexMono } from "./mono-font";
 import { useStill } from "./motion";
 
-const ROWS = 10;
+const LOADS = [20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 140, 160, 180, 200];
+const ROWS = LOADS.length;
 const CELL_T = 0.5;
 const ROW_DT = 0.035;
 const HOLD1 = 0.5;
@@ -115,7 +116,7 @@ export function FuelMap() {
       dvm = [];
       // 500 to 8000 rpm in 500 steps; narrow screens show the 1000 rpm steps only.
       for (let i = 0; i < cols; i++) rpms.push(cols === 16 ? 500 + i * 500 : 1000 + i * 1000);
-      for (let j = 0; j < ROWS; j++) loads.push(20 + j * 20);
+      for (let j = 0; j < ROWS; j++) loads.push(LOADS[j]);
       for (let i = 0; i < cols; i++) {
         vals[i] = [];
         dvm[i] = [];
@@ -255,7 +256,8 @@ export function FuelMap() {
         c.textAlign = "right";
         c.fillText(String(loads[cj]), padL - 8, padT + ch * (cj + 0.5));
         const rpmV = rpms[0] + (rpms[cols - 1] - rpms[0]) * (r / (cols - 1));
-        const loadV = loads[0] + (loads[ROWS - 1] - loads[0]) * (l / (ROWS - 1));
+        const lj = clamp(Math.floor(l), 0, ROWS - 2);
+        const loadV = loads[lj] + (loads[lj + 1] - loads[lj]) * (l - lj);
         setText(rpmRef.current, String(Math.round(rpmV / 10) * 10));
         setText(loadRef.current, String(Math.round(loadV)));
         setText(veRef.current, String(vals[ci][cj]));
