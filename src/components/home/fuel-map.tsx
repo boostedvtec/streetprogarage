@@ -6,7 +6,7 @@ import { clamp, fitCanvas, makeProjector, watchVisible } from "./canvas-utils";
 import { plexMono } from "./mono-font";
 import { useStill } from "./motion";
 
-const ROWS = 11;
+const ROWS = 10;
 const CELL_T = 0.5;
 const ROW_DT = 0.035;
 const HOLD1 = 0.5;
@@ -108,13 +108,14 @@ export function FuelMap() {
     let lastTime = 0;
 
     function build() {
-      cols = tb!.clientWidth < 430 ? 6 : 12;
+      cols = tb!.clientWidth < 430 ? 8 : 16;
       rpms = [];
       loads = [];
       vals = [];
       dvm = [];
-      for (let i = 0; i < cols; i++) rpms.push(cols === 12 ? 1500 + i * 500 : 1500 + i * 1000);
-      for (let j = 0; j < ROWS; j++) loads.push(30 + j * 10);
+      // 500 to 8000 rpm in 500 steps; narrow screens show the 1000 rpm steps only.
+      for (let i = 0; i < cols; i++) rpms.push(cols === 16 ? 500 + i * 500 : 1000 + i * 1000);
+      for (let j = 0; j < ROWS; j++) loads.push(20 + j * 20);
       for (let i = 0; i < cols; i++) {
         vals[i] = [];
         dvm[i] = [];
