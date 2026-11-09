@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { formatSubmission, renderSubmissionEmail, sendNotificationEmail } from "@/lib/mailer";
+import { sendNotificationEmail } from "@/lib/mailer";
+import { formatQuoteText, renderQuoteEmail } from "@/lib/quote-email";
 
 export async function POST(request: Request) {
   let body;
@@ -24,8 +25,8 @@ export async function POST(request: Request) {
     const subject = `New Build List Submission — ${body.vehicle || body.name}`;
     emailSent = await sendNotificationEmail({
       subject,
-      text: formatSubmission(body),
-      html: renderSubmissionEmail(subject, body),
+      text: formatQuoteText(body),
+      html: renderQuoteEmail(subject, body),
       replyTo: body.email,
     });
   } catch (err) {

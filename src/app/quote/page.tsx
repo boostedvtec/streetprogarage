@@ -174,7 +174,7 @@ export default function QuotePage() {
       const res = await fetch("/api/quote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, estimate: quote }),
+        body: JSON.stringify({ ...form, region, estimate: quote }),
       });
       if (!res.ok) throw new Error("Request failed");
       setSubmitStatus("done");
