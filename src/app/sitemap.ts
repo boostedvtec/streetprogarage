@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
 import { siteUrl } from "@/lib/site-config";
-import { products } from "@/lib/products";
 import { platformPages } from "@/lib/platform-pages";
 
 const staticRoutes: { path: string; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]; priority: number }[] = [
@@ -31,12 +30,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: route.changeFrequency,
       priority: route.priority,
-    })),
-    ...products.map((product) => ({
-      url: `${siteUrl}/parts/${product.slug}`,
-      lastModified: now,
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
     })),
     ...platformPages.map((platform) => ({
       url: `${siteUrl}/tuning/${platform.slug}`,

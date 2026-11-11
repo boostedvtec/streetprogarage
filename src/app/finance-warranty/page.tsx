@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/finance-warranty" },
   title: "Finance & Warranty | Street PRO Garage",
   description:
-    "Finance options and warranty terms for tuning and parts at Street PRO Garage.",
+    "Street PRO Garage tuning workmanship warranty terms and finance options for ECU tuning, wiring and performance parts, explained in one place.",
 };
 
 export default function FinanceWarrantyPage() {

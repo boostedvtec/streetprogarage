@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/declaration" },
   title: "Declaration & Liability | Street PRO Garage",
   description:
-    "Declaration and liability terms for tuning services at Street PRO Garage.",
+    "Read the declaration and liability terms for remote, road and dyno ECU tuning at Street PRO Garage, which you accept before any tuning work starts.",
 };
 
 export default function DeclarationPage() {

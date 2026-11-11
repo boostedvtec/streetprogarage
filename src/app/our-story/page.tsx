@@ -8,7 +8,7 @@ import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
   title: "Our Story: Precision ECU Calibration | Street PRO Garage",
-  description: "How Street PRO Garage's ECU calibration service came to be: engineered performance, not guesswork.",
+  description: "How Street PRO Garage's JDM ECU calibration service came to be, and why we build engineered, data-led tunes for modified cars instead of guesswork.",
   path: "/our-story",
 });
 
