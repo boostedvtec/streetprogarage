@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, EnvelopeSimple, MapPin, WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, ArrowUpRight, EnvelopeSimple, MapPin, WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
+import { reviewsConfig } from "@/lib/social-proof";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { PageHero } from "@/components/ui/page-hero";
@@ -185,6 +186,30 @@ export function LocationPage({
               <p className="mt-6 text-sm leading-relaxed text-foreground-muted">
                 Every tune in Pakistan is quoted directly once we have reviewed your build list, so you pay for exactly what your car needs.
               </p>
+            )}
+            {region === "uk" && (reviewsConfig.googleReviewsUrl || reviewsConfig.googleWriteReviewUrl) && (
+              <div className="mt-6 flex flex-wrap gap-3">
+                {reviewsConfig.googleReviewsUrl && (
+                  <a
+                    href={reviewsConfig.googleReviewsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 items-center gap-2 border border-border-strong px-4 text-[13px] font-semibold uppercase tracking-[0.08em] hover:border-accent hover:text-accent"
+                  >
+                    Find us on Google <ArrowUpRight size={16} weight="bold" aria-hidden />
+                  </a>
+                )}
+                {reviewsConfig.googleWriteReviewUrl && (
+                  <a
+                    href={reviewsConfig.googleWriteReviewUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 items-center gap-2 border border-border-strong px-4 text-[13px] font-semibold uppercase tracking-[0.08em] hover:border-accent hover:text-accent"
+                  >
+                    Leave a review <ArrowUpRight size={16} weight="bold" aria-hidden />
+                  </a>
+                )}
+              </div>
             )}
           </div>
           <iframe

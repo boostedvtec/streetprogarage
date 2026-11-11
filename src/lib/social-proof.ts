@@ -15,8 +15,10 @@ import { siteConfig } from "@/lib/site-config";
  *     or review count that cannot be checked at the source.
  */
 export const reviewsConfig = {
-  googleReviewsUrl: null as string | null,
-  googleWriteReviewUrl: null as string | null,
+  /** Google Business Profile for "Street Pro Garage UK" (Manchester). Supplied by the owner. */
+  googleReviewsUrl: "https://share.google/gc1huiietnGztxY6a" as string | null,
+  /** That profile's "write a review" form. Supplied by the owner. */
+  googleWriteReviewUrl: "https://g.page/r/CaXc3QumeUEoEAE/review" as string | null,
 };
 
 export type Review = {

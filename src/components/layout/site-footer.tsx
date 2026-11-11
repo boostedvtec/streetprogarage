@@ -8,10 +8,12 @@ import {
   InstagramLogo,
   FacebookLogo,
   ArrowUpRight,
+  Star,
 } from "@phosphor-icons/react/dist/ssr";
 import { Logo } from "@/components/logo";
 import { navLinks, siteConfig } from "@/lib/site-config";
 import { paymentLinks } from "@/lib/payment-links";
+import { reviewsConfig } from "@/lib/social-proof";
 import { useRegion } from "@/components/region/region-context";
 
 const legalLinks = [
@@ -131,6 +133,19 @@ export function SiteFooter() {
                   <InstagramLogo size={18} className="shrink-0 text-accent" aria-hidden />
                   <a href={siteConfig.social.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-accent">
                     {siteConfig.social.instagramHandle}
+                  </a>
+                </li>
+              )}
+              {region === "uk" && reviewsConfig.googleWriteReviewUrl && (
+                <li className="flex items-center gap-3">
+                  <Star size={18} weight="fill" className="shrink-0 text-accent" aria-hidden />
+                  <a
+                    href={reviewsConfig.googleWriteReviewUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-accent"
+                  >
+                    Review us on Google
                   </a>
                 </li>
               )}
