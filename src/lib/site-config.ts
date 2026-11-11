@@ -181,14 +181,14 @@ export type EcuBrandLogo = {
 export const ecuBrandLogos: EcuBrandLogo[] = [
   { name: "HP Tuners", src: "/images/logos/HPT_LOGO_blublk.png" },
   { name: "Hondata", src: "/images/logos/hondata-logo.jpg" },
-  { name: "MaxxECU", src: "/images/logos/MaxxECU-Logo-1.jpg" },
+  { name: "MaxxECU", src: "/images/logos/maxxecu.svg" },
   { name: "Link ECU", src: "/images/logos/LNK-Logo-whiteout.svg", onDark: true },
-  { name: "Haltech", src: "/images/logos/haltech-dual.png", crop: "top" },
+  { name: "Haltech", src: "/images/logos/haltech.svg" },
   { name: "Speeduino", src: "/images/logos/speeduino-logo.png" },
-  { name: "ME (Motorsport Electronics)", src: "/images/logos/me-ecu.png" },
+  { name: "ME (Motorsport Electronics)", src: "/images/logos/motorsport-electronics.png" },
   { name: "AEM Infinity", src: "/images/logos/AEM-Advanced-Engine-Management-Logo.png" },
   { name: "EcuMaster", src: "/images/logos/ecumaster.png" },
-  { name: "Megasquirt", src: "/images/logos/megasquirt-logo.png" },
+  { name: "Megasquirt", src: "/images/logos/megasquirt.svg", onDark: true },
 ];
 
 export type AddOn = {
