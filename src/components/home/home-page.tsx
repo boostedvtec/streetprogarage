@@ -6,14 +6,14 @@ import { ArrowRight, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { Reveal } from "@/components/ui/reveal";
-import { BrandLogo } from "@/components/brand-logo";
 import { buildPhotos } from "@/lib/builds";
 import { projects } from "@/lib/projects";
 import { paymentLinks } from "@/lib/payment-links";
-import { tunedVehiclePlatforms, ecuBrandLogos } from "@/lib/site-config";
+import { tunedVehiclePlatforms } from "@/lib/site-config";
 import { useRegion } from "@/components/region/region-context";
 import { dynoServiceLabel, type RegionData } from "@/lib/region";
 import { Hero } from "@/components/home/hero";
+import { EcuSupport } from "@/components/home/ecu-support";
 import { ServicePanels, type ServicePanel } from "@/components/home/services-panels";
 import { Datalog } from "@/components/home/datalog";
 import { FuelMap } from "@/components/home/fuel-map";
@@ -147,6 +147,7 @@ export function HomePage() {
   return (
     <>
       <Hero />
+      <EcuSupport />
 
       {/* Services */}
       <Section id="services">
@@ -293,7 +294,7 @@ export function HomePage() {
       <Section id="platforms" className="border-y border-border bg-surface/40">
         <Container>
           <Reveal>
-            <SectionHead eyebrow="Platforms &amp; ECUs" title="Honda, Toyota, Subaru, Nissan & more">
+            <SectionHead eyebrow="Cars we tune" title="Honda, Toyota, Subaru, Nissan & more">
               Japanese performance cars are what we do. Pick your platform to see the engines, ECUs and builds we
               handle.
             </SectionHead>
@@ -350,11 +351,6 @@ export function HomePage() {
             .
           </p>
 
-          <div className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-            {ecuBrandLogos.map((logo) => (
-              <BrandLogo key={logo.name} {...logo} />
-            ))}
-          </div>
         </Container>
       </Section>
 

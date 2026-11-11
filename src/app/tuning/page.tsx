@@ -450,7 +450,7 @@ function TuningPageContent() {
       </Section>
 
       {/* Shared: Supported ECUs */}
-      <Section className="border-y border-border bg-surface/50">
+      <Section id="supported-ecus" className="border-y border-border bg-surface/50">
         <Container>
           <div className="max-w-2xl">
             <Eyebrow>Platforms</Eyebrow>
