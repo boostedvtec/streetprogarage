@@ -67,3 +67,8 @@
 - Website: https://www.streetprogarage.com
 - Instagram: https://www.instagram.com/streetprogarage/
 - Facebook: https://www.facebook.com/profile.php?id=61593606914618
+
+## Workshops and guides
+- Manchester workshop (rolling road dyno, ECU tuning, wiring, parts): https://www.streetprogarage.com/manchester
+- Karachi workshop (ECU tuning, dyno tuning, wiring, JDM engine swaps): https://www.streetprogarage.com/karachi
+- How remote ECU tuning works: https://www.streetprogarage.com/guides/remote-ecu-tuning

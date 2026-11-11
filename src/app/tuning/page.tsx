@@ -670,7 +670,11 @@ function TuningPageContent() {
             <Eyebrow>The remote journey</Eyebrow>
             <h2 className="font-display mt-5 text-5xl leading-[0.92] sm:text-6xl">New to remote tuning? Here is how it works</h2>
             <p className="mt-5 text-base leading-relaxed text-foreground-muted sm:text-lg">
-              You never need to visit us. You send your build details, log your own car with a laptop, and we write and refine the map from your data.
+              You never need to visit us. You send your build details, log your own car with a laptop, and we write and refine the map from your data.{" "}
+              <Link href="/guides/remote-ecu-tuning" className="text-accent underline underline-offset-4">
+                Read the full guide
+              </Link>
+              .
             </p>
           </div>
 

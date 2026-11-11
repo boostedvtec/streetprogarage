@@ -10,13 +10,14 @@ import {
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { PageHero } from "@/components/ui/page-hero";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/engine-swaps" },
-  title: "JDM Engine Swaps & Builds Karachi — K-Swap, B18, 2JZ, SR20 | Street PRO Garage",
-  description:
-    "JDM engine swaps and custom builds at our Karachi workshop: Honda K/B/D/H-series, Toyota 2JZ & 2ZZ, Nissan SR20, Subaru and more — donor engine fitment, custom mounts, wiring, ECU install and dyno tuning.",
-};
+export const metadata: Metadata = pageMeta({
+  title: "JDM Engine Swaps in Karachi | Street PRO Garage",
+  description: "JDM engine swaps and custom builds at our Karachi workshop: K, B, D and H-series, 2JZ, 2ZZ, SR20. Fitment, wiring, ECU install and dyno tuning.",
+  path: "/engine-swaps",
+  image: "/og/karachi.jpg",
+});
 
 const buildServices = [
   "Donor engine fitment and mounting — custom mounts and subframes where needed",

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { EnvelopeSimple, MapPin, InstagramLogo, FacebookLogo, WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -184,7 +185,7 @@ export default function ContactPage() {
                 <FieldWrap label="What's this about?" required>
                   <RadioGroup name="topic" options={topics} value={topic} onChange={setTopic} />
                 </FieldWrap>
-                <FieldWrap label="Message" required>
+                <FieldWrap label="Message" required hint="Include your vehicle, engine, ECU and what you want to achieve.">
                   <TextArea value={message} onChange={setMessage} rows={5} required />
                 </FieldWrap>
                 {status === "error" && (
@@ -198,6 +199,43 @@ export default function ContactPage() {
               </form>
             )}
           </div>
+        </Container>
+      </Section>
+
+      <Section className="border-t border-border bg-surface/40">
+        <Container className="max-w-3xl">
+          <h2 className="font-display text-4xl sm:text-5xl">Before you message</h2>
+          <p className="mt-4 leading-relaxed text-foreground-muted">
+            A few things get you a faster, more useful reply. For a tuning price, send the{" "}
+            <Link href="/quote" className="text-accent underline underline-offset-4">
+              build list
+            </Link>{" "}
+            so we have your engine, parts and goals in one place. New to remote tuning? Read{" "}
+            <Link href="/guides/remote-ecu-tuning" className="text-accent underline underline-offset-4">
+              how it works
+            </Link>{" "}
+            and run through the{" "}
+            <Link href="/pre-tune-checklist" className="text-accent underline underline-offset-4">
+              pre-tune checklist
+            </Link>
+            . For wiring, ECU installs or a stalled project, use the{" "}
+            <Link href="/custom-wiring#enquiry" className="text-accent underline underline-offset-4">
+              wiring enquiry
+            </Link>
+            , and answers to common questions are in the{" "}
+            <Link href="/faq" className="text-accent underline underline-offset-4">
+              FAQ
+            </Link>
+            . The Manchester and Karachi workshops each have their own page:{" "}
+            <Link href="/manchester" className="text-accent underline underline-offset-4">
+              Manchester
+            </Link>{" "}
+            and{" "}
+            <Link href="/karachi" className="text-accent underline underline-offset-4">
+              Karachi
+            </Link>
+            .
+          </p>
         </Container>
       </Section>
     </>

@@ -35,7 +35,10 @@ export async function generateMetadata(
       description: platform.metaDescription,
       url,
       type: "website",
+      siteName: "Street PRO Garage",
+      images: [{ url: `${siteUrl}/og/tuning.jpg`, width: 1200, height: 630, alt: platform.metaTitle }],
     },
+    twitter: { card: "summary_large_image", title: platform.metaTitle, description: platform.metaDescription, images: [`${siteUrl}/og/tuning.jpg`] },
   };
 }
 

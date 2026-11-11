@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/contact" },
-  title: "Contact Street PRO Garage — Book ECU Tuning, Dyno Time or a Quote",
-  description:
-    "Call, WhatsApp or message Street PRO Garage to book remote ECU tuning, rolling road dyno tuning, standalone ECU installs or engine swaps. Manchester UK and Karachi, remote worldwide.",
-};
+export const metadata: Metadata = pageMeta({
+  title: "Contact & Book ECU Tuning | Street PRO Garage",
+  description: "Contact Street PRO Garage to book remote ECU tuning, dyno tuning, ECU installs or engine swaps. Manchester UK, Karachi and remote worldwide.",
+  path: "/contact",
+});
 
 export default function ContactLayout({ children }: { children: React.ReactNode }) {
   return children;

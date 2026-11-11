@@ -9,7 +9,7 @@ export function DynoVideo() {
   const ref = useRef<HTMLVideoElement>(null);
   const still = useStill();
   const [playing, setPlaying] = useState(false);
-  const visibleRef = useRef(true);
+  const visibleRef = useRef(false);
   const stillRef = useRef(false);
 
   function sync() {
@@ -51,11 +51,11 @@ export function DynoVideo() {
         ref={ref}
         className="block aspect-[848/478] w-full object-cover"
         src="/videos/dyno-k24-turbo.mp4"
-        autoPlay
+        poster="/images/builds/k24-turbo-before-after-dyno.jpg"
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="none"
         aria-label="Real footage from our dyno: a Honda K24 turbo power run shown on the dyno software. No sound."
       />
       <span className="absolute left-3 top-3 bg-accent px-2 py-1 text-xs font-medium uppercase tracking-wider text-accent-foreground">

@@ -118,7 +118,7 @@ export function Hero() {
               Precision Diagnostics<span className="text-accent">.</span>
             </p>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-foreground-muted sm:text-lg">
-              Performance-focused automotive solutions, from remote ECU calibration and dyno sessions to bespoke
+              JDM ECU tuning and performance engineering: remote ECU calibration and dyno sessions, bespoke
               wiring builds and advanced fault finding.
             </p>
 

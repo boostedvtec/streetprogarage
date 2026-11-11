@@ -4,13 +4,14 @@ import { LinkButton } from "@/components/ui/button";
 import { PageHero } from "@/components/ui/page-hero";
 import { ProjectsExplorer } from "@/components/projects/projects-explorer";
 import { projects } from "@/lib/projects";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "JDM Tuning Projects & Dyno Results — Honda, Toyota | Street PRO Garage",
-  description:
-    "Real JDM builds we've tuned: K24 turbo Civic 402 WHP, R18 turbo 233 WHP, 2ZZ-GE swap, B18 turbo rescue and more — build lists, dyno graphs, road-tune results and video.",
-  alternates: { canonical: "/projects" },
-};
+export const metadata: Metadata = pageMeta({
+  title: "JDM Tuning Projects & Dyno Results | Street PRO Garage",
+  description: "Real JDM builds we've tuned: K24 turbo Civic 402 WHP, R18 turbo 233 WHP, 2ZZ-GE swap, B18 rescue and more. Build lists, dyno graphs and video.",
+  path: "/projects",
+  image: "/og/projects.jpg",
+});
 
 export default function ProjectsPage() {
   const dynoProven = projects.filter((p) => p.method === "Dyno").length;

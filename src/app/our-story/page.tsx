@@ -4,13 +4,13 @@ import { LinkButton } from "@/components/ui/button";
 import { PageHero } from "@/components/ui/page-hero";
 import { WorkshopGallery } from "@/components/social/workshop-gallery";
 import { ReviewsSection } from "@/components/social/reviews-section";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/our-story" },
-  title: "Story | Street PRO Garage",
-  description:
-    "How Street PRO Garage's ECU calibration service came to be — engineered performance, not guesswork.",
-};
+export const metadata: Metadata = pageMeta({
+  title: "Our Story: Precision ECU Calibration | Street PRO Garage",
+  description: "How Street PRO Garage's ECU calibration service came to be: engineered performance, not guesswork.",
+  path: "/our-story",
+});
 
 export default function OurStoryPage() {
   return (
@@ -34,7 +34,7 @@ export default function OurStoryPage() {
               principles, and precise ECU calibration.
             </p>
             <p>
-              Over the years, that passion has evolved into a specialist
+              That passion has become a specialist
               calibration service built around technical knowledge,
               data-driven decision making, and a commitment to delivering
               reliable, repeatable performance.
@@ -57,8 +57,7 @@ export default function OurStoryPage() {
               standalone and piggyback engine management systems.
             </p>
             <p>
-              We regularly develop calibrations for industry-leading
-              platforms including MaxxECU, Link ECU, Haltech, AEM, ME ECU,
+              We develop calibrations for platforms including MaxxECU, Link ECU, Haltech, AEM, ME ECU,
               Megasquirt, Speeduino, and EcuMaster standalone and piggyback
               systems. From initial ECU setup and sensor configuration to
               complete fuel, ignition, boost, and motorsport strategy

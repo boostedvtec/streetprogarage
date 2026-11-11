@@ -19,13 +19,14 @@ import { LinkButton } from "@/components/ui/button";
 import { dynoRental } from "@/lib/site-config";
 import { PageHero } from "@/components/ui/page-hero";
 import { DynoVideo } from "@/components/home/dyno-video";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/dyno-rental" },
-  title: "Dyno Hire & Rolling Road Power Runs — Manchester | Street PRO Garage",
-  description:
-    "Hire our 2WD rolling road dyno (eddy current brake) in Manchester: power & torque runs, dyno graph printouts, live ECU tuning, diagnostics and before/after testing. Book by the run or hour.",
-};
+export const metadata: Metadata = pageMeta({
+  title: "Dyno Hire in Manchester | Street PRO Garage",
+  description: "Hire our 2WD rolling road dyno in Manchester: power and torque runs, graph printouts, live ECU tuning and diagnostics. Book by the run or hour.",
+  path: "/dyno-rental",
+  image: "/og/dyno.jpg",
+});
 
 const included = [
   "Full datalogging throughout your session",

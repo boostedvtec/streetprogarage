@@ -71,6 +71,21 @@ export function SiteFooter() {
                   Pre-Tune Checklist
                 </Link>
               </li>
+              <li>
+                <Link href="/guides/remote-ecu-tuning" className={colLink}>
+                  How Remote Tuning Works
+                </Link>
+              </li>
+              <li>
+                <Link href="/manchester" className={colLink}>
+                  Manchester Workshop
+                </Link>
+              </li>
+              <li>
+                <Link href="/karachi" className={colLink}>
+                  Karachi Workshop
+                </Link>
+              </li>
             </ul>
           </div>
 

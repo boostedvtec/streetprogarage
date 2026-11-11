@@ -10,12 +10,24 @@ import { WiringEnquiryForm } from "@/components/wiring/wiring-enquiry-form";
 import { DynoLines } from "@/components/home/dyno-lines";
 import { projects } from "@/lib/projects";
 import { wiringShots } from "@/lib/wiring-showcase";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/custom-wiring" },
-  title: "Standalone ECU Installation & Custom Wiring Harness | Street PRO Garage",
+export const metadata: Metadata = pageMeta({
+  title: "ECU Installation & Custom Wiring | Street PRO Garage",
+  description: "Standalone ECU installs, custom wiring harnesses and engine-swap wiring for MaxxECU, Link, Haltech, AEM and EcuMaster. Discuss your wiring project.",
+  path: "/custom-wiring",
+  image: "/og/wiring.jpg",
+});
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Custom automotive wiring and standalone ECU installation",
+  name: "Custom wiring harnesses and ECU installation",
+  provider: { "@type": "AutoRepair", name: "Street PRO Garage", url: "https://www.streetprogarage.com" },
+  areaServed: ["United Kingdom", "Pakistan"],
   description:
-    "Standalone ECU installation and custom wiring harnesses for MaxxECU, Link, Haltech, AEM, EcuMaster and Megasquirt. Engine-swap wiring, gauge fitting, Honda P28 ECU socketing, and diagnostics for stuck or half-finished JDM builds. Discuss your wiring project.",
+    "Custom wiring harnesses, standalone ECU installation, engine-swap wiring, sensor and gauge wiring, and wiring fault finding for JDM performance cars.",
 };
 
 const services = [
@@ -107,6 +119,7 @@ export default function CustomWiringPage() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
       {/* Hero */}
       <section className="relative isolate overflow-hidden border-b border-border">
         <div aria-hidden className="absolute inset-0 -z-10">

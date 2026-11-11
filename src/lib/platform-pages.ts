@@ -24,9 +24,9 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "honda-obd1",
     name: "Honda OBD1 (D/B/H/F-Series)",
-    metaTitle: "Honda D16 B16 B18 H22 ECU Tuning — Remote & Dyno | Street PRO Garage",
+    metaTitle: "Honda D16 B16 B18 H22 ECU Tuning | Street PRO Garage",
     metaDescription:
-      "ECU tuning for Honda OBD1 D16, B16, B18, B20, H22, H23 and F20B/F22/F23 swaps — P28 (chipped), Hondata S300, Hondavert, HTS. Remote, road-logged or rolling road dyno tuning.",
+      "ECU tuning for Honda OBD1 D16, B16, B18, B20, H22, H23 and F-series builds. Remote and dyno tuning on Hondata, P28 and standalone ECUs. Get a quote.",
     h1: "Honda OBD1 Tuning — D, B, H & F-Series",
     intro:
       "Classic Honda OBD1 tuning across D-series, B-series, H-series and F-series swaps — Civic, CRX, Del Sol and Prelude builds, including mini D16 swaps. Every tune is written from scratch for your actual engine, mods and fuel, not a generic chip.",
@@ -55,9 +55,9 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "honda-k-series",
     name: "Honda K & R-Series (K20/K24/R18)",
-    metaTitle: "Honda K20 K24 R18 Tuning — Hondata KPro & Turbo | Street PRO Garage",
+    metaTitle: "Honda K20 K24 R18 Tuning | Street PRO Garage",
     metaDescription:
-      "ECU tuning for Honda K20, K24 and R18 builds — Civic, EP3 Type R and K-swaps — on Hondata KPro, MaxxECU or Haltech standalone. Remote, road-logged or rolling road dyno tuning.",
+      "ECU tuning for Honda K20, K24 and R18 builds: Civic, EP3 Type R, Integra and swaps. Hondata KPro, MaxxECU or Haltech. Remote and dyno tuning.",
     h1: "Honda K & R-Series Tuning — K20, K24 & R18",
     intro:
       "K-series and R18 tuning for Civic K-swaps and EP3 Type R builds, from stock-turbo K24 tunes through to full standalone conversions. We've dyno-proven results on both piggyback and standalone setups.",
@@ -86,9 +86,9 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "subaru-wrx-sti",
     name: "Subaru WRX/STI",
-    metaTitle: "Subaru WRX & STI Remap & ECU Tuning — Remote & Dyno | Street PRO Garage",
+    metaTitle: "Subaru WRX & STI ECU Tuning | Street PRO Garage",
     metaDescription:
-      "ECU tuning for Subaru Impreza WRX & STI — UK 2000 model, 2001–05 with race ROM upgrade, and 2006-onward. Stock ECU reflash via HP Tuners plus standalone options.",
+      "ECU tuning for Subaru Impreza WRX and STI, from the UK 2000 model onward. Custom maps written from scratch, remote or on the dyno. Get a quote.",
     h1: "Subaru WRX & STI Tuning",
     intro:
       "Subaru Impreza WRX and STI tuning across three distinct generations — the UK 2000 model, 2001–05 cars (with a race ROM upgrade for more headroom and features), and 2006-onward models. Every map is written for your actual mods and fuel.",
@@ -117,9 +117,9 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "mitsubishi-evo",
     name: "Mitsubishi Lancer Evo",
-    metaTitle: "Mitsubishi Evo ECU Tuning — Evo 1-9 Remote & Dyno | Street PRO Garage",
+    metaTitle: "Mitsubishi Evo ECU Tuning | Street PRO Garage",
     metaDescription:
-      "ECU tuning for Mitsubishi Lancer Evo I–III, IV–VI and VIII–IX (4G63T) — stock ECU, AEM Infinity, MegaSquirt or MaxxECU standalone. Remote or rolling road dyno tuning.",
+      "ECU tuning for Mitsubishi Lancer Evo I-III, IV-VI and VIII-IX. Stock ECU, standalone and piggyback options, remote or dyno. Get a quote.",
     h1: "Mitsubishi Lancer Evo Tuning",
     intro:
       "Lancer Evo tuning across the 4G63T-powered generations — Evo I–III, IV–VI and VIII–IX — on stock ECU or a full standalone conversion. Custom-written maps for your turbo, fuelling and power target, not a canned Evo map.",
@@ -148,9 +148,9 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "toyota-supra-mr2",
     name: "Toyota Supra & MR2",
-    metaTitle: "Toyota 2JZ, MR2 3SGTE & 2ZZ Tuning — Standalone ECU | Street PRO Garage",
+    metaTitle: "Toyota 2JZ, 3SGTE & 2ZZ Tuning | Street PRO Garage",
     metaDescription:
-      "ECU tuning for Toyota Supra 2JZGTE, MR2 Turbo 3SGTE, and 2ZZ-GE builds on AEM Infinity or EcuMaster standalone. Remote, road-logged or rolling road dyno tuning.",
+      "ECU tuning for Toyota Supra 2JZGTE, MR2 Turbo 3SGTE and 2ZZ-GE builds on standalone ECUs. Custom maps, remote or dyno. Get a quote.",
     h1: "Toyota Supra & MR2 Tuning",
     intro:
       "Toyota Supra 2JZGTE, MR2 Turbo 3SGTE and 2ZZ-GE tuning on standalone ECUs — from stock-turbo daily builds to big single-turbo setups on flex fuel.",
@@ -179,9 +179,9 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "mazda-miata-mx5",
     name: "Mazda Miata / MX-5",
-    metaTitle: "Mazda MX-5 Miata Turbo & NA ECU Tuning | Street PRO Garage",
+    metaTitle: "Mazda MX-5 Miata ECU Tuning | Street PRO Garage",
     metaDescription:
-      "ECU tuning for Mazda Miata/MX-5 — naturally aspirated, turbo and supercharged builds — on standalone ECUs. Remote, road-logged or rolling road dyno tuning.",
+      "ECU tuning for Mazda Miata/MX-5, naturally aspirated and turbo. Custom maps written from scratch, remote or on the dyno. Get a quote.",
     h1: "Mazda Miata / MX-5 Tuning",
     intro:
       "Miata/MX-5 tuning across naturally aspirated, turbo and supercharged builds — from a mild NA tune to a fully boosted standalone conversion.",
@@ -210,9 +210,9 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "nissan-pulsar",
     name: "Nissan Pulsar GTiR",
-    metaTitle: "Nissan SR20DET Pulsar GTiR Tuning — Nistune & Link | Street PRO Garage",
+    metaTitle: "Nissan Pulsar GTiR SR20DET Tuning | Street PRO Garage",
     metaDescription:
-      "ECU tuning for Nissan Pulsar GTiR SR20DET builds — stock ECU on Nistune, or Link ECU standalone. Remote, road-logged or rolling road dyno tuning.",
+      "ECU tuning for Nissan Pulsar GTiR SR20DET builds: stock ECU with Nistune, or standalone such as Link. Custom maps, remote or dyno. Get a quote.",
     h1: "Nissan Pulsar GTiR Tuning",
     intro:
       "SR20DET Pulsar GTiR tuning on stock ECU via Nistune reflash, or a full Link ECU standalone conversion for built/modified engines.",
@@ -241,9 +241,9 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "nissan-skyline-gtr",
     name: "Nissan Skyline & GT-R",
-    metaTitle: "Nissan Skyline GT-R RB25 RB26 ECU Tuning — Remote & Dyno | Street PRO Garage",
+    metaTitle: "Nissan Skyline GT-R RB25 RB26 Tuning | Street PRO Garage",
     metaDescription:
-      "ECU tuning for Nissan Skyline and GT-R — RB20, RB25DET and RB26DETT — on Nistune, Haltech, Link, MaxxECU or AEM Infinity. Remote e-tuning or rolling road dyno tuning. Get a quote.",
+      "ECU tuning for Nissan Skyline and GT-R: RB20, RB25DET and RB26DETT on Nistune or standalone (Haltech, Link, MaxxECU). Remote or dyno.",
     h1: "Nissan Skyline & GT-R Tuning — RB20, RB25 & RB26",
     intro:
       "RB-powered Skylines and GT-Rs tuned properly — stock ECU on Nistune for lightly modified cars, or a full standalone conversion for big-turbo builds. Custom-written maps, not a generic file.",
@@ -272,9 +272,9 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "nissan-silvia-200sx",
     name: "Nissan Silvia & 200SX",
-    metaTitle: "Nissan Silvia S13 S14 S15 200SX SR20DET Tuning | Street PRO Garage",
+    metaTitle: "Nissan Silvia S13 S14 S15 Tuning | Street PRO Garage",
     metaDescription:
-      "ECU tuning for Nissan Silvia S13, S14, S15 and 200SX — SR20DET and CA18DET — on Nistune, Link, Haltech or MaxxECU. Remote and dyno tuning, plus SR20 swaps. Get a quote.",
+      "ECU tuning for Nissan Silvia S13, S14, S15 and 200SX: SR20DET and CA18DET builds. Custom maps written from scratch, remote or dyno. Get a quote.",
     h1: "Nissan Silvia & 200SX Tuning — SR20DET & CA18DET",
     intro:
       "Silvia and 200SX tuning for stock-ECU Nistune builds through to full standalone conversions on SR20DET and CA18DET engines, including SR20 swaps into other chassis.",
@@ -303,9 +303,9 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "honda-s2000",
     name: "Honda S2000",
-    metaTitle: "Honda S2000 ECU Tuning — Hondata FlashPro, Turbo & NA | Street PRO Garage",
+    metaTitle: "Honda S2000 ECU Tuning | Street PRO Garage",
     metaDescription:
-      "Honda S2000 tuning on Hondata FlashPro or standalone (MaxxECU, Haltech) — naturally aspirated, supercharged and turbo F20C/F22C builds. Remote and dyno tuning. Get a quote.",
+      "Honda S2000 tuning on Hondata FlashPro or standalone (MaxxECU, Link, Haltech): turbo and NA, F20C and F22C. Remote or dyno. Get a quote.",
     h1: "Honda S2000 Tuning — F20C & F22C",
     intro:
       "S2000 tuning for naturally aspirated cars on Hondata FlashPro through to supercharged and turbo builds on a standalone ECU, tuned remotely or on our rolling road dyno.",
@@ -334,9 +334,9 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "toyota-celica-chaser",
     name: "Toyota Celica & Chaser",
-    metaTitle: "Toyota Celica GT-Four 3S-GTE & Chaser 1JZ Tuning | Street PRO Garage",
+    metaTitle: "Toyota Celica GT-Four & Chaser Tuning | Street PRO Garage",
     metaDescription:
-      "ECU tuning for Toyota Celica GT-Four (3S-GTE) and Chaser (1JZ-GTE) on Link, Haltech, MaxxECU, AEM or EcuMaster. Remote and dyno tuning, wiring and swaps. Get a quote.",
+      "ECU tuning for Toyota Celica GT-Four (3S-GTE) and Chaser (1JZ-GTE) on standalone ECUs. Custom maps, remote or dyno. Get a quote.",
     h1: "Toyota Celica GT-Four & Chaser Tuning — 3S-GTE & 1JZ-GTE",
     intro:
       "Celica GT-Four and Chaser tuning on standalone ECUs, from stock-turbo daily builds to big-turbo setups, with the wiring and installation handled properly.",
@@ -365,9 +365,9 @@ export const platformPages: PlatformPage[] = [
   {
     slug: "mazda-rx7",
     name: "Mazda RX-7",
-    metaTitle: "Mazda RX-7 FD 13B-REW ECU Tuning — Standalone | Street PRO Garage",
+    metaTitle: "Mazda RX-7 FD 13B-REW Tuning | Street PRO Garage",
     metaDescription:
-      "ECU tuning for Mazda RX-7 (FD 13B-REW) on Link, Haltech, MaxxECU or AEM Infinity standalone — remote e-tuning or rolling road dyno tuning. Get a quote.",
+      "ECU tuning for Mazda RX-7 FD 13B-REW on Link, Haltech, MaxxECU and other standalone ECUs. Custom maps, remote or dyno. Get a quote.",
     h1: "Mazda RX-7 Tuning — FD 13B-REW",
     intro:
       "RX-7 tuning on a standalone ECU with the wiring and installation done properly, then tuned remotely or on the dyno for a reliable, driveable rotary.",

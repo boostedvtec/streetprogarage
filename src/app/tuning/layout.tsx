@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/tuning" },
-  title: "Remote ECU Tuning & Dyno Tuning — Honda, Subaru, Toyota, Nissan | Street PRO Garage",
-  description:
-    "Custom ECU tuning written from scratch: remote (live or road-logged) or on our Manchester rolling road. Hondata KPro, HP Tuners, Nistune, MaxxECU, Link, Haltech, AEM, EcuMaster for Honda K/B/D/H/R-series, WRX/STI, Evo, Supra, MR2, SR20DET and MX-5. Get a quote.",
-};
+export const metadata: Metadata = pageMeta({
+  title: "Remote & Dyno ECU Tuning | Street PRO Garage",
+  description: "Custom ECU tuning written from scratch, remote (live or road-logged) or on our Manchester rolling road. Honda, Subaru, Toyota, Nissan. Get a quote.",
+  path: "/tuning",
+  image: "/og/tuning.jpg",
+});
 
 export default function TuningLayout({ children }: { children: React.ReactNode }) {
   return <Suspense>{children}</Suspense>;

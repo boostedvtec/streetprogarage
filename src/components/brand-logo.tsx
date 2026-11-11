@@ -29,7 +29,7 @@ export function BrandLogo({ name, src, onDark, crop }: EcuBrandLogo) {
         // Next/Image's optimizer rejects local SVGs by default; SVGs are
         // already resolution-independent so a plain <img> is correct here.
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt={name} className="h-full w-full object-contain" />
+        <img src={src} alt={name} loading="lazy" decoding="async" className="h-full w-full object-contain" />
       ) : (
         <Image
           src={src}

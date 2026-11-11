@@ -61,7 +61,7 @@ const businessJsonLd = [
     "@type": "AutoRepair",
     name: "Street PRO Garage",
     image: `${siteUrl}/images/Logo.png`,
-    url: siteUrl,
+    url: `${siteUrl}/manchester`,
     telephone: "+44 7438 483559",
     email: "info@streetprogarage.com",
     priceRange: "££",
@@ -79,7 +79,7 @@ const businessJsonLd = [
     "@type": "AutoRepair",
     name: "Street PRO Garage",
     image: `${siteUrl}/images/Logo.png`,
-    url: siteUrl,
+    url: `${siteUrl}/karachi`,
     telephone: "+92 346 2767382",
     email: "info@streetprogarage.com",
     knowsAbout,
@@ -114,9 +114,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "JDM ECU Tuning — Honda, Toyota, Subaru, Nissan | Remote & Dyno Tuning | Street PRO Garage",
+  title: "JDM ECU Tuning, Remote & Dyno | Street PRO Garage",
   description:
-    "Japanese ECU tuning for Honda, Toyota, Subaru, Nissan, Mitsubishi & Mazda. Custom remote e-tuning worldwide (Hondata, Nistune, MaxxECU, Link, Haltech, AEM), rolling road dyno remaps in Manchester, engine swaps and stuck-project rescues. Get a quote.",
+    "Custom JDM ECU tuning for Honda, Toyota, Subaru, Nissan, Mitsubishi and Mazda. Remote worldwide, rolling road dyno in Manchester, plus wiring and engine swaps.",
   keywords: [
     "Japanese ECU tuning",
     "Japanese ECU tuning UK",
@@ -169,19 +169,19 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     siteName: "Street PRO Garage",
-    title: "JDM ECU Tuning — Honda, Toyota, Subaru, Nissan | Remote & Dyno Tuning | Street PRO Garage",
+    title: "JDM ECU Tuning, Remote & Dyno | Street PRO Garage",
     description:
-      "Custom ECU tuning for Honda, Toyota, Subaru, Nissan, Mitsubishi & Mazda. Remote tuning worldwide, rolling road dyno tuning in Manchester, standalone ECU installs (MaxxECU, Link, Haltech, AEM), JDM engine swaps and stuck-project rescues. Get a quote.",
+      "Custom JDM ECU tuning for Honda, Toyota, Subaru, Nissan, Mitsubishi and Mazda. Remote worldwide, rolling road dyno in Manchester, plus wiring and engine swaps.",
     url: siteUrl,
     type: "website",
-    images: [`${siteUrl}/images/Logo.png`],
+    images: [{ url: `${siteUrl}/og/home.jpg`, width: 1200, height: 630, alt: "Street PRO Garage" }],
   },
   twitter: {
-    card: "summary",
-    title: "JDM ECU Tuning — Honda, Toyota, Subaru, Nissan | Remote & Dyno Tuning | Street PRO Garage",
+    card: "summary_large_image",
+    title: "JDM ECU Tuning, Remote & Dyno | Street PRO Garage",
     description:
-      "Custom ECU tuning for Honda, Toyota, Subaru, Nissan, Mitsubishi & Mazda. Remote tuning worldwide, rolling road dyno tuning in Manchester, standalone ECU installs (MaxxECU, Link, Haltech, AEM), JDM engine swaps and stuck-project rescues. Get a quote.",
-    images: [`${siteUrl}/images/Logo.png`],
+      "Custom JDM ECU tuning for Honda, Toyota, Subaru, Nissan, Mitsubishi and Mazda. Remote worldwide, rolling road dyno in Manchester, plus wiring and engine swaps.",
+    images: [`${siteUrl}/og/home.jpg`],
   },
 };
 

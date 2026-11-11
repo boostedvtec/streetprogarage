@@ -4,13 +4,13 @@ import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { faqItems } from "@/lib/faq";
 import { PageHero } from "@/components/ui/page-hero";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/faq" },
-  title: "ECU Tuning FAQ — Remote Tuning, Dyno Tuning, Supported JDM Cars | Street PRO Garage",
-  description:
-    "How remote ECU tuning works, what dyno tuning costs, which JDM cars and ECUs we support (Honda, Subaru, Toyota, Nissan, Evo, MX-5), revisions, flex fuel and stuck-project help.",
-};
+export const metadata: Metadata = pageMeta({
+  title: "ECU Tuning FAQ | Street PRO Garage",
+  description: "How remote ECU tuning works, what dyno tuning costs, which JDM cars and ECUs we support, revisions, flex fuel and stuck-project help.",
+  path: "/faq",
+});
 
 const faqJsonLd = {
   "@context": "https://schema.org",
