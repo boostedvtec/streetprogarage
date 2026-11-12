@@ -233,32 +233,6 @@ export default function CustomWiringPage() {
             These are generic illustrations of common practice, not a specific vehicle, ECU or pinout. Wire colours and
             connector layouts vary by manufacturer, so every job is wired from your ECU maker&rsquo;s own documentation.
           </p>
-
-          <div className="mt-16 grid gap-8 lg:grid-cols-12 lg:items-center">
-            <div className="lg:col-span-5">
-              <Eyebrow>From the workshop</Eyebrow>
-              <h3 className="font-display mt-4 text-4xl leading-[0.95] sm:text-5xl">Rewired and set up from scratch</h3>
-              <p className="mt-4 text-[15px] leading-relaxed text-foreground-muted">
-                A Civic EK B18 turbo rescue: rewired, with base triggers and sensors set up from scratch.
-              </p>
-              <Link
-                href="/projects#civic-ek-b18-turbo-rescue"
-                className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-[13px] font-semibold uppercase tracking-[0.08em] text-accent hover:text-accent-hover"
-              >
-                Full project <ArrowRight size={14} weight="bold" aria-hidden />
-              </Link>
-            </div>
-            <figure className="relative aspect-video overflow-hidden border border-border bg-surface lg:col-span-7">
-              <video
-                src="/videos/builds/civic-ek-b18-turbo-rescue.mp4"
-                controls
-                playsInline
-                preload="metadata"
-                aria-label="Civic EK B18 turbo rescue: rewired, with base triggers and sensors set up from scratch"
-                className="h-full w-full object-cover"
-              />
-            </figure>
-          </div>
         </Container>
       </Section>
 
