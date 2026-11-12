@@ -13,7 +13,7 @@ import { useRegion } from "@/components/region/region-context";
 import { RegionSwitcher } from "@/components/region/region-switcher";
 
 /** Links shown in the desktop bar; the rest live in the mobile menu and footer. */
-const PRIMARY_HREFS = new Set(["/tuning", "/custom-wiring", "/dyno-rental", "/parts", "/engine-swaps", "/projects", "/contact"]);
+const PRIMARY_HREFS = new Set(["/tuning", "/tcu-tuning", "/custom-wiring", "/dyno-rental", "/parts", "/engine-swaps", "/projects", "/contact"]);
 
 function CartLink() {
   const { itemCount } = useCart();
