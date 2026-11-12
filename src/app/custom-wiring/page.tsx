@@ -9,7 +9,7 @@ import { HarnessBuilderForm } from "@/components/wiring/harness-builder-form";
 import { WiringEnquiryForm } from "@/components/wiring/wiring-enquiry-form";
 import { DynoLines } from "@/components/home/dyno-lines";
 import { projects } from "@/lib/projects";
-import { wiringShots } from "@/lib/wiring-showcase";
+import { EcuHarnessDiagram, PowerDiagram, SensorDiagram, CanDiagram, HarnessBoardDiagram } from "@/components/wiring/wiring-diagrams";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
@@ -105,17 +105,32 @@ const steps = [
   },
 ];
 
-function Caption({ children }: { children: React.ReactNode }) {
+/**
+ * A wiring diagram in a card. Diagrams carry small text, so on narrow screens
+ * they keep a readable minimum width and scroll sideways instead of shrinking.
+ */
+function DiagramCard({ title, text, children }: { title: string; text: string; children: React.ReactNode }) {
   return (
-    <span className="font-mono-tech absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-background/95 via-background/60 to-transparent p-4 text-[11px] uppercase leading-snug tracking-[0.12em]">
-      {children}
-    </span>
+    <figure className="grid border border-border bg-surface lg:grid-cols-12">
+      <div
+        className="overflow-x-auto p-4 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent sm:p-6 lg:col-span-8"
+        tabIndex={0}
+        role="region"
+        aria-label={`${title} diagram (scrolls sideways on small screens)`}
+      >
+        <div className="min-w-[600px] sm:min-w-0">{children}</div>
+      </div>
+      <figcaption className="flex flex-col justify-center border-t border-border p-6 lg:col-span-4 lg:border-l lg:border-t-0 lg:p-8">
+        <p className="font-mono-tech text-[11px] uppercase tracking-[0.16em] text-accent">Generic illustration</p>
+        <h3 className="font-display mt-2 text-3xl leading-none sm:text-4xl">{title}</h3>
+        <p className="mt-3 text-[15px] leading-relaxed text-foreground-muted">{text}</p>
+      </figcaption>
+    </figure>
   );
 }
 
 export default function CustomWiringPage() {
   const wiringProjects = projects.filter((p) => p.services.includes("wiring"));
-  const [lead, second, third, fourth] = wiringShots;
 
   return (
     <>
@@ -144,112 +159,82 @@ export default function CustomWiringPage() {
                 <ArrowRight size={18} weight="bold" aria-hidden />
               </LinkButton>
               <LinkButton href="#work" size="lg" variant="secondary">
-                View our work
+                See how we wire
               </LinkButton>
             </div>
           </div>
 
-          <div className="relative mb-10 lg:col-span-6 lg:mb-0">
-            <div className="brackets relative aspect-[5/4] w-full overflow-hidden border border-border-strong">
-              <Image
-                src={lead.src}
-                alt={lead.alt}
-                fill
-                priority
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover saturate-[0.9]"
-                style={{ objectPosition: lead.pos }}
-              />
-              <Caption>
-                <span className="ml-auto text-right">
-                  <span className="text-accent">01</span> &nbsp;{lead.caption}
-                </span>
-              </Caption>
-            </div>
-            <div className="absolute -bottom-10 left-4 w-[42%] max-w-[15rem] border border-border-strong bg-background p-1 shadow-[0_24px_50px_-20px_rgba(0,0,0,0.9)] lg:-left-6">
-              <div className="relative aspect-[3/4] w-full overflow-hidden">
-                <Image
-                  src={second.src}
-                  alt={second.alt}
-                  fill
-                  sizes="(min-width: 1024px) 20vw, 42vw"
-                  className="object-cover"
-                  style={{ objectPosition: second.pos }}
-                />
-              </div>
-              <p className="font-mono-tech px-1 py-1.5 text-[10px] uppercase leading-snug tracking-[0.12em] text-foreground-muted">
-                <span className="text-accent">02</span> &nbsp;{second.caption}
-              </p>
-            </div>
+          <div className="lg:col-span-6">
+            <figure className="brackets relative border border-border-strong bg-surface/60 p-4 sm:p-6">
+              <EcuHarnessDiagram />
+              <figcaption className="font-mono-tech mt-4 border-t border-border pt-3 text-[11px] uppercase leading-snug tracking-[0.12em] text-foreground-subtle">
+                <span className="text-accent">Generic illustration</span> &nbsp;Standalone ECU harness groups. Not a
+                specific vehicle.
+              </figcaption>
+            </figure>
           </div>
         </Container>
       </section>
 
-      {/* Technical showcase */}
+      {/* Wiring diagrams */}
       <Section id="work">
         <Container>
           <div className="max-w-3xl">
-            <Eyebrow>Installs &amp; engine bays</Eyebrow>
-            <h2 className="font-display mt-5 text-5xl leading-[0.92] sm:text-6xl lg:text-7xl">The craft is in the detail</h2>
+            <Eyebrow>Wiring, drawn out</Eyebrow>
+            <h2 className="font-display mt-5 text-5xl leading-[0.92] sm:text-6xl lg:text-7xl">How a harness is laid out</h2>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-foreground-muted sm:text-lg">
-              Real jobs from our workshop: engine-bay routing, ECU installs and finished swaps. Loomed, labelled and
-              routed away from heat and moving parts.
+              Four generic diagrams of the practice behind every install: clean power, correct sensor references, a
+              properly terminated CAN bus and a harness built flat, loomed and labelled before it goes in the car.
             </p>
           </div>
 
-          <div className="mt-12 grid gap-4 lg:grid-cols-12">
-            <figure className="group relative aspect-[4/3] overflow-hidden border border-border lg:col-span-8 lg:aspect-auto lg:h-[26rem]">
-              <Image
-                src={third.src}
-                alt={third.alt}
-                fill
-                sizes="(min-width: 1024px) 66vw, 100vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                style={{ objectPosition: third.pos }}
-              />
-              <Caption>{third.caption}</Caption>
-            </figure>
-            <figure className="group relative aspect-[4/5] overflow-hidden border border-border lg:col-span-4 lg:aspect-auto lg:h-[26rem]">
-              <Image
-                src={fourth.src}
-                alt={fourth.alt}
-                fill
-                sizes="(min-width: 1024px) 33vw, 100vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                style={{ objectPosition: fourth.pos }}
-              />
-              <Caption>
-                <span>{fourth.caption}</span>
-                {fourth.project && (
-                  <Link href={`/projects#${fourth.project}`} className="shrink-0 text-accent hover:text-accent-hover">
-                    Project
-                  </Link>
-                )}
-              </Caption>
-            </figure>
+          <div className="mt-12 grid gap-6">
+            <DiagramCard
+              title="Power, fusing and earths"
+              text="Battery, fusing, relays and earths laid out so every circuit is protected and every ground returns cleanly. Relay and fuse setup is part of every ECU install."
+            >
+              <PowerDiagram />
+            </DiagramCard>
+            <DiagramCard
+              title="Sensor wiring"
+              text="Each sensor gets the right 5 V reference, signal and sensor ground, with trigger wiring shielded and routed away from ignition and injector leads, so the readings you log and tune from are clean."
+            >
+              <SensorDiagram />
+            </DiagramCard>
+            <DiagramCard
+              title="CAN bus layout"
+              text="If your build uses CAN devices such as a dash, wideband or keypad, the bus should look like this: a twisted pair, short stubs and a terminator at each end."
+            >
+              <CanDiagram />
+            </DiagramCard>
+            <DiagramCard
+              title="Harness build board"
+              text="Built flat on a board before it goes in the car: convoluted tube on the trunk, heat-shrink at each breakout, every branch labelled and every connector matched to the ECU pinout."
+            >
+              <HarnessBoardDiagram />
+            </DiagramCard>
+          </div>
 
-            {[lead, second].map((shot) => (
-              <figure key={shot.src} className="group relative aspect-[4/3] overflow-hidden border border-border lg:col-span-4 lg:aspect-auto lg:h-[22rem]">
-                <Image
-                  src={shot.src}
-                  alt={shot.alt}
-                  fill
-                  sizes="(min-width: 1024px) 33vw, 100vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                  style={{ objectPosition: shot.pos }}
-                />
-                <Caption>
-                  <span>{shot.caption}</span>
-                  {shot.project && (
-                    <Link href={`/projects#${shot.project}`} className="shrink-0 text-accent hover:text-accent-hover">
-                      Project
-                    </Link>
-                  )}
-                </Caption>
-              </figure>
-            ))}
+          <p className="mt-6 max-w-3xl text-sm leading-relaxed text-foreground-subtle">
+            These are generic illustrations of common practice, not a specific vehicle, ECU or pinout. Wire colours and
+            connector layouts vary by manufacturer, so every job is wired from your ECU maker&rsquo;s own documentation.
+          </p>
 
-            <figure className="relative aspect-[4/3] overflow-hidden border border-border bg-surface lg:col-span-4 lg:aspect-auto lg:h-[22rem]">
+          <div className="mt-16 grid gap-8 lg:grid-cols-12 lg:items-center">
+            <div className="lg:col-span-5">
+              <Eyebrow>From the workshop</Eyebrow>
+              <h3 className="font-display mt-4 text-4xl leading-[0.95] sm:text-5xl">Rewired and set up from scratch</h3>
+              <p className="mt-4 text-[15px] leading-relaxed text-foreground-muted">
+                A Civic EK B18 turbo rescue: rewired, with base triggers and sensors set up from scratch.
+              </p>
+              <Link
+                href="/projects#civic-ek-b18-turbo-rescue"
+                className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-[13px] font-semibold uppercase tracking-[0.08em] text-accent hover:text-accent-hover"
+              >
+                Full project <ArrowRight size={14} weight="bold" aria-hidden />
+              </Link>
+            </div>
+            <figure className="relative aspect-video overflow-hidden border border-border bg-surface lg:col-span-7">
               <video
                 src="/videos/builds/civic-ek-b18-turbo-rescue.mp4"
                 controls
@@ -258,9 +243,6 @@ export default function CustomWiringPage() {
                 aria-label="Civic EK B18 turbo rescue: rewired, with base triggers and sensors set up from scratch"
                 className="h-full w-full object-cover"
               />
-              <figcaption className="font-mono-tech pointer-events-none absolute left-0 top-0 bg-background/85 px-3 py-1.5 text-[11px] uppercase tracking-[0.12em]">
-                EK B18 turbo: rewired and set up from scratch
-              </figcaption>
             </figure>
           </div>
         </Container>
