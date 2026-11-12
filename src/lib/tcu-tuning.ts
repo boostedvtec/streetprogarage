@@ -35,7 +35,6 @@ export const tcuSetups: TcuSetup[] = [
     title: "Haltech A340E control",
     summary:
       "Haltech's transmission control can run the Toyota A340E four-speed automatic directly from the ECU, so shifts are calibrated alongside the engine map.",
-    tag: "Recently completed",
     coverTitle: "What we set up and tune",
     covers: [
       "Wiring of the two high-side outputs that drive the S1 and S2 shift solenoids",
