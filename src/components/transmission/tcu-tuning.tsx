@@ -1,7 +1,7 @@
-import { ArrowUpRight, CheckCircle, Info } from "@phosphor-icons/react/dist/ssr";
+import { ArrowUpRight, CheckCircle, Clock, Info } from "@phosphor-icons/react/dist/ssr";
 import { BrandLogo } from "@/components/brand-logo";
 import { ecuBrandLogos } from "@/lib/site-config";
-import { tcuSetups } from "@/lib/tcu-tuning";
+import { tcuSetups, tcuUpcoming } from "@/lib/tcu-tuning";
 
 /** The Haltech A340E and ZF 8HP setup cards for the TCU tuning page. */
 export function TcuSetupCards() {
@@ -73,5 +73,73 @@ export function TcuSetupCards() {
         );
       })}
     </div>
+  );
+}
+
+/** Haltech's announced Ti8HP, shown as upcoming and not yet released. */
+export function TcuUpcomingCard() {
+  const u = tcuUpcoming;
+  const logo = ecuBrandLogos.find((l) => l.name === u.logo);
+  const lists = [
+    { title: u.whatTitle, items: u.what },
+    { title: u.needTitle, items: u.need },
+    { title: u.laterTitle, items: u.later },
+  ];
+  return (
+    <article id={u.id} className="mt-6 scroll-mt-24 border border-dashed border-accent/50 bg-surface p-6 sm:p-8">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="font-mono-tech text-[11px] uppercase tracking-[0.16em] text-accent">{u.eyebrow}</p>
+          <h3 className="font-display mt-2 text-3xl leading-none sm:text-4xl">{u.title}</h3>
+        </div>
+        {logo && (
+          <div className="hidden w-28 shrink-0 sm:block">
+            <BrandLogo {...logo} />
+          </div>
+        )}
+      </div>
+
+      <p className="font-mono-tech mt-4 inline-flex items-center gap-2 border border-accent/50 bg-accent-soft px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-accent">
+        <Clock size={14} weight="bold" aria-hidden />
+        {u.tag}
+      </p>
+
+      <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-foreground-muted">{u.summary}</p>
+
+      <div className="mt-6 grid gap-6 lg:grid-cols-3">
+        {lists.map((l) => (
+          <div key={l.title}>
+            <h4 className="font-mono-tech text-[11px] uppercase tracking-[0.16em] text-foreground-subtle">{l.title}</h4>
+            <ul className="mt-3 grid gap-2.5 text-sm text-foreground">
+              {l.items.map((i) => (
+                <li key={i} className="flex items-start gap-2.5">
+                  <span className="mt-2 h-1 w-3 shrink-0 bg-accent" aria-hidden />
+                  {i}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-6 flex items-start gap-2 border border-border-strong bg-surface-2 p-4 text-sm leading-relaxed text-foreground-muted">
+        <Info size={16} className="mt-0.5 shrink-0" aria-hidden />
+        <span>{u.note}</span>
+      </div>
+
+      <div className="mt-4 flex flex-wrap gap-x-6">
+        {u.sources.map((src) => (
+          <a
+            key={src.url}
+            href={src.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center gap-1.5 text-[13px] font-semibold uppercase tracking-[0.08em] text-accent hover:text-accent-hover"
+          >
+            {src.label} <ArrowUpRight size={14} weight="bold" aria-hidden />
+          </a>
+        ))}
+      </div>
+    </article>
   );
 }

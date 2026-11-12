@@ -4,7 +4,7 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { DynoLines } from "@/components/home/dyno-lines";
-import { TcuSetupCards } from "@/components/transmission/tcu-tuning";
+import { TcuSetupCards, TcuUpcomingCard } from "@/components/transmission/tcu-tuning";
 import { TcuDiagram } from "@/components/transmission/tcu-diagram";
 import { tcuFaq, tcuSpecsChecked, tcuSteps } from "@/lib/tcu-tuning";
 import { pageMeta } from "@/lib/seo";
@@ -119,6 +119,7 @@ export default function TcuTuningPage() {
           </div>
           <div className="mt-12">
             <TcuSetupCards />
+            <TcuUpcomingCard />
           </div>
           <p className="mt-6 max-w-3xl text-sm leading-relaxed text-foreground-subtle">
             Transmission details are summarised from the manufacturers&rsquo; own documentation (checked {tcuSpecsChecked})
