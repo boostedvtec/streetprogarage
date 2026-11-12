@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, CheckCircle, Info } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
@@ -8,7 +7,6 @@ import { UkOnlySection } from "@/components/region/uk-only-section";
 import { HarnessBuilderForm } from "@/components/wiring/harness-builder-form";
 import { WiringEnquiryForm } from "@/components/wiring/wiring-enquiry-form";
 import { DynoLines } from "@/components/home/dyno-lines";
-import { projects } from "@/lib/projects";
 import {
   EcuHarnessDiagram,
   PowerDiagram,
@@ -148,8 +146,6 @@ function DiagramCard({ title, text, children }: { title: string; text: string; c
 }
 
 export default function CustomWiringPage() {
-  const wiringProjects = projects.filter((p) => p.services.includes("wiring"));
-
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
@@ -421,76 +417,9 @@ export default function CustomWiringPage() {
         </Container>
       </Section>
 
-      {/* Project evidence */}
-      <Section id="projects" className="border-t border-border bg-surface/40">
-        <Container>
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <div className="max-w-3xl">
-              <Eyebrow>Wiring in real projects</Eyebrow>
-              <h2 className="font-display mt-5 text-5xl leading-[0.92] sm:text-6xl lg:text-7xl">Jobs we have wired</h2>
-            </div>
-            <Link
-              href="/projects"
-              className="inline-flex min-h-11 items-center gap-2 text-[13px] font-semibold uppercase tracking-[0.1em] text-accent hover:text-accent-hover"
-            >
-              All projects <ArrowRight size={16} weight="bold" aria-hidden />
-            </Link>
-          </div>
-
-          {wiringProjects.length === 0 ? (
-            <p className="mt-10 border border-dashed border-border-strong p-8 text-foreground-muted">
-              New wiring projects will appear here as they are completed. Tell us about yours below.
-            </p>
-          ) : (
-            <ul className="mt-12 grid gap-6 md:grid-cols-2">
-              {wiringProjects.map((p) => (
-                <li key={p.slug} className="flex flex-col border border-border bg-surface">
-                  <div className="relative aspect-video w-full bg-surface-2">
-                    {p.media?.type === "image" ? (
-                      <Image src={p.media.src} alt={p.media.alt} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
-                    ) : p.media?.type === "video" ? (
-                      <video
-                        src={p.media.src}
-                        controls
-                        playsInline
-                        preload="metadata"
-                        aria-label={`${p.title} video`}
-                        className="h-full w-full object-cover"
-                      />
-                    ) : null}
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <p className="font-mono-tech text-[11px] uppercase tracking-[0.16em] text-foreground-subtle">
-                      {[p.vehicle, p.engine, p.ecu].filter(Boolean).join(" · ")}
-                    </p>
-                    <h3 className="font-display mt-2 text-3xl leading-none">{p.title}</h3>
-                    <ul className="mt-4 grid gap-1.5 text-sm text-foreground-muted">
-                      {p.buildList.slice(0, 4).map((b) => (
-                        <li key={b} className="flex items-start gap-2.5">
-                          <span className="mt-2 h-1 w-3 shrink-0 bg-accent" aria-hidden />
-                          {b}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="mt-auto flex flex-wrap gap-x-6 pt-5">
-                      <Link href={`/projects#${p.slug}`} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-accent hover:text-accent-hover">
-                        Full project <ArrowRight size={14} weight="bold" aria-hidden />
-                      </Link>
-                      <Link href="#enquiry" className="inline-flex min-h-11 items-center text-sm font-semibold text-foreground-muted hover:text-foreground">
-                        Similar project? Enquire
-                      </Link>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </Container>
-      </Section>
-
       {/* Honda OBD1 ECU services: UK only */}
       <UkOnlySection>
-        <Section>
+        <Section className="border-t border-border">
           <Container>
             <div className="grid gap-10 lg:grid-cols-[2fr_3fr] lg:items-start">
               <div>
