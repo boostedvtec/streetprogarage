@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, CheckCircle, Info } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, ArrowUpRight, CheckCircle, Info } from "@phosphor-icons/react/dist/ssr";
 import { Container, Section, Eyebrow } from "@/components/ui/container";
 import { LinkButton } from "@/components/ui/button";
 import { UkOnlySection } from "@/components/region/uk-only-section";
@@ -9,12 +9,20 @@ import { HarnessBuilderForm } from "@/components/wiring/harness-builder-form";
 import { WiringEnquiryForm } from "@/components/wiring/wiring-enquiry-form";
 import { DynoLines } from "@/components/home/dyno-lines";
 import { projects } from "@/lib/projects";
-import { EcuHarnessDiagram, PowerDiagram, SensorDiagram, CanDiagram, HarnessBoardDiagram } from "@/components/wiring/wiring-diagrams";
+import {
+  EcuHarnessDiagram,
+  PowerDiagram,
+  SensorDiagram,
+  CanDiagram,
+  HarnessBoardDiagram,
+  PdmDiagram,
+} from "@/components/wiring/wiring-diagrams";
+import { pdmInstallSteps, pdmModels, pdmSpecsChecked } from "@/lib/pdm-models";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
   title: "ECU Installation & Custom Wiring | Street PRO Garage",
-  description: "Standalone ECU installs, custom wiring harnesses and engine-swap wiring for MaxxECU, Link, Haltech, AEM and EcuMaster. Discuss your wiring project.",
+  description: "Standalone ECU installs, custom harnesses, PDM installation and engine-swap wiring for MaxxECU, Link, Haltech, AEM and EcuMaster. Discuss your project.",
   path: "/custom-wiring",
   image: "/og/wiring.jpg",
 });
@@ -27,7 +35,7 @@ const serviceJsonLd = {
   provider: { "@type": "AutoRepair", name: "Street PRO Garage", url: "https://www.streetprogarage.com" },
   areaServed: ["United Kingdom", "Pakistan"],
   description:
-    "Custom wiring harnesses, standalone ECU installation, engine-swap wiring, sensor and gauge wiring, and wiring fault finding for JDM performance cars.",
+    "Custom wiring harnesses, standalone ECU installation, PDM (power distribution module) installation and setup, engine-swap wiring, sensor and gauge wiring, and wiring fault finding for JDM performance cars.",
 };
 
 const services = [
@@ -56,6 +64,16 @@ const services = [
     title: "Piggyback ECU integration",
     text: "Add a piggyback solution alongside the factory ECU and integrate it with the existing harness.",
     points: ["Piggyback ECU integration with the factory harness"],
+  },
+  {
+    title: "PDM installation and setup",
+    text: "Replace the fuse and relay box with a programmable PDM, wired, linked to your ECU over CAN and configured.",
+    points: [
+      "Haltech, PLEX, Hardwire, MoTeC, Link, MaxxECU, Ecumaster, AEM and AiM units",
+      "Output wiring, fusing and the CAN link to your ECU",
+      "Software set-up of outputs, current limits and fan control",
+    ],
+    href: "#pdm",
   },
   {
     title: "Sensors, ignition and injectors",
@@ -253,7 +271,7 @@ export default function CustomWiringPage() {
         <Container>
           <div className="max-w-3xl">
             <Eyebrow>What we wire</Eyebrow>
-            <h2 className="font-display mt-5 text-5xl leading-[0.92] sm:text-6xl lg:text-7xl">Six kinds of wiring work</h2>
+            <h2 className="font-display mt-5 text-5xl leading-[0.92] sm:text-6xl lg:text-7xl">Seven kinds of wiring work</h2>
           </div>
           <ol className="mt-12 border-t border-border-strong">
             {services.map((s, i) => (
@@ -294,8 +312,95 @@ export default function CustomWiringPage() {
         </Container>
       </Section>
 
+      {/* PDM installation */}
+      <Section id="pdm" className="border-t border-border">
+        <Container>
+          <div className="max-w-3xl">
+            <Eyebrow>Power distribution</Eyebrow>
+            <h2 className="font-display mt-5 text-5xl leading-[0.92] sm:text-6xl lg:text-7xl">PDM installation</h2>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-foreground-muted sm:text-lg">
+              A PDM replaces the fuse box and relays with electronically switched outputs you configure in software.
+              Each output is protected and measured, and the whole thing talks to your ECU and dash over CAN. We fit
+              and set up the units below, and others on request.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6">
+            <DiagramCard
+              title="PDM layout"
+              text="One fused feed in, an ignition-switched wake-up, CAN to the ECU and keypad, and outputs split into high-current loads such as pumps and fans and low-current loads such as lights."
+            >
+              <PdmDiagram />
+            </DiagramCard>
+          </div>
+
+          <div className="mt-16 flex flex-wrap items-end justify-between gap-4">
+            <h3 className="font-display text-4xl leading-none sm:text-5xl">PDMs we install</h3>
+            <p className="font-mono-tech text-[11px] uppercase tracking-[0.14em] text-foreground-subtle">
+              {pdmModels.length} makes and models
+            </p>
+          </div>
+          <ul className="mt-8 grid gap-4 lg:grid-cols-2">
+            {pdmModels.map((m) => (
+              <li key={`${m.brand}-${m.model}`} className="flex flex-col border border-border bg-surface p-6">
+                <p className="font-mono-tech text-[11px] uppercase tracking-[0.16em] text-accent">{m.brand}</p>
+                <h4 className="font-display mt-2 text-3xl leading-none sm:text-4xl">{m.model}</h4>
+                <p className="mt-3 text-[15px] leading-relaxed text-foreground-muted">{m.summary}</p>
+                <ul className="mt-4 grid gap-2 text-sm text-foreground">
+                  {m.specs.map((s) => (
+                    <li key={s} className="flex items-start gap-2.5">
+                      <span className="mt-2 h-1 w-3 shrink-0 bg-accent" aria-hidden />
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-4 text-sm leading-relaxed text-foreground-muted">
+                  <span className="font-mono-tech block text-[11px] uppercase tracking-[0.14em] text-foreground-subtle">
+                    Works with
+                  </span>
+                  {m.pairsWith}
+                </p>
+                <a
+                  href={m.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-auto inline-flex min-h-11 items-center gap-1.5 pt-4 text-[13px] font-semibold uppercase tracking-[0.08em] text-accent hover:text-accent-hover"
+                >
+                  Manufacturer page <ArrowUpRight size={14} weight="bold" aria-hidden />
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6 max-w-3xl text-sm leading-relaxed text-foreground-subtle">
+            Specifications are summarised from each manufacturer&rsquo;s published pages (checked {pdmSpecsChecked}) and
+            change between revisions. We confirm the exact model and ECU pairing before quoting. Not listed? Ask, we
+            can look at other units.
+          </p>
+
+          <div className="mt-16 grid gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-4">
+              <Eyebrow>What an install covers</Eyebrow>
+              <h3 className="font-display mt-4 text-4xl leading-[0.95] sm:text-5xl">From load list to live test</h3>
+              <LinkButton href="#enquiry" size="lg" className="mt-8">
+                Enquire about a PDM install
+                <ArrowRight size={18} weight="bold" aria-hidden />
+              </LinkButton>
+            </div>
+            <ol className="grid gap-4 sm:grid-cols-2 lg:col-span-8">
+              {pdmInstallSteps.map((s, i) => (
+                <li key={s.title} className="border border-border bg-surface p-5 sm:p-6">
+                  <span className="font-mono-tech text-xs tracking-[0.2em] text-accent">{String(i + 1).padStart(2, "0")}</span>
+                  <h4 className="font-display mt-2 text-2xl leading-none">{s.title}</h4>
+                  <p className="mt-2 text-sm leading-relaxed text-foreground-muted">{s.text}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Container>
+      </Section>
+
       {/* Process */}
-      <Section id="process">
+      <Section id="process" className="border-t border-border">
         <Container>
           <div className="max-w-3xl">
             <Eyebrow>How a wiring project works</Eyebrow>

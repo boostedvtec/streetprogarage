@@ -552,3 +552,121 @@ export function HarnessBoardDiagram() {
     </Frame>
   );
 }
+
+/* ------------------------------------------------------------------ */
+/* 6. PDM layout                                                       */
+/* ------------------------------------------------------------------ */
+
+export function PdmDiagram() {
+  const high = [
+    { y: 134, l: "FUEL PUMP" },
+    { y: 178, l: "COOLING FAN" },
+    { y: 222, l: "WATER PUMP" },
+  ];
+  const low = [
+    { y: 268, l: "LIGHTS" },
+    { y: 306, l: "AUX / ACCESSORY" },
+  ];
+
+  return (
+    <Frame
+      name="pdm-diagram"
+      viewBox="0 0 720 372"
+      title="PDM layout replacing a fuse and relay box"
+      desc="Generic diagram of a programmable power distribution module. The battery feeds the PDM through a main fuse, an ignition feed switches it on, and it talks to the ECU and a keypad over CAN. Its outputs power the fuel pump, cooling fan and water pump on high-current channels, and lights and accessories on low-current channels."
+    >
+      {/* ECU on CAN */}
+      <rect x={20} y={30} width={90} height={64} rx={3} fill={C.surface2} stroke={C.accent} strokeWidth={1.5} />
+      <text x={65} y={72} textAnchor="middle" fontSize={28} fill={C.fg} className="font-display">
+        ECU
+      </text>
+      <Wire d="M110,56 H260" color={W.ref} w={2.5} />
+      <Wire d="M110,68 H260" color={W.grn} w={2.5} />
+      <T x={185} y={46} size={11} fill={C.muted} anchor="middle">
+        CAN
+      </T>
+
+      {/* Battery and main feed */}
+      <rect x={20} y={130} width={90} height={100} rx={3} fill={C.surface2} stroke={C.line} />
+      <T x={65} y={175} size={13} anchor="middle" weight={600}>
+        BATTERY
+      </T>
+      <T x={65} y={198} size={18} fill={C.accent} anchor="middle" weight={600}>
+        12 V
+      </T>
+      <Wire d="M110,180 H150" color={W.pos} w={4} />
+      <rect x={150} y={168} width={60} height={24} rx={2} fill={C.surface} stroke={W.pos} strokeWidth={1.5} />
+      <T x={180} y={160} size={11} fill={C.muted} anchor="middle">
+        MAIN FUSE
+      </T>
+      <Wire d="M210,180 H260" color={W.pos} w={4} />
+
+      {/* Ignition feed */}
+      <rect x={20} y={262} width={90} height={44} rx={3} fill={C.surface} stroke={C.line} />
+      <T x={65} y={281} size={12} anchor="middle" weight={600}>
+        IGNITION
+      </T>
+      <T x={65} y={297} size={10.5} fill={C.muted} anchor="middle">
+        switched 12 V
+      </T>
+      <Wire d="M110,284 H260" color={W.pos} w={2.5} dash="6 5" />
+
+      {/* PDM */}
+      <rect x={260} y={30} width={200} height={284} rx={3} fill={C.surface2} stroke={C.accent} strokeWidth={1.5} />
+      <text x={360} y={82} textAnchor="middle" fontSize={44} fill={C.fg} className="font-display">
+        PDM
+      </text>
+      <T x={360} y={102} size={11} fill={C.muted} anchor="middle" spacing={1.5}>
+        SOLID-STATE OUTPUTS
+      </T>
+      <line x1={274} y1={116} x2={446} y2={116} stroke={C.line} />
+      {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+        <circle key={i} cx={288 + i * 20.5} cy={292} r={3.5} fill={i < 5 ? W.grn : C.subtle} />
+      ))}
+      <T x={360} y={310} size={10} fill={C.subtle} anchor="middle">
+        status LEDs
+      </T>
+
+      {/* Keypad on CAN */}
+      <Wire d="M460,56 H580" color={W.ref} w={2.5} />
+      <Wire d="M460,68 H580" color={W.grn} w={2.5} />
+      <rect x={580} y={36} width={120} height={44} rx={3} fill={C.surface} stroke={C.line} />
+      <T x={640} y={63} size={13} anchor="middle" weight={600}>
+        KEYPAD
+      </T>
+
+      {/* Outputs */}
+      <T x={470} y={116} size={10} fill={C.muted}>
+        HIGH-CURRENT OUTPUTS
+      </T>
+      {high.map((o) => (
+        <g key={o.l}>
+          <Wire d={`M460,${o.y} H580`} color={W.pos} w={4} />
+          <rect x={580} y={o.y - 17} width={120} height={34} rx={3} fill={C.surface} stroke={C.line} />
+          <T x={640} y={o.y + 4.5} size={12} anchor="middle" weight={600}>
+            {o.l}
+          </T>
+        </g>
+      ))}
+      <T x={470} y={248} size={10} fill={C.muted}>
+        LOW-CURRENT OUTPUTS
+      </T>
+      {low.map((o) => (
+        <g key={o.l}>
+          <Wire d={`M460,${o.y} H580`} color={W.pos} w={2.5} />
+          <rect x={580} y={o.y - 15} width={120} height={30} rx={3} fill={C.surface} stroke={C.line} />
+          <T x={640} y={o.y + 4.5} size={12} anchor="middle" weight={600}>
+            {o.l}
+          </T>
+        </g>
+      ))}
+
+      {/* Earth */}
+      <Wire d="M360,314 V344 H560" color={W.gnd} w={4} />
+      <Wire d="M560,344 V352 M548,352 H572 M553,358 H567 M558,364 H562" color={W.gnd} w={2} />
+      <T x={376} y={336} size={11} fill={C.muted}>
+        PDM EARTH TO BATTERY / CHASSIS
+      </T>
+    </Frame>
+  );
+}

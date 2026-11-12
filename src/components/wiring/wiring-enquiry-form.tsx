@@ -10,6 +10,7 @@ const WORK_TYPES = [
   "Custom harness / standalone ECU wiring",
   "Engine-swap wiring",
   "Piggyback ECU integration",
+  "PDM installation and setup",
   "Sensors, ignition or injector wiring",
   "Gauge installation",
   "Wiring repair or fault finding",
