@@ -32,7 +32,7 @@
 
 ## Key Pages
 
-- [Tuning](/tuning): Remote tuning, road tuning, and rolling road dyno tuning — methods, pricing structure, and supported ECU platforms.
+- [Tuning](/tuning): Remote tuning, road tuning, and rolling road dyno tuning — methods, pricing structure, and supported ECU platforms. Transmission tuning has its own page: [TCU Tuning](/tcu-tuning).
 - [Honda OBD1 Tuning](/tuning/honda-obd1): D/B/H/F-series Civic, CRX, Del Sol & Prelude tuning.
 - [Honda K & R-Series Tuning](/tuning/honda-k-series): K20/K24/R18 Civic and EP3 Type R tuning.
 - [Subaru WRX/STI Tuning](/tuning/subaru-wrx-sti): UK 2000, 2001–05 and 2006-onward Impreza WRX/STI tuning.

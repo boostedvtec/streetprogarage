@@ -7,7 +7,7 @@ import type { ReactNode } from "react";
  * not a specific vehicle, ECU or pinout, and the page labels them as such.
  */
 
-const C = {
+export const C = {
   bg: "var(--color-background)",
   surface: "var(--color-surface)",
   surface2: "var(--color-surface-2)",
@@ -19,7 +19,7 @@ const C = {
 };
 
 /** Wire colours. Illustrative: they follow common convention, not a real loom. */
-const W = {
+export const W = {
   pos: "#ef4444",
   gnd: "#a1a1aa",
   sig: "#e4e4e7",
@@ -29,7 +29,7 @@ const W = {
   out: "#ff6a1f",
 };
 
-function Frame({
+export function Frame({
   name,
   viewBox,
   title,
@@ -51,7 +51,7 @@ function Frame({
   );
 }
 
-function T({
+export function T({
   x,
   y,
   size = 13,
@@ -86,7 +86,7 @@ function T({
   );
 }
 
-function Wire({ d, color, w = 2.5, dash }: { d: string; color: string; w?: number; dash?: string }) {
+export function Wire({ d, color, w = 2.5, dash }: { d: string; color: string; w?: number; dash?: string }) {
   return (
     <path d={d} fill="none" stroke={color} strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" strokeDasharray={dash} />
   );

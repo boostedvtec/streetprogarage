@@ -67,6 +67,11 @@ export function SiteFooter() {
                 </li>
               ))}
               <li>
+                <Link href="/tcu-tuning" className={colLink}>
+                  TCU Tuning
+                </Link>
+              </li>
+              <li>
                 <Link href="/pre-tune-checklist" className={colLink}>
                   Pre-Tune Checklist
                 </Link>

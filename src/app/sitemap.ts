@@ -6,6 +6,7 @@ const staticRoutes: { path: string; changeFrequency: MetadataRoute.Sitemap[numbe
   { path: "", changeFrequency: "weekly", priority: 1 },
   { path: "/tuning", changeFrequency: "weekly", priority: 0.9 },
   { path: "/projects", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/tcu-tuning", changeFrequency: "monthly", priority: 0.7 },
   { path: "/custom-wiring", changeFrequency: "monthly", priority: 0.7 },
   { path: "/dyno-rental", changeFrequency: "monthly", priority: 0.7 },
   { path: "/engine-swaps", changeFrequency: "monthly", priority: 0.7 },
